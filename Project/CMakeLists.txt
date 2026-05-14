@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 4.1)
+project(Project)
+
+set(CMAKE_CXX_STANDARD 14)
+
+set(PROJECT_HEADERS_DIR
+        ${PROJECT_SOURCE_DIR}/headers)
+set(PROJECT_SOURCES_DIR
+        ${PROJECT_SOURCE_DIR}/sources)
+
+set(PROJECT_HEADERS_VIEWS_DIR
+        ${PROJECT_HEADERS_DIR}/views)
+set(PROJECT_SOURCES_VIEWS_DIR
+        ${PROJECT_SOURCES_DIR}/views)
+include_directories(
+        ${PROJECT_HEADERS_VIEWS_DIR}
+        ${PROJECT_SOURCES_VIEWS_DIR})
+set(VIEWS_SOURCE_FILES
+        ${PROJECT_HEADERS_VIEWS_DIR}/View.h
+        ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp)
+
+add_executable(Project main.cpp
+        ${VIEWS_SOURCE_FILES})
