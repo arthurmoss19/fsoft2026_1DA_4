@@ -1,0 +1,8 @@
+//
+// Created by pedro on 14/05/2026.
+//
+
+#ifndef PROJETOFSOFT_TABULEIRO_H
+#define PROJETOFSOFT_TABULEIRO_H
+
+#endif //PROJETOFSOFT_TABULEIRO_H
