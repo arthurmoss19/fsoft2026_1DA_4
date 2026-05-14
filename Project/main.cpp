@@ -1,6 +1,6 @@
 #include <iostream>
-#include "View.h"
+
 int main() {
-    View();
+    std::cout << "Hello, World!" << std::endl;
     return 0;
 }
