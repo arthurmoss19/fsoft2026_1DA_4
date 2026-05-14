@@ -1,0 +1,8 @@
+//
+// Created by pedro on 14/05/2026.
+//
+
+#ifndef PROJETOFSOFT_JOGADOR_H
+#define PROJETOFSOFT_JOGADOR_H
+
+#endif //PROJETOFSOFT_JOGADOR_H
