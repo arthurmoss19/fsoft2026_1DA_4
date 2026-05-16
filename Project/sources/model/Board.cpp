@@ -125,6 +125,10 @@ int Board::getSize() const {
     return this->SIZE;
 }
 
+char Board::getCell(int row, int column) const {
+    return grid[row][column];
+}
+
 const vector<Ship>& Board::getFleet() const {
     return this->fleet;
 }

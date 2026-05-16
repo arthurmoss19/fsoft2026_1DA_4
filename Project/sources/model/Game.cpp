@@ -107,3 +107,31 @@ Player* Game::getCurrentPlayer() const {
 bool Game::isGameOver() const {
     return this->gameOver;
 }
+
+int Game::getCurrentTurn() const {
+    return currentTurn;
+}
+
+bool Game::isVsComputer() const {
+    return vsComputer;
+}
+
+int Game::getAiDifficulty() const {
+    return aiDifficulty;
+}
+
+const Board& Game::getBoard1() const {
+    return board1;
+}
+
+const Board& Game::getBoard2() const {
+    return board2;
+}
+
+Player* Game::getPlayer1() const {
+    return player1;
+}
+
+Player* Game::getPlayer2() const {
+    return player2;
+}

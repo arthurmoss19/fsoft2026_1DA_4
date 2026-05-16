@@ -106,3 +106,11 @@ bool Player::operator == (const string& nick) const {
     return false;
 }
 
+int Player::getTotalShots() const {
+    return totalShots;
+}
+
+int Player::getHits() const {
+    return hits;
+}
+
