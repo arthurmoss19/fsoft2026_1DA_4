@@ -11,11 +11,11 @@ using namespace std;
 
 struct PlayerDTO {
     string nickname;
-    int vitorias;
-    int derrotas;
-    int totalTiros;
-    int tirosAcertados;
-    float taxaPrecisao;
+    int victories;
+    int defeats;
+    int totalShots;
+    int shotsHit;
+    float accuracy;
 };
 
 #endif //FSOFT_PLAYERDTO_H
