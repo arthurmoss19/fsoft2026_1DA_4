@@ -9,5 +9,8 @@ struct BarcoDTO {
     std::string tipo;
     int tamanho;
     bool afundado;
+    int linha;
+    int coluna;
+    bool direcao;
 
 #endif //FSOFT_BARCODTO_H
