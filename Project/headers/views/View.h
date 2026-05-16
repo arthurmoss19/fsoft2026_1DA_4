@@ -18,4 +18,4 @@ public:
     void printHelpAndRules();
 };
 
-#endif /* HEADERS_VIEWS_VIEW_H_ */
+#endif

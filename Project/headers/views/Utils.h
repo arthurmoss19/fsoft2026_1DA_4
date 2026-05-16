@@ -9,10 +9,10 @@
 
 using namespace std;
 
-class Utils{
+class Utils {
 public:
     static int getNumber(const string&  label);
     static string getString(const string&  label);
 };
 
-#endif /* HEADERS_VIEWS_UTILS_H_ */
+#endif
