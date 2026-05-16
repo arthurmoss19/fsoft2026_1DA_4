@@ -4,9 +4,9 @@
 
 #ifndef HEADERS_VIEWS_VIEW_H_
 #define HEADERS_VIEWS_VIEW_H_
-#include <string>
 
 using namespace std;
+
 class View {
 public:
     View();

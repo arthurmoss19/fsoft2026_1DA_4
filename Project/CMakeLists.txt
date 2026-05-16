@@ -17,7 +17,9 @@ include_directories(
         ${PROJECT_SOURCES_VIEWS_DIR})
 set(VIEWS_SOURCE_FILES
         ${PROJECT_HEADERS_VIEWS_DIR}/View.h
-        ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp)
+        ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp
+        ${PROJECT_HEADERS_VIEWS_DIR}/Utils.h
+        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp)
 
 add_executable(Project main.cpp
         ${VIEWS_SOURCE_FILES})

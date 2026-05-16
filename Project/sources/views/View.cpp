@@ -4,6 +4,7 @@
 
 #include<iostream>
 #include "View.h"
+#include "Utils.h"
 
 using namespace std;
 
