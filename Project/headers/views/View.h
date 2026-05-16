@@ -2,11 +2,11 @@
 // Created by arthu on 14/05/2026.
 //
 
-#ifndef HEADERS_VIEWS_VIEW_H_
-#define HEADERS_VIEWS_VIEW_H_
-#include <string>
+#ifndef PROJECT_VIEW_H
+#define PROJECT_VIEW_H
 
 using namespace std;
+
 class View {
 public:
     View();
@@ -14,6 +14,9 @@ public:
     int menuNewGame();
     int menuDifficulty();
     int menuShipPlacement();
+    int menuRankingType();
+    int menuStatistics();
+    void printHelpAndRules();
 };
 
-#endif /* HEADERS_VIEWS_VIEW_H_ */
+#endif
