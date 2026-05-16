@@ -21,6 +21,7 @@ private:
     static const char MISS = '0';
 
 public:
+    friend class BoardMapper;
     Board();
     ~Board() = default;
     bool validatePosition(int row, int column, int size, bool horizontal) const;
@@ -29,6 +30,7 @@ public:
     void print(bool hideShips) const;
     bool allShipsSunk() const;
     int getSize() const;
+    char getCell(int row, int column) const;
     const vector<Ship>& getFleet() const;
 };
 

@@ -24,13 +24,21 @@ private:
     bool checkGameOver();
 
 public:
+    friend class GameMapper;
     Game(Player* p1, Player* p2, bool isVsAI, int difficulty);
     ~Game() = default;
     void prepareMatch();
     bool executeMove(int row, int column);
     void computerMove();
+    int getCurrentTurn() const;
+    bool isVsComputer() const;
+    int getAiDifficulty() const;
     Board& getActiveBoard();
     Board& getOpponentBoard();
+    const Board& getBoard1() const;
+    const Board& getBoard2() const;
+    Player* getPlayer1() const;
+    Player* getPlayer2() const;
     Player* getCurrentPlayer() const;
     bool isGameOver() const;
 };
