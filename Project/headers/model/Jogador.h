@@ -2,6 +2,9 @@
 // Created by pedro on 14/05/2026.
 //
 
+#ifndef HEADERS_MODEL_PLAYER_H_
+#define HEADERS_MODEL_PLAYER_H_
+
 #include <string>
 #include <iostream>
 
@@ -19,7 +22,6 @@ private:
     void setDerrotas(int derrotas);
 
 public:
-
     Player(const string& nickname);
     Player(const Player& obj);
     ~Player() = default;
@@ -36,4 +38,4 @@ public:
     bool operator == (const string& nick) const;
 };
 
-#endif /* HEADERS_MODEL_PLAYER_H_ */
+#endif
