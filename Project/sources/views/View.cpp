@@ -119,6 +119,6 @@ void View::printHelpAndRules() {
     cout << "- Cada jogador joga uma vez por turno\n";
     cout << "- Ganha quem destruir todos os navios inimigos\n";
 
-    cout << "\nAgora você ja esta pronto para jogar Batalha Naval!\n";
-    cout << "Boa sorte e bom jogo!\n";
+    cout << "\nAgora voce ja esta pronto para jogar Batalha Naval!\n";
+    cout << "Boa sorte e bom jogo!\n\n";
 }

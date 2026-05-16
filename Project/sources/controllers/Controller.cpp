@@ -60,6 +60,5 @@ void Controller::runStatistics() {
 
 void Controller::runHelpAndRules() {
     this -> view.printHelpAndRules();
-
-    Utils::getString("Pressione ENTER para voltar ao menu");
+    Utils::pressEnter();
 }

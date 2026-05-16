@@ -37,3 +37,8 @@ string Utils::getString(const string&  label){
 
     return input;
 }
+
+void Utils::pressEnter() {
+    cout << "Pressione ENTER para voltar ao menu principal...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
