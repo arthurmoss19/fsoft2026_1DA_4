@@ -12,9 +12,12 @@ private:
     View view;
 
     void runNewGame();
-    void runRanking();
+    void runRankingType();
     void runStatistics();
     void runHelpAndRules();
+
+public:
+    void run();
 };
 
 #endif

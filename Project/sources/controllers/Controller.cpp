@@ -16,7 +16,7 @@ void Controller::run() {
         switch(op) {
             case 1: runNewGame();
                 break;
-            case 2: runRanking();
+            case 2: runRankingType();
                 break;
             case 3: runStatistics();
                 break;
@@ -38,10 +38,10 @@ void Controller::runNewGame() {
     } while (op != 0);
 }
 
-void Controller::runRanking() {
+void Controller::runRankingType() {
     int op = -1;
     do {
-        op = this -> view.menuRanking();
+        op = this -> view.menuRankingType();
         switch(op) {
 
         }
@@ -51,7 +51,7 @@ void Controller::runRanking() {
 void Controller::runStatistics() {
     int op = -1;
     do {
-        op = this -> view.menuStatiscs();
+        op = this -> view.menuStatistics();
         switch(op) {
 
         }

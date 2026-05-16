@@ -15,6 +15,7 @@ public:
     int menuDifficulty();
     int menuShipPlacement();
     int menuRankingType();
+    int menuStatistics();
     void printHelpAndRules();
 };
 
