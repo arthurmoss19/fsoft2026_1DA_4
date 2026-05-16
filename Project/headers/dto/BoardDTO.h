@@ -17,6 +17,4 @@ struct BoardDTO {
     bool allSunk;
 };
 
-#endif
-
 #endif //FSOFT_BOARDDTO_H

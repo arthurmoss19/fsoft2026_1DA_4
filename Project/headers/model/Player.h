@@ -22,6 +22,7 @@ private:
     void setLosses(int losses);
 
 public:
+    friend class PlayerMapper;
     Player(const string& nickname);
     Player(const Player& obj);
     ~Player() = default;
@@ -29,6 +30,8 @@ public:
     void setNickname(const string& nickname);
     int getWins() const;
     int getLosses() const;
+    int getTotalShots() const;
+    int getHits() const;
     float getAccuracyRate() const;
     void registerShot(bool hit);
     void registerGameOver(bool won);
