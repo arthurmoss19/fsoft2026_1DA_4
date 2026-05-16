@@ -2,15 +2,15 @@
 // Created by pedro on 14/05/2026.
 //
 
-#ifndef HEADERS_MODEL_PLAYER_H_
-#define HEADERS_MODEL_PLAYER_H_
+#ifndef PROJETOFSOFT_JOGADOR_H
+#define PROJETOFSOFT_JOGADOR_H
 
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-class Player {
+class Jogador {
 private:
     string nickname;
     int vitorias;
@@ -22,19 +22,17 @@ private:
     void setDerrotas(int derrotas);
 
 public:
-    Player(const string& nickname);
-    Player(const Player& obj);
-    ~Player() = default;
+    Jogador(const string& nickname);
+    Jogador(const Jogador& obj);
+    ~Jogador() = default;
     const string& getNickname() const;
     void setNickname(const string& nickname);
     int getVitorias() const;
     int getDerrotas() const;
-
     float getTaxaPrecisao() const;
     void registarTiro(bool acertou);
     void registarFimDeJogo(bool venceu);
-
-    bool operator == (const Player& obj) const;
+    bool operator == (const Jogador& obj) const;
     bool operator == (const string& nick) const;
 };
 
