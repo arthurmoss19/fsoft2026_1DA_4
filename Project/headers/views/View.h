@@ -14,6 +14,8 @@ public:
     int menuNewGame();
     int menuDifficulty();
     int menuShipPlacement();
+    int menuRankingType();
+    void printHelpAndRules();
 };
 
 #endif /* HEADERS_VIEWS_VIEW_H_ */

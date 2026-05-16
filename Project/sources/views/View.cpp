@@ -61,3 +61,46 @@ int View::menuShipPlacement() {
     } while (op < 0 || op > 2);
     return op;
 }
+
+int View::menuRankingType() {
+    int op = -1;
+    do {
+        cout << "\n\n********** Tipo de Ranking **********\n";
+        cout << "1. Número de vitórias\n";
+        cout << "2. Taxa de precisão\n";
+        cout << "\n0. Sair\n";
+        op = Utils::getNumber("Opção");
+    } while (op < 0 || op > 2);
+    return op;
+}
+
+void View::printHelpAndRules() {
+    cout << "\n\n********** Ajuda e Regras **********\n";
+
+    cout << "\nObjetivo do jogo:\n";
+    cout << "- Afundar todos os navios do adversário antes que ele afunde os seus\n";
+
+    cout << "\nComo jogar:\n";
+    cout << "- Cada jogador possui 5 navios e um tabuleiro 10x10\n";
+    cout << "- Cada jogador posiciona os navios no tabuleiro em segredo\n";
+    cout << "- O jogo começa!\n";
+
+    cout << "\nExemplo de turno:\n";
+    cout << "- Jogador 1 escolhe a coordenada B4\n";
+    cout << "- Se houver navio em B4, é um tiro certo\n";
+    cout << "- Caso contrário, é um tiro falhado\n";
+
+    cout << "\nLegenda do Tabuleiro:\n";
+    cout << " ~ Água\n";
+    cout << " # Navio\n";
+    cout << " X Navio atingido (tiro certo)\n";
+    cout << " O Tiro na água (tiro falhado)\n";
+    cout << "\nOutras Regras\n";
+
+    cout << "- Não pode mudar os navios de lugar durante o jogo\n";
+    cout << "- Cada jogador joga uma vez por turno\n";
+    cout << "- Ganha quem destruir todos os navios inimigos\n";
+
+    cout << "\nAgora você já está pronto para jogar Batalha Naval!\n";
+    cout << "Boa sorte e bom jogo!\n";
+}
