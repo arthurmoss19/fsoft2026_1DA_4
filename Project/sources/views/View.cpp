@@ -78,7 +78,7 @@ int View::menuRankingType() {
 
     do {
         cout << "\n\n********** Tipo de Ranking **********\n";
-        cout << "1. Número de vitorias\n";
+        cout << "1. Numero de vitorias\n";
         cout << "2. Taxa de precisao\n";
         cout << "\n0. Sair\n";
 
