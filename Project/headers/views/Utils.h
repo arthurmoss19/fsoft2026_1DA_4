@@ -2,8 +2,8 @@
 // Created by arthu on 16/05/2026.
 //
 
-#ifndef HEADERS_VIEWS_UTILS_H_
-#define HEADERS_VIEWS_UTILS_H_
+#ifndef PROJECT_UTILS_H_
+#define PROJECT_UTILS_H_
 
 #include <string>
 
