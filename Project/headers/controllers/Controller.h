@@ -6,13 +6,14 @@
 #define PROJECT_CONTROLLER_H
 
 #include "View.h"
-#include "Controller.h"
-#include "Game.h"
+
+class PlayerContainer;
+class Game;
 
 class Controller {
 private:
     View view;
-    PlayerContainer playerContainer;
+    PlayerContainer* playerContainer;
     Game* currentGame;
 
     void runNewGame();

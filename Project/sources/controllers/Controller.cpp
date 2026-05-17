@@ -6,8 +6,23 @@
 #include <list>
 #include "Controller.h"
 #include "Utils.h"
+1
+#include "PlayerContainer.h"
+#include "Game.h"
 
 using namespace std;
+
+Controller::Controller() {
+    this->playerContainer = new PlayerContainer();
+    this->currentGame = nullptr;
+}
+
+Controller::~Controller() {
+    delete this->playerContainer;
+    if (this->currentGame != nullptr) {
+        delete this->currentGame;
+    }
+}
 
 void Controller::run() {
     int op = -1;

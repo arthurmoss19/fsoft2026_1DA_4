@@ -15,7 +15,7 @@ bool Ship::isSizeValid(int size) {
 }
 
 bool Ship::isTypeValid(const string& type) {
-    if (type.lenght() >= 3 && type.lenght() <= 20) {
+    if (type.length() >= 3 && type.length() <= 20) {
         return true;
     }
     else {
