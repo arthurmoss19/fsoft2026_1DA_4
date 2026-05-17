@@ -6,7 +6,7 @@
 #define FSOFT_BOARDDTO_H
 
 #include <vector>
-#include "BoatDTO.h"
+#include "ShipDTO.h"
 
 using namespace std;
 
