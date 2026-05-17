@@ -30,7 +30,12 @@ set(VIEWS_SOURCE_FILES
         ${PROJECT_HEADERS_VIEWS_DIR}/View.h
         ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp
         ${PROJECT_HEADERS_VIEWS_DIR}/Utils.h
-        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp)
+        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp
+        headers/exceptions/NoDataException.h
+        headers/exceptions/DuplicatedDataException.h
+        sources/exceptions/DuplicatedDataException.cpp
+        sources/exceptions/InvalidDataException.cpp
+        sources/exceptions/NoDataException.cpp)
 
 add_executable(Project main.cpp
         ${VIEWS_SOURCE_FILES}
