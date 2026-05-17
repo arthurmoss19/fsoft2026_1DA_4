@@ -19,7 +19,6 @@ private:
     Game* currentGame;
     string currentNickname;
 
-    void runLogin();
     void runNewGame();
     void runRankingType();
     void runStatistics();
@@ -28,6 +27,7 @@ private:
 public:
     Controller();
     ~Controller();
+    void runLogin();
     void runMain();
 };
 

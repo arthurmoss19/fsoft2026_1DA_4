@@ -4,7 +4,7 @@
 
 int main() {
     Controller controller;
-    controller.runMain();
+    controller.runLogin();
 
     return 0;
 }

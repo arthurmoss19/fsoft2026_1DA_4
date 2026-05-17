@@ -89,7 +89,17 @@ set(VIEWS_SOURCE_FILES
 
 ################################################
 
-
+set(PROJECT_HEADERS_REPO_DIR
+        ${PROJECT_HEADERS_DIR}/repo)
+set(PROJECT_SOURCES_REPO_DIR
+        ${PROJECT_SOURCES_DIR}/repo)
+include_directories(
+        ${PROJECT_HEADERS_REPO_DIR}
+        ${PROJECT_SOURCES_REPO_DIR})
+set(REPO_SOURCE_FILES
+        ${PROJECT_HEADERS_REPO_DIR}/IProfileRepository.h
+        ${PROJECT_HEADERS_REPO_DIR}/ProfileRepositoryFile.h
+        ${PROJECT_SOURCES_REPO_DIR}/ProfileRepositoryFile.cpp)
 
 ################################################
 
@@ -111,7 +121,8 @@ set(MAPPERS_SOURCE_FILES
         ${PROJECT_HEADERS_MAPPERS_DIR}/PlayerMapper.h
         sources/views/LoginView.cpp
         headers/views/LoginView.h
-        headers/dto/PlayerLoginDTO.h)
+        headers/dto/PlayerLoginDTO.h
+)
 
 ################################################
 

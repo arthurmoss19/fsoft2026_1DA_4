@@ -18,6 +18,8 @@ int LoginView::menuLogin() {
         cout << "\n0 - Sair\n";
         op = Utils::getNumber("Opcao");
     } while (op < 0 || op > 2);
+
+    return op;
 }
 
 PlayerLoginDTO LoginView::getNewPlayer() {

@@ -33,7 +33,7 @@ void Controller::runLogin() {
             case 1: {
                 string nick = loginView.getNickname("Nickname");
                 try {
-                    playerService -> getPlayer(nick);
+                    // playerService -> getPlayer(nick);
                     currentNickname = nick;
                     runMain();
                 } catch (NoDataException& e) {
@@ -44,7 +44,7 @@ void Controller::runLogin() {
                 case 2: {
                 PlayerLoginDTO dto = loginView.getNewPlayer();
                 try {
-                    playerService -> registerPlayer(dto);
+                    // playerService -> registerPlayer(dto);
                     currentNickname = dto.nickname;
                     view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
                     Utils::pressEnter();
