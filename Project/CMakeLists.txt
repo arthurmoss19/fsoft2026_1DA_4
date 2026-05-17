@@ -34,5 +34,11 @@ set(VIEWS_SOURCE_FILES
 
 add_executable(Project main.cpp
         ${VIEWS_SOURCE_FILES}
-        ${CONTROLLERS_SOURCE_FILES})
-
+        ${CONTROLLERS_SOURCE_FILES}
+        Player.h Player.cpp
+        Ship.h Ship.cpp
+        Board.h Board.cpp
+        Game.h Game.cpp
+        PlayerContainer.h PlayerContainer.cpp
+        DuplicatedDataException.h NoDataException.h InvalidDataException.h
+)
