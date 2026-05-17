@@ -12,38 +12,42 @@ set(PROJECT_HEADERS_CONTROLLERS_DIR
         ${PROJECT_HEADERS_DIR}/controllers)
 set(PROJECT_SOURCES_CONTROLLERS_DIR
         ${PROJECT_SOURCES_DIR}/controllers)
-include_directories(
-        ${PROJECT_HEADERS_CONTROLLERS_DIR}
-        ${PROJECT_SOURCES_CONTROLLERS_DIR})
-set(CONTROLLERS_SOURCE_FILES
-        ${PROJECT_HEADERS_CONTROLLERS_DIR}/Controller.h
-        ${PROJECT_SOURCES_CONTROLLERS_DIR}/Controller.cpp)
 
 set(PROJECT_HEADERS_VIEWS_DIR
         ${PROJECT_HEADERS_DIR}/views)
 set(PROJECT_SOURCES_VIEWS_DIR
         ${PROJECT_SOURCES_DIR}/views)
-include_directories(
-        ${PROJECT_HEADERS_VIEWS_DIR}
-        ${PROJECT_SOURCES_VIEWS_DIR})
 set(VIEWS_SOURCE_FILES
         ${PROJECT_HEADERS_VIEWS_DIR}/View.h
         ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp
         ${PROJECT_HEADERS_VIEWS_DIR}/Utils.h
-        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp
-        headers/exceptions/NoDataException.h
-        headers/exceptions/DuplicatedDataException.h
-        sources/exceptions/DuplicatedDataException.cpp
-        sources/exceptions/InvalidDataException.cpp
-        sources/exceptions/NoDataException.cpp)
+        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp)
 
-add_executable(Project main.cpp
+include_directories(
+        ${PROJECT_HEADERS_CONTROLLERS_DIR}
+        ${PROJECT_SOURCES_CONTROLLERS_DIR}
+        ${PROJECT_HEADERS_VIEWS_DIR}
+        ${PROJECT_SOURCES_VIEWS_DIR}
+        headers/model
+        headers/exceptions
+)
+set(CONTROLLERS_SOURCE_FILES
+        ${PROJECT_HEADERS_CONTROLLERS_DIR}/Controller.h
+        ${PROJECT_SOURCES_CONTROLLERS_DIR}/Controller.cpp)
+
+add_executable(Project
+        main.cpp
         ${VIEWS_SOURCE_FILES}
         ${CONTROLLERS_SOURCE_FILES}
-        Player.h Player.cpp
-        Ship.h Ship.cpp
-        Board.h Board.cpp
-        Game.h Game.cpp
-        PlayerContainer.h PlayerContainer.cpp
-        DuplicatedDataException.h NoDataException.h InvalidDataException.h
+        headers/model/Player.h            sources/model/Player.cpp
+        headers/model/Ship.h              sources/model/Ship.cpp
+        headers/model/Board.h             sources/model/Board.cpp
+        headers/model/Game.h              sources/model/Game.cpp
+        headers/model/PlayerContainer.h   sources/model/PlayerContainer.cpp
+        headers/exceptions/NoDataException.h
+        headers/exceptions/DuplicatedDataException.h
+        headers/exceptions/InvalidDataException.h
+        sources/exceptions/NoDataException.cpp
+        sources/exceptions/DuplicatedDataException.cpp
+        sources/exceptions/InvalidDataException.cpp
 )
