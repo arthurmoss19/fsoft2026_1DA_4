@@ -6,7 +6,6 @@
 #include <list>
 #include "Controller.h"
 #include "Utils.h"
-1
 #include "PlayerContainer.h"
 #include "Game.h"
 
