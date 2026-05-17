@@ -17,6 +17,7 @@ public:
     int menuRankingType();
     int menuStatistics();
     void printHelpAndRules();
+    void printMessage(const string& msg);
 };
 
 #endif

@@ -122,3 +122,7 @@ void View::printHelpAndRules() {
     cout << "\nAgora voce ja esta pronto para jogar Batalha Naval!\n";
     cout << "Boa sorte e bom jogo!\n\n";
 }
+
+void View::printMessage(const string& msg) {
+    cout << msg << endl;
+}

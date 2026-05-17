@@ -3,11 +3,13 @@
 //
 
 #include <string>
-#include <list>
 #include "Controller.h"
 #include "Utils.h"
 #include "PlayerContainer.h"
 #include "Game.h"
+#include "NoDataException.h"
+#include "InvalidDataException.h"
+#include "DuplicatedDataException.h"
 
 using namespace std;
 
@@ -23,7 +25,41 @@ Controller::~Controller() {
     }
 }
 
-void Controller::run() {
+void Controller::runLogin() {
+    int op = -1;
+    do {
+        op = this -> loginView.menuLogin();
+        switch(op) {
+            case 1: {
+                string nick = loginView.getNickname("Nickname");
+                try {
+                    playerService -> getPlayer(nick);
+                    currentNickname = nick;
+                    runMain();
+                } catch (NoDataException& e) {
+                    this->view.printMessage(e.what());
+                }
+                break;
+            }
+                case 2: {
+                PlayerLoginDTO dto = loginView.getNewPlayer();
+                try {
+                    playerService -> registerPlayer(dto);
+                    currentNickname = dto.nickname;
+                    view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                    Utils::pressEnter();
+                    runMain();
+                } catch (InvalidDataException& e) {
+                    this->view.printMessage(e.what());
+                } catch (DuplicatedDataException& e) {
+                    this->view.printMessage(e.what());
+                }
+            }
+        }
+    } while (op != 0);
+}
+
+void Controller::runMain() {
     int op = -1;
     do {
         op = this -> view.menuMain();

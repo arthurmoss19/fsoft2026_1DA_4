@@ -4,7 +4,7 @@
 
 int main() {
     Controller controller;
-    controller.run();
+    controller.runMain();
 
     return 0;
 }

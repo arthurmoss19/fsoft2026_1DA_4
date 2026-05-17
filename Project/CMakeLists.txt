@@ -108,7 +108,10 @@ set(MAPPERS_SOURCE_FILES
         ${PROJECT_SOURCES_MAPPERS_DIR}/GameMapper.cpp
         ${PROJECT_HEADERS_MAPPERS_DIR}/GameMapper.h
         ${PROJECT_SOURCES_MAPPERS_DIR}/PlayerMapper.cpp
-        ${PROJECT_HEADERS_MAPPERS_DIR}/PlayerMapper.h)
+        ${PROJECT_HEADERS_MAPPERS_DIR}/PlayerMapper.h
+        sources/views/LoginView.cpp
+        headers/views/LoginView.h
+        headers/dto/PlayerLoginDTO.h)
 
 ################################################
 

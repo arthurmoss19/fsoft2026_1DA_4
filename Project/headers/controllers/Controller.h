@@ -5,6 +5,7 @@
 #ifndef PROJECT_CONTROLLER_H
 #define PROJECT_CONTROLLER_H
 
+#include "LoginView.h"
 #include "View.h"
 
 class PlayerContainer;
@@ -13,9 +14,12 @@ class Game;
 class Controller {
 private:
     View view;
+    LoginView loginView;
     PlayerContainer* playerContainer;
     Game* currentGame;
+    string currentNickname;
 
+    void runLogin();
     void runNewGame();
     void runRankingType();
     void runStatistics();
@@ -24,7 +28,7 @@ private:
 public:
     Controller();
     ~Controller();
-    void run();
+    void runMain();
 };
 
 #endif
