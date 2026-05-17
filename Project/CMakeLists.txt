@@ -35,3 +35,4 @@ set(VIEWS_SOURCE_FILES
 add_executable(Project main.cpp
         ${VIEWS_SOURCE_FILES}
         ${CONTROLLERS_SOURCE_FILES})
+
