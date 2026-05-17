@@ -2,7 +2,7 @@
 // Created by tiago on 16/05/2026.
 //
 
-#include "../../headers/mappers/ShipMapper.h"
+#include "ShipMapper.h"
 
 void ShipMapper::model2DTO(const Ship& ship, int row, int column, ShipDTO& dto) {
     dto.type      = ship.getType();

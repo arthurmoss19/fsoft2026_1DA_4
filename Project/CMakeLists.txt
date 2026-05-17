@@ -51,13 +51,13 @@ set(MODEL_SOURCE_FILES
         ${PROJECT_HEADERS_MODEL_DIR}/Board.h
         ${PROJECT_SOURCES_MODEL_DIR}/Board.cpp
         ${PROJECT_HEADERS_MODEL_DIR}/Game.h
-        ${PROJECT_HEADERS_MODEL_DIR}/Game.cpp
-        ${PROJECT_SOURCES_MODEL_DIR}/Player.h
-        ${PROJECT_HEADERS_MODEL_DIR}/Player.cpp
-        ${PROJECT_SOURCES_MODEL_DIR}/PlayerContainer.h
-        ${PROJECT_HEADERS_MODEL_DIR}/PlayerContainer.cpp
-        ${PROJECT_SOURCES_MODEL_DIR}/Ship.h
-        ${PROJECT_HEADERS_MODEL_DIR}/Ship.cpp)
+        ${PROJECT_SOURCES_MODEL_DIR}/Game.cpp
+        ${PROJECT_HEADERS_MODEL_DIR}/Player.h
+        ${PROJECT_SOURCES_MODEL_DIR}/Player.cpp
+        ${PROJECT_HEADERS_MODEL_DIR}/PlayerContainer.h
+        ${PROJECT_SOURCES_MODEL_DIR}/PlayerContainer.cpp
+        ${PROJECT_HEADERS_MODEL_DIR}/Ship.h
+        ${PROJECT_SOURCES_MODEL_DIR}/Ship.cpp)
 
 ################################################
 
@@ -77,6 +77,10 @@ set(PROJECT_HEADERS_VIEWS_DIR
         ${PROJECT_HEADERS_DIR}/views)
 set(PROJECT_SOURCES_VIEWS_DIR
         ${PROJECT_SOURCES_DIR}/views)
+include_directories(
+        ${PROJECT_HEADERS_VIEWS_DIR}
+        ${PROJECT_SOURCES_VIEWS_DIR}
+)
 set(VIEWS_SOURCE_FILES
         ${PROJECT_HEADERS_VIEWS_DIR}/View.h
         ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp
@@ -85,17 +89,7 @@ set(VIEWS_SOURCE_FILES
 
 ################################################
 
-include_directories(
-        ${PROJECT_HEADERS_CONTROLLERS_DIR}
-        ${PROJECT_SOURCES_CONTROLLERS_DIR}
-        ${PROJECT_HEADERS_VIEWS_DIR}
-        ${PROJECT_SOURCES_VIEWS_DIR}
-        headers/model
-        headers/exceptions
-)
-set(CONTROLLERS_SOURCE_FILES
-        ${PROJECT_HEADERS_CONTROLLERS_DIR}/Controller.h
-        ${PROJECT_SOURCES_CONTROLLERS_DIR}/Controller.cpp)
+
 
 ################################################
 
@@ -106,7 +100,7 @@ set(PROJECT_SOURCES_MAPPERS_DIR
 include_directories(
         ${PROJECT_HEADERS_MAPPERS_DIR}
         ${PROJECT_SOURCES_MAPPERS_DIR})
-set(MAPPERS_SOURCE_FILES${PROJECT_HEADERS_MAPPERS_DIR}/StudentMapper.h
+set(MAPPERS_SOURCE_FILES
         ${PROJECT_SOURCES_MAPPERS_DIR}/BoardMapper.cpp
         ${PROJECT_HEADERS_MAPPERS_DIR}/BoardMapper.h
         ${PROJECT_SOURCES_MAPPERS_DIR}/ShipMapper.cpp
@@ -114,7 +108,7 @@ set(MAPPERS_SOURCE_FILES${PROJECT_HEADERS_MAPPERS_DIR}/StudentMapper.h
         ${PROJECT_SOURCES_MAPPERS_DIR}/GameMapper.cpp
         ${PROJECT_HEADERS_MAPPERS_DIR}/GameMapper.h
         ${PROJECT_SOURCES_MAPPERS_DIR}/PlayerMapper.cpp
-        ${PROJECT_SOURCES_MAPPERS_DIR}/PlayerMapper.h)
+        ${PROJECT_HEADERS_MAPPERS_DIR}/PlayerMapper.h)
 
 ################################################
 
@@ -123,16 +117,8 @@ add_executable(
         main.cpp
         ${VIEWS_SOURCE_FILES}
         ${CONTROLLERS_SOURCE_FILES}
-        
-        headers/model/Player.h            sources/model/Player.cpp
-        headers/model/Ship.h              sources/model/Ship.cpp
-        headers/model/Board.h             sources/model/Board.cpp
-        headers/model/Game.h              sources/model/Game.cpp
-        headers/model/PlayerContainer.h   sources/model/PlayerContainer.cpp
-        headers/exceptions/NoDataException.h
-        headers/exceptions/DuplicatedDataException.h
-        headers/exceptions/InvalidDataException.h
-        sources/exceptions/NoDataException.cpp
-        sources/exceptions/DuplicatedDataException.cpp
-        sources/exceptions/InvalidDataException.cpp
+        ${DTO_SOURCE_FILES}
+        ${MODEL_SOURCE_FILES}
+        ${EXCEPTIONS_SOURCE_FILES}
+        ${MAPPERS_SOURCE_FILES}
 )

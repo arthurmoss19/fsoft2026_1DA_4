@@ -2,7 +2,7 @@
 // Created by tiago on 16/05/2026.
 //
 
-#include "../../headers/mappers/PlayerMapper.h"
+#include "PlayerMapper.h"
 
 void PlayerMapper::model2DTO(const Player& player, PlayerDTO& dto) {
     dto.nickname   = player.getNickname();

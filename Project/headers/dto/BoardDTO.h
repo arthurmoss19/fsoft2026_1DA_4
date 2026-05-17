@@ -13,7 +13,7 @@ using namespace std;
 struct BoardDTO {
     int size;
     vector<vector<char>> grid;
-    vector<BoatDTO> fleet;
+    vector<ShipDTO> fleet;
     bool allSunk;
 };
 
