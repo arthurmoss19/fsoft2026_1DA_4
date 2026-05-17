@@ -5,6 +5,7 @@
 #ifndef PROJECT_CONTROLLER_H
 #define PROJECT_CONTROLLER_H
 
+#include "PlayerService.h"
 #include "LoginView.h"
 #include "View.h"
 
@@ -16,6 +17,7 @@ private:
     View view;
     LoginView loginView;
     PlayerContainer* playerContainer;
+    PlayerService* playerService;
     Game* currentGame;
     string currentNickname;
 

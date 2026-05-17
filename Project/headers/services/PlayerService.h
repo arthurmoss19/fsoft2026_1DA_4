@@ -7,9 +7,9 @@
 
 #include <list>
 #include <string>
-#include "../dto/PlayerDTO.h"
-#include "../dto/PlayerLoginDTO.h"
-#include "../model/PlayerContainer.h"
+#include "PlayerDTO.h"
+#include "PlayerLoginDTO.h"
+#include "PlayerContainer.h"
 
 using namespace std;
 

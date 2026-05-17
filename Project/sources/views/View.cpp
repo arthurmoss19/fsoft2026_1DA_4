@@ -89,7 +89,17 @@ int View::menuRankingType() {
 }
 
 int View::menuStatistics() {
+    int op = -1;
+    do {
+        cout << "\n\n********** Estatisticas *********\n";
+        cout <<"1. Ver minhas estatisticas\n";
+        cout <<"2. Ver estatisticas de outro jogador\n";
+        cout <<"\n0. Sair\n";
 
+        op = Utils::getNumber("Opcao");
+    } while (op < 0 || op > 2);
+
+    return op;
 }
 
 void View::printHelpAndRules() {

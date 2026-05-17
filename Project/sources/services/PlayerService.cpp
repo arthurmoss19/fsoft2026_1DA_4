@@ -2,11 +2,11 @@
 // Created by tiago on 17/05/2026.
 //
 
-#include "../../headers/services/PlayerService.h"
-#include "../../headers/mappers/PlayerMapper.h"
-#include "../../headers/exceptions/NoDataException.h"
-#include "../../headers/exceptions/DuplicatedDataException.h"
-#include "../../headers/exceptions/InvalidDataException.h"
+#include "PlayerService.h"
+#include "PlayerMapper.h"
+#include "NoDataException.h"
+#include "DuplicatedDataException.h"
+#include "InvalidDataException.h"
 
 PlayerService::PlayerService(PlayerContainer* container) : container(container) {}
 

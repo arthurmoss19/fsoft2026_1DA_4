@@ -24,7 +24,7 @@ int LoginView::menuLogin() {
 
 PlayerLoginDTO LoginView::getNewPlayer() {
     PlayerLoginDTO dto;
-    cout << "\n\n********** Registar Novo Jogador **********\n";
+    cout << "\n\n********** Registar Novo Jogador **********\n\n";
     dto.nickname = Utils::getString("Nickname (3-24 caracteres)");
     return dto;
 }

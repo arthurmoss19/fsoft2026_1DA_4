@@ -4,7 +4,6 @@
 
 #include "ProfileRepositoryFile.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
 
 ProfileRepositoryFile* ProfileRepositoryFile::instance = nullptr;
