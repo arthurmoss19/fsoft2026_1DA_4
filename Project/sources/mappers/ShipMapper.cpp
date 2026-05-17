@@ -2,9 +2,9 @@
 // Created by tiago on 16/05/2026.
 //
 
-#include "../../headers/mappers/BoatMapper.h"
+#include "../../headers/mappers/ShipMapper.h"
 
-void BoatMapper::model2DTO(const Ship& ship, int row, int column, BoatDTO& dto) {
+void ShipMapper::model2DTO(const Ship& ship, int row, int column, ShipDTO& dto) {
     dto.type      = ship.getType();
     dto.size      = ship.getSize();
     dto.direction = ship.getDirection();
@@ -13,7 +13,7 @@ void BoatMapper::model2DTO(const Ship& ship, int row, int column, BoatDTO& dto) 
     dto.column    = column;
 }
 
-void BoatMapper::dto2Model(const BoatDTO& dto, Ship& ship) {
+void ShipMapper::dto2Model(const ShipDTO& dto, Ship& ship) {
     ship.setType(dto.type);
     ship.setDirection(dto.direction);
 }

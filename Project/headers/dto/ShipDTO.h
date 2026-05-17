@@ -2,14 +2,14 @@
 // Created by tiago on 16/05/2026.
 //
 
-#ifndef FSOFT_BOATDTO_H
-#define FSOFT_BOATDTO_H
+#ifndef FSOFT_SHIPDTO_H
+#define FSOFT_SHIPDTO_H
 
 #include <string>
 
 using namespace std;
 
-struct BoatDTO {
+struct ShipDTO {
     string type;
     int size;
     bool destroyed;
@@ -18,4 +18,4 @@ struct BoatDTO {
     bool direction;
 };
 
-#endif //FSOFT_BOATDTO_H
+#endif
