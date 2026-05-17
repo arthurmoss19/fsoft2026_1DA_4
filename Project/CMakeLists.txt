@@ -89,7 +89,16 @@ set(VIEWS_SOURCE_FILES
 
 ################################################
 
-
+set(PROJECT_HEADERS_SERVICES_DIR
+        ${PROJECT_HEADERS_DIR}/services)
+set(PROJECT_SOURCES_SERVICES_DIR
+        ${PROJECT_SOURCES_DIR}/services)
+include_directories(
+        ${PROJECT_HEADERS_SERVICES_DIR}
+        ${PROJECT_SOURCES_SERVICES_DIR})
+set(SERVICES_SOURCE_FILES
+        ${PROJECT_HEADERS_SERVICES_DIR}/PlayerService.h
+        ${PROJECT_SOURCES_SERVICES_DIR}/PlayerService.cpp)
 
 ################################################
 
@@ -124,4 +133,5 @@ add_executable(
         ${MODEL_SOURCE_FILES}
         ${EXCEPTIONS_SOURCE_FILES}
         ${MAPPERS_SOURCE_FILES}
+        ${SERVICES_SOURCE_FILES}
 )
