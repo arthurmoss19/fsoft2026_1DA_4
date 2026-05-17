@@ -10,8 +10,6 @@
 
 class IProfileRepository {
 public:
-    virtual ~IProfileRepository() = default;
-
     virtual bool exists(const std::string& nickname) = 0;
     virtual void addProfile(const Player& player) = 0;
 };

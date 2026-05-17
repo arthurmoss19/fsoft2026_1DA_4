@@ -6,7 +6,7 @@
 
 
 InvalidDataException::InvalidDataException(const string& data){
-    this->data = "Error: ["+ data + "] is not valid!!";;
+    this->data = "ERRO! "+ data + " nao e valido!";
 }
 
 const char* InvalidDataException::what(){

@@ -24,7 +24,7 @@ Player* PlayerContainer::get(const string& nickname) {
     if (player != NULL) {
         return player;
     } else {
-        string msg = "Player: " + nickname;
+        string msg = "Jogador " + nickname;
         throw NoDataException(msg);
     }
 }
@@ -35,7 +35,7 @@ void PlayerContainer::add(const string& nickname) {
         Player* newPlayer = new Player(nickname);
         this->players.push_back(newPlayer);
     } else {
-        string msg = "Player: " + nickname;
+        string msg = "Jogador " + nickname;
         throw DuplicatedDataException(msg);
     }
 }
@@ -54,7 +54,7 @@ Player* PlayerContainer::remove(const string& nickname) {
         delete (*it);
         return player;
     } else {
-        string msg = "Player: " + nickname;
+        string msg = "Jogador " + nickname;
         throw NoDataException(msg);
     }
 }
@@ -67,11 +67,11 @@ Player* PlayerContainer::update(const string& oldNickname, const string& newNick
             player1->setNickname(newNickname);
             return player1;
         } else {
-            string msg = "Player: " + newNickname;
+            string msg = "Jogador " + newNickname;
             throw DuplicatedDataException(msg);
         }
     } else {
-        string msg = "Player: " + oldNickname;
+        string msg = "Jogador " + oldNickname;
         throw NoDataException(msg);
     }
 }

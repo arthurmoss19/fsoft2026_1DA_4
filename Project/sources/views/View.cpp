@@ -22,7 +22,7 @@ int View::menuMain() {
         cout <<"4. Ajuda e Regras\n";
         cout <<"\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 4);
     } while (op < 0 || op > 4);
 
     return op;
@@ -37,7 +37,7 @@ int View::menuNewGame() {
         cout <<"2. Jogador vs. Jogador\n";
         cout <<"\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;
@@ -52,7 +52,7 @@ int View::menuDifficulty() {
         cout <<"2. Dificil\n";
         cout <<"\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;
@@ -67,7 +67,7 @@ int View::menuShipPlacement() {
         cout <<"2. Posicionamento automatico\n";
         cout <<"\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;
@@ -82,7 +82,7 @@ int View::menuRankingType() {
         cout << "2. Taxa de precisao\n";
         cout << "\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;
@@ -96,7 +96,7 @@ int View::menuStatistics() {
         cout <<"2. Ver estatisticas de outro jogador\n";
         cout <<"\n0. Sair\n";
 
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;

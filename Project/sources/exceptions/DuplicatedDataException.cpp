@@ -6,7 +6,7 @@
 
 
 DuplicatedDataException::DuplicatedDataException(string data){
-    this->data = "Error: ["+ data + "] duplicated!!";
+    this->data = "ERRO! "+ data + "!";
 }
 
 const char* DuplicatedDataException::what(){

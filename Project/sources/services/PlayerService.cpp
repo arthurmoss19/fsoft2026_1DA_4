@@ -18,10 +18,13 @@ PlayerDTO PlayerService::toDTO(const Player& player) const {
 
 void PlayerService::registerPlayer(const PlayerLoginDTO& dto) {
     if (dto.nickname.empty()) {
-        throw InvalidDataException("Nickname cannot be empty.");
+        throw InvalidDataException("ERRO! Nickname nao pode estar vazio");
     }
     if (playerExists(dto.nickname)) {
-        throw DuplicatedDataException("Player '" + dto.nickname + "' already exists.");
+        throw DuplicatedDataException("Jogador " + dto.nickname + " ja existe");
+    }
+    if (dto.nickname.length() < 3 || dto.nickname.length() > 24) {
+        throw InvalidDataException("O nickname deve ter entre 3 e 24 caracteres,");
     }
     container->add(dto.nickname);
 }

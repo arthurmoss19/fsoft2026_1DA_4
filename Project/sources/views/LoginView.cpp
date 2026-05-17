@@ -2,7 +2,7 @@
 // Created by arthu on 17/05/2026.
 //
 
-#include "LoginView.h"
+#include "LogInView.h"
 #include "Utils.h"
 #include <iostream>
 #include <iomanip>
@@ -14,9 +14,9 @@ int LoginView::menuLogin() {
     do {
         cout << "\n\n********** Batalha Naval **********\n";
         cout << "1 - Tenho perfil\n";
-        cout << "2 - Nao tenho perfil (Registar)\n";
+        cout << "2 - Nao tenho perfil\n";
         cout << "\n0 - Sair\n";
-        op = Utils::getNumber("Opcao");
+        op = Utils::getNumber("Opcao", 0, 2);
     } while (op < 0 || op > 2);
 
     return op;
@@ -24,7 +24,7 @@ int LoginView::menuLogin() {
 
 PlayerLoginDTO LoginView::getNewPlayer() {
     PlayerLoginDTO dto;
-    cout << "\n\n********** Registar Novo Jogador **********\n\n";
+    cout << "\n********** Registar Novo Jogador **********\n";
     dto.nickname = Utils::getString("Nickname (3-24 caracteres)");
     return dto;
 }

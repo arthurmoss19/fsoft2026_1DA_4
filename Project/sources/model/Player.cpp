@@ -10,7 +10,7 @@ void Player::setWins(int wins) {
         this->wins = wins;
     }
     else {
-        string msg = "Player" + nickname;
+        string msg = "Jogador " + nickname;
         throw InvalidDataException(msg);
     }
 }
@@ -20,7 +20,7 @@ void Player::setLosses(int losses) {
         this->losses = losses;
     }
     else {
-        string msg = "Player" + nickname;
+        string msg = "Jogador " + nickname;
         throw InvalidDataException(msg);
     }
 }
@@ -37,7 +37,7 @@ void Player::setNickname(const string& nickname) {
         this->nickname = nickname;
     }
     else {
-        string msg = "Player" + nickname;
+        string msg = "Jogador " + nickname;
         throw InvalidDataException(msg);
     }
 }

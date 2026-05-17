@@ -6,7 +6,7 @@
 
 
 NoDataException::NoDataException(const string& data){
-    this->data = "Error: ["+ data + "] not found!!";;
+    this->data = "ERRO! "+ data + " nao existe!\n";
 }
 
 const char* NoDataException::what(){

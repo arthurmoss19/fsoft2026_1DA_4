@@ -11,7 +11,7 @@ using namespace std;
 
 class Utils {
 public:
-    static int getNumber(const string&  label);
+    static int getNumber(const string&  label, int min, int max);
     static string getString(const string&  label);
     static void pressEnter();
 };
