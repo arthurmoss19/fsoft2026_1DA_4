@@ -8,9 +8,9 @@
 #include "PlayerService.h"
 #include "LoginView.h"
 #include "View.h"
+#include "Game.h"
 
 class PlayerContainer;
-class Game;
 
 class Controller {
 private:
