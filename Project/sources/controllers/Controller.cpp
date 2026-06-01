@@ -120,6 +120,12 @@ void Controller::runNewGame() {
                         case 0: jogador2nick = true;
                     }
                 } while (!jogador2nick && op2 != 0);
+                if (jogador2nick && op2 != 0) {
+                    Player* p1 = this->playerContainer->get(this->currentNickname);
+                    Player* p2 = this->playerContainer->get(nick2);
+                    this->currentGame = new Game(p1, p2, false, 0);
+                    return;
+                }
                 break;
             }
         }
