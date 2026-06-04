@@ -120,118 +120,23 @@ void Controller::runNewGame() {
                         case 0: jogador2nick = true;
                     }
                 } while (!jogador2nick && op2 != 0);
+
                 if (jogador2nick && op2 != 0) {
                     Player* p1 = this->playerContainer->get(this->currentNickname);
                     Player* p2 = this->playerContainer->get(nick2);
                     this->currentGame = new Game(p1, p2, false, 0);
 
-                    vector<pair<int, string>> frota = {
-                        {5, "Porta-Avioes"},
-                        {4, "Navio-Tanque"},
-                        {3, "Submarino"},
-                        {3, "Fragata"},
-                        {2, "Navio-Patrulha"}
-                    };
-                    char simboloNavio = '#';
-
-                    int modoOpcao;
-                    cout << "\n=========================================\n";
-                    cout << "      COMO DESEJA POSICIONAR OS NAVIOS?  \n";
-                    cout << "=========================================\n";
-                    cout << "1 - Posicionamento Manual\n";
-                    cout << "2 - Posicionamento Automatico (Aleatorio)\n";
-                    cout << "Escolha uma opcao: ";
-                    cin >> modoOpcao;
-
-                    Board& board1 = this->currentGame->getBoard1();
-
-                    if (modoOpcao == 1) {
-                        for (const auto& navio : frota) {
-                            bool sucesso = false;
-                            while (!sucesso) {
-                                int linha, coluna;
-                                char orientacao;
-                                bool horizontal;
-
-                                cout << "\n-> Posicionar " << navio.second << " (Tamanho " << navio.first << "):\n";
-                                cout << "Linha de inicio (0 a 9): ";
-                                cin >> linha;
-                                cout << "Coluna de inicio (0 a 9): ";
-                                cin >> coluna;
-                                cout << "Orientacao (H - Horizontal, V - Vertical): ";
-                                cin >> orientacao;
-
-                                horizontal = (orientacao == 'H' || orientacao == 'h');
-
-                                Ship oNavio(navio.second, navio.first, simboloNavio);
-                                sucesso = board1.placeShip(oNavio, linha, coluna, horizontal);
-
-                                if (!sucesso) {
-                                    cout << "[ERRO] Posicao invalida ou sobreposta! Tente novamente.\n";
-                                }
-                            }
-                            board1.print(false);
-                        }
-                        cout << "\n[SUCESSO] Todos os teus navios foram posicionados manualmente!\n";
-
-                    } else {
-                        cout << "\nA gerar posicoes aleatorias para a sua frota...\n";
-                        for (const auto& navio : frota) {
-                            board1.placeShipAutomatically(navio.first, navio.second, simboloNavio);
-                        }
-                        board1.print(false);
-                        cout << "[SUCESSO] A tua frota foi gerada com sucesso!\n";
-                    }
+                    this->view.printMessage("\n*** Jogador 1: " + p1->getNickname() + " — posiciona os teus navios ***");
+                    runPlacement();
 
                     Utils::pressEnter();
                     system("cls");
 
-                    cout << "\n*** Jogador 2: " << p2->getNickname() << " — posiciona os teus navios ***\n";
-                    Board& board2 = this->currentGame->getBoard2();
-
-                    int modoOpcao2;
-                    cout << "\n=========================================\n";
-                    cout << "      COMO DESEJA POSICIONAR OS NAVIOS?  \n";
-                    cout << "=========================================\n";
-                    cout << "1 - Posicionamento Manual\n";
-                    cout << "2 - Posicionamento Automatico (Aleatorio)\n";
-                    cout << "Escolha uma opcao: ";
-                    cin >> modoOpcao2;
-
-                    if (modoOpcao2 == 1) {
-                        for (const auto& navio : frota) {
-                            bool sucesso = false;
-                            while (!sucesso) {
-                                int linha, coluna;
-                                char orientacao;
-                                cout << "\n-> Posicionar " << navio.second << " (Tamanho " << navio.first << "):\n";
-                                cout << "Linha de inicio (0 a 9): ";
-                                cin >> linha;
-                                cout << "Coluna de inicio (0 a 9): ";
-                                cin >> coluna;
-                                cout << "Orientacao (H - Horizontal, V - Vertical): ";
-                                cin >> orientacao;
-                                bool horizontal = (orientacao == 'H' || orientacao == 'h');
-                                Ship oNavio(navio.second, navio.first, simboloNavio);
-                                sucesso = board2.placeShip(oNavio, linha, coluna, horizontal);
-                                if (!sucesso) {
-                                    cout << "[ERRO] Posicao invalida ou sobreposta! Tente novamente.\n";
-                                }
-                            }
-                            board2.print(false);
-                        }
-                        cout << "\n[SUCESSO] Todos os teus navios foram posicionados manualmente!\n";
-                    } else {
-                        cout << "\nA gerar posicoes aleatorias para a sua frota...\n";
-                        for (const auto& navio : frota) {
-                            board2.placeShipAutomatically(navio.first, navio.second, simboloNavio);
-                        }
-                        board2.print(false);
-                        cout << "[SUCESSO] A tua frota foi gerada com sucesso!\n";
-                    }
+                    this->view.printMessage("\n*** Jogador 2: " + p2->getNickname() + " — posiciona os teus navios ***");
+                    runPlacement();
 
                     system("cls");
-                    cout << "\nPreparacao concluida! O jogo vai comecar...\n";
+                    this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
                     return;
                 }
                 break;
@@ -247,20 +152,20 @@ void Controller::runRankingType() {
         switch (op) {
             case 1: {
                 list<PlayerDTO> ranking = this->playerService->getRankingByWins();
-                cout << "\n********** Ranking por Numero de Vitorias **********\n";
+                this->view.printMessage("\n********** Ranking por Numero de Vitorias **********");
                 int pos = 1;
                 for (const PlayerDTO &p: ranking) {
-                    cout << pos << ". " << p.nickname << " - " << p.victories << " vitorias\n";
+                    this->view.printMessage(to_string(pos) + ". " + p.nickname + " - " + to_string(p.victories) + " vitorias");
                     pos++;
                 }
                 break;
             }
             case 2: {
                 list<PlayerDTO> ranking = this->playerService->getRankingByAccuracy();
-                cout << "\n********** Ranking por Taxa de Precisao **********\n";
+                this->view.printMessage("\n********** Ranking por Taxa de Precisao **********");
                 int pos = 1;
                 for (const PlayerDTO &p: ranking) {
-                    cout << pos << ". " << p.nickname << " - " << p.accuracy << "%\n";
+                    this->view.printMessage(to_string(pos) + ". " + p.nickname + " - " + to_string(p.accuracy) + "%");
                     pos++;
                 }
                 break;
@@ -268,7 +173,6 @@ void Controller::runRankingType() {
         }
     }while (op != 0);
 }
-
 
 void Controller::runStatistics() {
     int op = -1;
@@ -312,6 +216,7 @@ void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
     Utils::pressEnter();
 }
+
 void Controller::runPlacement() {
     if (this->currentGame == nullptr) {
         return;
@@ -324,7 +229,7 @@ void Controller::runPlacement() {
         {2, "Navio-Patrulha"}
     };
     char simboloNavio = '#';
-    Board& board = (this->currentGame->getBoard1().getFleet().empty()) ? this->currentGame->getBoard1() : this->currentGame->getBoard2();
+    Board& board = (this->currentGame->getBoard1().getFleet().size() < frota.size()) ? this->currentGame->getBoard1() : this->currentGame->getBoard2();
     int modoOpcao = this->view.menuShipPlacement();
     if (modoOpcao == 0) {
         return;
