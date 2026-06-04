@@ -127,9 +127,9 @@ void Controller::runNewGame() {
 
                     vector<pair<int, string>> frota = {
                         {5, "Porta-Avioes"},
-                        {4, "Encouracado"},
+                        {4, "Navio-Tanque"},
                         {3, "Submarino"},
-                        {3, "Contratorpedeiro"},
+                        {3, "Fragata"},
                         {2, "Navio-Patrulha"}
                     };
                     char simboloNavio = '#';
