@@ -35,6 +35,8 @@ public:
     int getAiDifficulty() const;
     Board& getActiveBoard();
     Board& getOpponentBoard();
+    Board& getBoard1();
+    Board& getBoard2();
     const Board& getBoard1() const;
     const Board& getBoard2() const;
     Player* getPlayer1() const;

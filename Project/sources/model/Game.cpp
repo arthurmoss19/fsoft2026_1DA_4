@@ -120,6 +120,14 @@ int Game::getAiDifficulty() const {
     return aiDifficulty;
 }
 
+Board& Game::getBoard1() {
+    return board1;
+}
+
+Board& Game::getBoard2() {
+    return board2;
+}
+
 const Board& Game::getBoard1() const {
     return board1;
 }
