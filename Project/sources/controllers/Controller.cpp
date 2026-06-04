@@ -312,3 +312,47 @@ void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
     Utils::pressEnter();
 }
+void Controller::runPlacement() {
+    if (this->currentGame == nullptr) {
+        return;
+    }
+    vector<pair<int, string>> frota = {
+        {5, "Porta-Avioes"},
+        {4, "Navio-Tanque"},
+        {3, "Submarino"},
+        {3, "Fragata"},
+        {2, "Navio-Patrulha"}
+    };
+    char simboloNavio = '#';
+    Board& board = (this->currentGame->getBoard1().getFleet().empty()) ? this->currentGame->getBoard1() : this->currentGame->getBoard2();
+    int modoOpcao = this->view.menuShipPlacement();
+    if (modoOpcao == 0) {
+        return;
+    }
+    if (modoOpcao == 1) {
+        for (const auto& navio : frota) {
+            bool sucesso = false;
+            while (!sucesso) {
+                this->view.printMessage("\n-> Posicionar " + navio.second + " (Tamanho " + to_string(navio.first) + "):");
+                int linha = Utils::getNumber("Linha de inicio (0 a 9)", 0, 9);
+                int coluna = Utils::getNumber("Coluna de inicio (0 a 9)", 0, 9);
+                string orientacao = Utils::getString("Orientacao (H - Horizontal, V - Vertical)");
+                bool horizontal = (orientacao == "H" || orientacao == "h");
+                Ship oNavio(navio.second, navio.first, simboloNavio);
+                sucesso = board.placeShip(oNavio, linha, coluna, horizontal);
+                if (!sucesso) {
+                    this->view.printMessage("[ERRO] Posicao invalida ou sobreposta! Tente novamente.");
+                }
+            }
+            board.print(false);
+        }
+        this->view.printMessage("\n[SUCESSO] Todos os teus navios foram posicionados manualmente!");
+    } else {
+        this->view.printMessage("\nA gerar posicoes aleatorias para a sua frota...");
+        for (const auto& navio : frota) {
+            board.placeShipAutomatically(navio.first, navio.second, simboloNavio);
+        }
+        board.print(false);
+        this->view.printMessage("[SUCESSO] A tua frota foi gerada com sucesso!");
+    }
+}
