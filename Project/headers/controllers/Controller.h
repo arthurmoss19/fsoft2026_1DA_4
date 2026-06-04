@@ -22,6 +22,7 @@ private:
     string currentNickname;
 
     void runNewGame();
+    void runPlacement();
     void runRankingType();
     void runStatistics();
     void runHelpAndRules();
