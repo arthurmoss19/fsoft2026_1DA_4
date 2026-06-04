@@ -124,6 +124,73 @@ void Controller::runNewGame() {
                     Player* p1 = this->playerContainer->get(this->currentNickname);
                     Player* p2 = this->playerContainer->get(nick2);
                     this->currentGame = new Game(p1, p2, false, 0);
+
+                    vector<pair<int, string>> frota = {
+                        {5, "Porta-Avioes"},
+                        {4, "Encouracado"},
+                        {3, "Submarino"},
+                        {3, "Contratorpedeiro"},
+                        {2, "Navio-Patrulha"}
+                    };
+                    char simboloNavio = '#';
+
+                    int modoOpcao;
+                    cout << "\n=========================================\n";
+                    cout << "      COMO DESEJA POSICIONAR OS NAVIOS?  \n";
+                    cout << "=========================================\n";
+                    cout << "1 - Posicionamento Manual\n";
+                    cout << "2 - Posicionamento Automatico (Aleatorio)\n";
+                    cout << "Escolha uma opcao: ";
+                    cin >> modoOpcao;
+
+                    Board& board1 = const_cast<Board&>(currentGame->getBoard1());
+
+                    if (modoOpcao == 1) {
+                        for (const auto& navio : frota) {
+                            bool sucesso = false;
+                            while (!sucesso) {
+                                int linha, coluna;
+                                char orientacao;
+                                bool horizontal;
+
+                                cout << "\n-> Posicionar " << navio.second << " (Tamanho " << navio.first << "):\n";
+                                cout << "Linha de inicio (0 a 9): ";
+                                cin >> linha;
+                                cout << "Coluna de inicio (0 a 9): ";
+                                cin >> coluna;
+                                cout << "Orientacao (H - Horizontal, V - Vertical): ";
+                                cin >> orientacao;
+
+                                horizontal = (orientacao == 'H' || orientacao == 'h');
+
+                                Ship oNavio(navio.second, navio.first, simboloNavio);
+                                sucesso = board1.placeShip(oNavio, linha, coluna, horizontal);
+
+                                if (!sucesso) {
+                                    cout << "[ERRO] Posicao invalida ou sobreposta! Tente novamente.\n";
+                                }
+                            }
+                            board1.print(false);
+                        }
+                        cout << "\n[SUCESSO] Todos os teus navios foram posicionados manualmente!\n";
+
+                    } else {
+                        cout << "\nA gerar posicoes aleatorias para a sua frota...\n";
+                        for (const auto& navio : frota) {
+                            board1.placeShipAutomatically(navio.first, navio.second, simboloNavio);
+                        }
+                        board1.print(false);
+                        cout << "[SUCESSO] A tua frota foi gerada com sucesso!\n";
+                    }
+
+                    if (currentGame->isVsComputer()) {
+                        Board& board2 = const_cast<Board&>(currentGame->getBoard2());
+                        for (const auto& navio : frota) {
+                            board2.placeShipAutomatically(navio.first, navio.second, simboloNavio);
+                        }
+                    }
+
+                    cout << "\nPreparacao concluida! O jogo vai comecar...\n";
                     return;
                 }
                 break;
