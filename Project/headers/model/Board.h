@@ -26,6 +26,7 @@ public:
     ~Board() = default;
     bool validatePosition(int row, int column, int size, bool horizontal) const;
     bool placeShip(const Ship& ship, int row, int column, bool horizontal);
+    void placeShipAutomatically(int size, const string& type, char symbol);
     char registerShot(int row, int column);
     void print(bool hideShips) const;
     bool allShipsSunk() const;

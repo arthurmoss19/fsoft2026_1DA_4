@@ -132,3 +132,25 @@ char Board::getCell(int row, int column) const {
 const vector<Ship>& Board::getFleet() const {
     return this->fleet;
 }
+
+#include <random>
+
+void Board::placeShipAutomatically(int size, const string& type, char symbol) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis_coord(0, SIZE - 1);
+    std::uniform_int_distribution<> dis_dir(0, 1);
+
+    bool placed = false;
+    while (!placed) {
+        int row_random = dis_coord(gen);
+        int col_random = dis_coord(gen);
+        bool horizontal_random = (dis_dir(gen) == 1);
+
+        if (validatePosition(row_random, col_random, size, horizontal_random)) {
+            Ship tempShip(type, size, symbol);
+            placeShip(tempShip, row_random, col_random, horizontal_random);
+            placed = true;
+        }
+    }
+}
