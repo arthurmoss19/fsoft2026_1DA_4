@@ -127,13 +127,13 @@ void Controller::runNewGame() {
                     this->currentGame = new Game(p1, p2, false, 0);
 
                     this->view.printMessage("\n*** Jogador 1: " + p1->getNickname() + " — posiciona os teus navios ***");
-                    runPlacement();
+                    runPlacement(this->currentGame->getBoard1());
 
                     Utils::pressEnter();
                     system("cls");
 
                     this->view.printMessage("\n*** Jogador 2: " + p2->getNickname() + " — posiciona os teus navios ***");
-                    runPlacement();
+                    runPlacement(this->currentGame->getBoard2());
 
                     system("cls");
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
@@ -217,7 +217,7 @@ void Controller::runHelpAndRules() {
     Utils::pressEnter();
 }
 
-void Controller::runPlacement() {
+void Controller::runPlacement(Board& board) {
     if (this->currentGame == nullptr) {
         return;
     }
@@ -229,7 +229,6 @@ void Controller::runPlacement() {
         {2, "Navio-Patrulha"}
     };
     char simboloNavio = '#';
-    Board& board = (this->currentGame->getBoard1().getFleet().size() < frota.size()) ? this->currentGame->getBoard1() : this->currentGame->getBoard2();
     int modoOpcao = this->view.menuShipPlacement();
     if (modoOpcao == 0) {
         return;
@@ -239,9 +238,13 @@ void Controller::runPlacement() {
             bool sucesso = false;
             while (!sucesso) {
                 this->view.printMessage("\n-> Posicionar " + navio.second + " (Tamanho " + to_string(navio.first) + "):");
+
                 int linha = Utils::getNumber("Linha de inicio (0 a 9)", 0, 9);
+
                 int coluna = Utils::getNumber("Coluna de inicio (0 a 9)", 0, 9);
+
                 string orientacao = Utils::getString("Orientacao (H - Horizontal, V - Vertical)");
+
                 bool horizontal = (orientacao == "H" || orientacao == "h");
                 Ship oNavio(navio.second, navio.first, simboloNavio);
                 sucesso = board.placeShip(oNavio, linha, coluna, horizontal);
