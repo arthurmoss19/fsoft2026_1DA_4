@@ -18,7 +18,7 @@ private:
     static const char WATER = '~';
     static const char SHIP = '#';
     static const char HIT = 'X';
-    static const char MISS = '0';
+    static const char MISS = 'O';
 
 public:
     friend class BoardMapper;

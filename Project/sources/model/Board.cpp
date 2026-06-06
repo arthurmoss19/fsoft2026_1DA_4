@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Board.h"
+#include <random>
 
 Board::Board() {
     for (int i = 0; i < this->SIZE; ++i) {
@@ -132,8 +133,6 @@ char Board::getCell(int row, int column) const {
 const vector<Ship>& Board::getFleet() const {
     return this->fleet;
 }
-
-#include <random>
 
 void Board::placeShipAutomatically(int size, const string& type, char symbol) {
     std::random_device rd;

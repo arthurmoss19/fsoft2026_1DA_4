@@ -222,13 +222,7 @@ void Controller::runPlacement(Board& board) {
     if (this->currentGame == nullptr) {
         return;
     }
-    vector<pair<int, string>> frota = {
-        {5, "Porta-Avioes"},
-        {4, "Navio-Tanque"},
-        {3, "Submarino"},
-        {3, "Fragata"},
-        {2, "Navio-Patrulha"}
-    };
+    const auto& frota = Game::getFleet();
     char simboloNavio = '#';
     int modoOpcao = this->view.menuShipPlacement();
     if (modoOpcao == 0) {
@@ -238,7 +232,7 @@ void Controller::runPlacement(Board& board) {
         for (const auto& navio : frota) {
             bool sucesso = false;
             while (!sucesso) {
-                this->view.printMessage("\n-> Posicionar " + navio.second + " (Tamanho " + to_string(navio.first) + "):");
+                this->view.printMessage("\n-> Posicionar " + navio.type + " (Tamanho " + to_string(navio.size) + "):");
 
                 int linha = Utils::getNumber("Linha de inicio (0 a 9)", 0, 9);
 
@@ -247,7 +241,7 @@ void Controller::runPlacement(Board& board) {
                 string orientacao = Utils::getString("Orientacao (H - Horizontal, V - Vertical)");
 
                 bool horizontal = (orientacao == "H" || orientacao == "h");
-                Ship oNavio(navio.second, navio.first, simboloNavio);
+                Ship oNavio(navio.type, navio.size, simboloNavio);
                 sucesso = board.placeShip(oNavio, linha, coluna, horizontal);
                 if (!sucesso) {
                     this->view.printMessage("[ERRO] Posicao invalida ou sobreposta! Tente novamente.");
@@ -259,7 +253,7 @@ void Controller::runPlacement(Board& board) {
     } else {
         this->view.printMessage("\nA gerar posicoes aleatorias para a sua frota...");
         for (const auto& navio : frota) {
-            board.placeShipAutomatically(navio.first, navio.second, simboloNavio);
+            board.placeShipAutomatically(navio.size, navio.type, simboloNavio);
         }
         board.print(false);
         this->view.printMessage("[SUCESSO] A tua frota foi gerada com sucesso!");

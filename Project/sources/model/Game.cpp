@@ -5,6 +5,17 @@
 #include <iostream>
 #include "Game.h"
 
+const vector<Game::ShipInfo>& Game::getFleet() {
+    static const vector<ShipInfo> fleet = {
+        {"Porta-Avioes",   5,},
+        {"Navio-Tanque",   4,},
+        {"Submarino",      3,},
+        {"Fragata",        3,},
+        {"Navio-Patrulha", 2,}
+    };
+    return fleet;
+}
+
 Game::Game(Player* p1, Player* p2, bool isVsAI, int difficulty) {
     this->player1 = p1;
     this->player2 = p2;
@@ -71,7 +82,7 @@ bool Game::executeMove(int row, int column) {
         }
     }
 
-    if (result == '0') {
+    if (result == 'O') {
         switchTurn();
     }
 

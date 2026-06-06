@@ -7,6 +7,8 @@
 
 #include "Player.h"
 #include "Board.h"
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -24,6 +26,11 @@ private:
     bool checkGameOver();
 
 public:
+    struct ShipInfo {
+        string type;
+        int size;
+    };
+    static const vector<ShipInfo>& getFleet();
     friend class GameMapper;
     Game(Player* p1, Player* p2, bool isVsAI, int difficulty);
     ~Game() = default;
