@@ -181,7 +181,7 @@ void View::showPlacementSuccess() {
 }
 
 void View::showBoard(const Board& board, bool hideShips) {
-    cout << "\n********** Tabuleiro **********\n\n";
+    cout << "\n--- Seu Tabuleiro ---\n\n";
     board.print(hideShips);
 }
 
@@ -193,7 +193,38 @@ int View::menuAutoPlacement() {
         cout << "2. Nao, gerar nova distribuicao\n";
         cout << "3. Nao, quero posicionar manualmente\n";
         cout << "\n0. Sair\n";
+
         op = Utils::getNumber("Opcao", 0, 3);
     } while (op < 0 || op > 3);
+
     return op;
+}
+
+bool View::getShotCoordinate(int& row, int& col) {
+    string shot = Utils::getString("Introduza a coordenada de ataque (ex: A1)");
+
+    if (shot == "0") {
+        return false;
+    }
+
+    char letter = toupper(shot[0]);
+
+    row = letter - 'A';
+    col = stoi(shot.substr(1));
+
+    return (row >= 0 && row <= 9 && col >= 0 && col <= 9);
+}
+
+void View::showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard) {
+    cout << "\n********** Turno de: " << player << " **********\n\n";
+
+    cout << "--- Seu Tabuleiro ---\n";
+    yourBoard.print(false);
+
+    cout << "\n--- Tabuleiro do Adversario ---\n";
+    opponentBoard.print(true);
+}
+
+void View::showShotResult(bool hit, const string& coordinate) {
+    cout << "\n>>> Tiro em " << coordinate << (hit ? ": NAVIO!" : ": AGUA!") << '\n';
 }

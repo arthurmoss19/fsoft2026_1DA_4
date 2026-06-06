@@ -18,6 +18,7 @@ public:
     int menuShipPlacement();
     int menuRankingType();
     int menuStatistics();
+    int menuAutoPlacement();
     void printHelpAndRules();
     void printMessage(const string& msg);
     void ShipPlacement(const string& type, int size, int& row, int& col, bool& horizontal);
@@ -25,7 +26,9 @@ public:
     void showPlacementSuccess();
     void showOutOfBoundsError();
     void showOverlapError();
-    int menuAutoPlacement();
+    void showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard);
+    void showShotResult(bool hit, const string& coordinate);
+    bool getShotCoordinate(int& row, int& col);
 };
 
 #endif

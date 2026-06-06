@@ -63,7 +63,7 @@ void Game::prepareMatch() {
     this->gameOver = false;
 }
 
-bool Game::executeMove(int row, int column) {
+char Game::executeMove(int row, int column) {
     if (this->gameOver) {
         return false;
     }
@@ -87,7 +87,7 @@ bool Game::executeMove(int row, int column) {
     }
 
     checkGameOver();
-    return true;
+    return result;
 }
 
 void Game::computerMove() {

@@ -27,6 +27,7 @@ private:
     void runStatistics();
     void runHelpAndRules();
     void placeFleetManually(Board& board);
+    void runGameLoop();
 
 public:
     Controller();

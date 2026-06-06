@@ -138,7 +138,8 @@ void Controller::runNewGame() {
                     Utils::pressEnterConfirmPlayer(currentNickname);
 
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
-                    return;
+
+                    runGameLoop();
                 }
                 break;
             }
@@ -290,4 +291,41 @@ void Controller::runPlacement(Board& board) {
             break;
             }
     }
+}
+
+void Controller::runGameLoop()
+{
+    if (this->currentGame == nullptr) return;
+
+    while (!this->currentGame->isGameOver()) {
+        string player = this->currentGame->getCurrentPlayer()->getNickname();
+        Board& myBoard = this->currentGame->getActiveBoard();
+        Board& enemyBoard = this->currentGame->getOpponentBoard();
+
+        this->view.showGameTurn(player, myBoard, enemyBoard);
+
+        int row, col;
+        bool valid = false;
+
+        do {
+            if (!this->view.getShotCoordinate(row, col)) {
+                return;
+            }
+
+            char cell = enemyBoard.getCell(row, col);
+
+            if (cell == 'X' || cell == 'O') {
+                this->view.printMessage("Essa posicao ja foi atacada! Escolha outra.");
+            }
+            else {
+                valid = true;
+            }
+        } while (!valid);
+
+        string coord = string(1, 'A' + row) + to_string(col);
+        char result = this->currentGame->executeMove(row, col);
+        bool hit = (result == 'X');
+
+        this->view.showShotResult(hit, coord);
+    };
 }

@@ -35,7 +35,7 @@ public:
     Game(Player* p1, Player* p2, bool isVsAI, int difficulty);
     ~Game() = default;
     void prepareMatch();
-    bool executeMove(int row, int column);
+    char executeMove(int row, int column);
     void computerMove();
     int getCurrentTurn() const;
     bool isVsComputer() const;
