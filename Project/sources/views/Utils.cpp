@@ -41,8 +41,17 @@ string Utils::getString(const string&  label){
     return input;
 }
 
-void Utils::pressEnter() {
+void Utils::pressEnterMainMenu() {
     cout << "Pressione ENTER para voltar ao menu principal...";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+}
+
+void Utils::pressEnterPlayerSwitch(const string& player) {
+    cout << "Pressione ENTER e passe o computador para " << player << "...";
+    cin.get();
+}
+
+void Utils::pressEnterConfirmPlayer(const string& player) {
+    cout << "Passe o computador para " << player << " e precione ENTER...";
     cin.get();
 }

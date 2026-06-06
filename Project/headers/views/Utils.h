@@ -13,7 +13,9 @@ class Utils {
 public:
     static int getNumber(const string&  label, int min, int max);
     static string getString(const string&  label);
-    static void pressEnter();
+    static void pressEnterMainMenu();
+    static void pressEnterPlayerSwitch(const string& player);
+    static void pressEnterConfirmPlayer(const string& player);
 };
 
 #endif

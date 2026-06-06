@@ -130,12 +130,12 @@ void Controller::runNewGame() {
                     this->view.printMessage("\n********** Jogador 1: " + p1->getNickname() + " - posiciona os teus navios **********");
                     runPlacement(this->currentGame->getBoard1());
 
-                    system("cls");
+                    Utils::pressEnterPlayerSwitch(nick2);
 
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
                     runPlacement(this->currentGame->getBoard2());
 
-                    system("cls");
+                    Utils::pressEnterConfirmPlayer(currentNickname);
 
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
                     return;
@@ -215,7 +215,7 @@ void Controller::runStatistics() {
 
 void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
-    Utils::pressEnter();
+    Utils::pressEnterMainMenu();
 }
 
 void Controller::placeFleetManually(Board& board) {
