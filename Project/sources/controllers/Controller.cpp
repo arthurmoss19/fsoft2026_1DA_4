@@ -89,16 +89,16 @@ void Controller::runNewGame() {
                 break;
             case 2: {
                 string nick2;
-                bool jogador2nick = false;
+                bool player2nick = false;
                 int op2 = -1;
                 do {
-                    op2 = this->loginView.menuLogin("********** Jogador 2 - Login **********");
+                    op2 = this->loginView.menuLogin("********** Login do Jogador 2 **********");
                     switch (op2) {
                         case 1: {
                             nick2 = loginView.getNickname("Nickname do jogador 2");
                             try {
                                 this->playerService->getPlayer(nick2);
-                                jogador2nick = true;
+                                player2nick = true;
                             } catch (NoDataException &e) {
                                 this->view.printMessage(e.what());
                             }
@@ -110,7 +110,7 @@ void Controller::runNewGame() {
                                 this->playerService->registerPlayer(dto);
                                 nick2 = dto.nickname;
                                 this->view.printMessage("Perfil criado com sucesso! Bem-vindo, " + nick2 + "!\n");
-                                jogador2nick = true;
+                                player2nick = true;
                             } catch (InvalidDataException &e) {
                                 this->view.printMessage(e.what());
                             } catch (DuplicatedDataException &e) {
@@ -118,25 +118,25 @@ void Controller::runNewGame() {
                             }
                             break;
                         }
-                        case 0: jogador2nick = true;
+                        case 0: player2nick = true;
                     }
-                } while (!jogador2nick && op2 != 0);
+                } while (!player2nick && op2 != 0);
 
-                if (jogador2nick && op2 != 0) {
+                if (player2nick && op2 != 0) {
                     Player* p1 = this->playerContainer->get(this->currentNickname);
                     Player* p2 = this->playerContainer->get(nick2);
                     this->currentGame = new Game(p1, p2, false, 0);
 
-                    this->view.printMessage("\n*** Jogador 1: " + p1->getNickname() + " — posiciona os teus navios ***");
+                    this->view.printMessage("\n********** Jogador 1: " + p1->getNickname() + " - posiciona os teus navios **********");
                     runPlacement(this->currentGame->getBoard1());
 
-                    Utils::pressEnter();
                     system("cls");
 
-                    this->view.printMessage("\n*** Jogador 2: " + p2->getNickname() + " — posiciona os teus navios ***");
+                    this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
                     runPlacement(this->currentGame->getBoard2());
 
                     system("cls");
+
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
                     return;
                 }
@@ -218,46 +218,76 @@ void Controller::runHelpAndRules() {
     Utils::pressEnter();
 }
 
+void Controller::placeFleetManually(Board& board) {
+    this->view.showBoard(board, false);
+    const auto& fleet = Game::getFleet();
+    for (const auto& ship : fleet) {
+        bool placed = false;
+        while (!placed) {
+            int row, col;
+            bool horizontal;
+            this->view.ShipPlacement(ship.type, ship.size, row, col, horizontal);
+
+            if (!board.isWithinBounds(row, col, ship.size, horizontal)) {
+                this->view.showOutOfBoundsError();
+                this->view.showBoard(board, false);
+                continue;
+            }
+
+            Ship newShip(ship.type, ship.size, '#');
+            placed = board.placeShip(newShip, row, col, horizontal);
+            if (!placed) {
+                this->view.showOverlapError();
+                this->view.showBoard(board, false);
+            }
+        }
+        this->view.showBoard(board, false);
+    }
+}
+
 void Controller::runPlacement(Board& board) {
     if (this->currentGame == nullptr) {
         return;
     }
-    const auto& frota = Game::getFleet();
-    int modoOpcao = this->view.menuShipPlacement();
-    if (modoOpcao == 0) {
-        return;
-    }
-    if (modoOpcao == 1) {
-        this->view.showBoard(board, false);
-        for (const auto& navio : frota) {
-            bool sucesso = false;
-            while (!sucesso) {
-                int linha, coluna;
-                bool horizontal;
-                this->view.ShipPlacement(navio.type, navio.size, linha, coluna, horizontal);
+    const auto& fleet = Game::getFleet();
+    int op = this->view.menuShipPlacement();
 
-                if (!board.isWithinBounds(linha, coluna, navio.size, horizontal)) {
-                    this->view.showOutOfBoundsError();
-                    this->view.showBoard(board, false);
-                    continue;
+    switch (op)
+    {
+        case 1:
+            {
+                this->placeFleetManually(board);
+                this->view.showPlacementSuccess();
+                break;
+            }
+        case 2:
+            {
+                bool ready = false;
+                while (!ready) {
+                    board = Board();
+                    for (const auto& ship : fleet) {
+                        board.placeShipAutomatically(ship.size, ship.type, '#');
                 }
+                this->view.showBoard(board, false);
 
-                Ship oNavio(navio.type, navio.size, '#');
-                sucesso = board.placeShip(oNavio, linha, coluna, horizontal);
-                if (!sucesso) {
-                    this->view.showOverlapError();
-                    this->view.showBoard(board, false);
+                int opt = this->view.menuAutoPlacement();
+                switch (opt) {
+                    case 1:
+                        ready = true;
+                        this->view.showPlacementSuccess();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        {
+                            board = Board();
+                            this->placeFleetManually(board);
+                            this->view.showPlacementSuccess();
+                            break;
+                        }
                 }
             }
-            this->view.showBoard(board, false);
-        }
-        this->view.showPlacementSuccess();
-    } else {
-        this->view.printMessage("\nA gerar posicoes aleatorias para a sua frota...");
-        for (const auto& navio : frota) {
-            board.placeShipAutomatically(navio.size, navio.type, '#');
-        }
-        this->view.showBoard(board, false);
-        this->view.showPlacementSuccess();
+            break;
+            }
     }
 }

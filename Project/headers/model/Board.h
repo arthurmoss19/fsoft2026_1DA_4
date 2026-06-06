@@ -31,9 +31,9 @@ public:
     void print(bool hideShips) const;
     bool allShipsSunk() const;
     int getSize() const;
-    char getCell(int row, int column) const;
+    char getCell(int row, int col) const;
     const vector<Ship>& getFleet() const;
-    bool isWithinBounds(int row, int column, int size, bool horizontal) const;
+    bool isWithinBounds(int row, int col, int size, bool horizontal) const;
 };
 
 #endif

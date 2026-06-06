@@ -138,7 +138,7 @@ void View::printMessage(const string& msg) {
 }
 
 void View::ShipPlacement(const string& type, int size, int& row, int& col, bool& horizontal) {
-    cout << "\nPosicionar " << type << " (Tamanho " << size << ")\n";
+    cout << "\nPosicionar " << type << " (Tamanho " << size << ")\n\n";
 
     bool validPosition = false;
 
@@ -177,9 +177,23 @@ void View::showOverlapError() {
 }
 
 void View::showPlacementSuccess() {
-    cout << "\n[SUCESSO] Todos os teus navios foram posicionados!\n";
+    cout << "\nTodos os teus navios foram posicionados!\n";
 }
 
 void View::showBoard(const Board& board, bool hideShips) {
+    cout << "\n********** Tabuleiro **********\n\n";
     board.print(hideShips);
+}
+
+int View::menuAutoPlacement() {
+    int op = -1;
+    do {
+        cout << "\n********** Esta satisfeito com a distribuicao dos navios? **********\n";
+        cout << "1. Sim, comecar jogo\n";
+        cout << "2. Nao, gerar nova distribuicao\n";
+        cout << "3. Nao, quero posicionar manualmente\n";
+        cout << "\n0. Sair\n";
+        op = Utils::getNumber("Opcao", 0, 3);
+    } while (op < 0 || op > 3);
+    return op;
 }

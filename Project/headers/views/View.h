@@ -25,6 +25,7 @@ public:
     void showPlacementSuccess();
     void showOutOfBoundsError();
     void showOverlapError();
+    int menuAutoPlacement();
 };
 
 #endif

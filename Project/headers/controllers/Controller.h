@@ -26,6 +26,7 @@ private:
     void runRankingType();
     void runStatistics();
     void runHelpAndRules();
+    void placeFleetManually(Board& board);
 
 public:
     Controller();

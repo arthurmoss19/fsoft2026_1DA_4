@@ -126,8 +126,8 @@ int Board::getSize() const {
     return this->SIZE;
 }
 
-char Board::getCell(int row, int column) const {
-    return grid[row][column];
+char Board::getCell(int row, int col) const {
+    return grid[row][col];
 }
 
 const vector<Ship>& Board::getFleet() const {
@@ -154,10 +154,10 @@ void Board::placeShipAutomatically(int size, const string& type, char symbol) {
     }
 }
 
-bool Board::isWithinBounds(int row, int column, int size, bool horizontal) const {
-    if (row < 0 || row >= this->SIZE || column < 0 || column >= this->SIZE)
+bool Board::isWithinBounds(int row, int col, int size, bool horizontal) const {
+    if (row < 0 || row >= this->SIZE || col < 0 || col >= this->SIZE)
         return false;
-    if (horizontal && column + size > this->SIZE)
+    if (horizontal && col + size > this->SIZE)
         return false;
     if (!horizontal && row + size > this->SIZE)
         return false;
