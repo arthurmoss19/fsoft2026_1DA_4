@@ -52,6 +52,7 @@ void Utils::pressEnterPlayerSwitch(const string& player) {
 }
 
 void Utils::pressEnterConfirmPlayer(const string& player) {
-    cout << "Passe o computador para " << player << " e precione ENTER...";
+    cout << "Passe o computador para " << player << "\n";
+    cout << "Pressione ENTER...";
     cin.get();
 }

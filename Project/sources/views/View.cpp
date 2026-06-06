@@ -177,7 +177,7 @@ void View::showOverlapError() {
 }
 
 void View::showPlacementSuccess() {
-    cout << "\nTodos os teus navios foram posicionados!\n";
+    cout << "\nTodos os teus navios foram posicionados!\n\n";
 }
 
 void View::showBoard(const Board& board, bool hideShips) {
