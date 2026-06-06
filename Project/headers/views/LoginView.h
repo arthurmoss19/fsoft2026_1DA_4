@@ -13,7 +13,7 @@ class LoginView {
 public:
     PlayerLoginDTO getNewPlayer();
     string getNickname(const string& label);
-    int menuLogin();
+    int menuLogin(const string& title = "********** Batalha Naval **********");
 };
 
 #endif //PROJECT_LOGINVIEW_H

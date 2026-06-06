@@ -9,10 +9,10 @@
 
 using namespace std;
 
-int LoginView::menuLogin() {
+int LoginView::menuLogin(const string& title) {
     int op = -1;
     do {
-        cout << "\n\n********** Batalha Naval **********\n";
+        cout << "\n\n" << title << "\n";
         cout << "1 - Tenho perfil\n";
         cout << "2 - Nao tenho perfil\n";
         cout << "\n0 - Sair\n";

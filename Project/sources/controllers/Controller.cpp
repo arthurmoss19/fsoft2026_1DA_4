@@ -92,7 +92,7 @@ void Controller::runNewGame() {
                 bool jogador2nick = false;
                 int op2 = -1;
                 do {
-                    op2 = this->loginView.menuLogin();
+                    op2 = this->loginView.menuLogin("********** Jogador 2 - Login **********");
                     switch (op2) {
                         case 1: {
                             nick2 = loginView.getNickname("Nickname do jogador 2");
