@@ -109,6 +109,7 @@ void Controller::runNewGame() {
                             try {
                                 this->playerService->registerPlayer(dto);
                                 nick2 = dto.nickname;
+                                this->view.printMessage("Perfil criado com sucesso! Bem-vindo, " + nick2 + "!\n");
                                 jogador2nick = true;
                             } catch (InvalidDataException &e) {
                                 this->view.printMessage(e.what());
