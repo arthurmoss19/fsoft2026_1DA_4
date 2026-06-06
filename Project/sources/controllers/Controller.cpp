@@ -223,39 +223,41 @@ void Controller::runPlacement(Board& board) {
         return;
     }
     const auto& frota = Game::getFleet();
-    char simboloNavio = '#';
     int modoOpcao = this->view.menuShipPlacement();
     if (modoOpcao == 0) {
         return;
     }
     if (modoOpcao == 1) {
+        this->view.showBoard(board, false);
         for (const auto& navio : frota) {
             bool sucesso = false;
             while (!sucesso) {
-                this->view.printMessage("\n-> Posicionar " + navio.type + " (Tamanho " + to_string(navio.size) + "):");
+                int linha, coluna;
+                bool horizontal;
+                this->view.ShipPlacement(navio.type, navio.size, linha, coluna, horizontal);
 
-                int linha = Utils::getNumber("Linha de inicio (0 a 9)", 0, 9);
+                if (!board.isWithinBounds(linha, coluna, navio.size, horizontal)) {
+                    this->view.showOutOfBoundsError();
+                    this->view.showBoard(board, false);
+                    continue;
+                }
 
-                int coluna = Utils::getNumber("Coluna de inicio (0 a 9)", 0, 9);
-
-                string orientacao = Utils::getString("Orientacao (H - Horizontal, V - Vertical)");
-
-                bool horizontal = (orientacao == "H" || orientacao == "h");
-                Ship oNavio(navio.type, navio.size, simboloNavio);
+                Ship oNavio(navio.type, navio.size, '#');
                 sucesso = board.placeShip(oNavio, linha, coluna, horizontal);
                 if (!sucesso) {
-                    this->view.printMessage("[ERRO] Posicao invalida ou sobreposta! Tente novamente.");
+                    this->view.showOverlapError();
+                    this->view.showBoard(board, false);
                 }
             }
-            board.print(false);
+            this->view.showBoard(board, false);
         }
-        this->view.printMessage("\n[SUCESSO] Todos os teus navios foram posicionados manualmente!");
+        this->view.showPlacementSuccess();
     } else {
         this->view.printMessage("\nA gerar posicoes aleatorias para a sua frota...");
         for (const auto& navio : frota) {
-            board.placeShipAutomatically(navio.size, navio.type, simboloNavio);
+            board.placeShipAutomatically(navio.size, navio.type, '#');
         }
-        board.print(false);
-        this->view.printMessage("[SUCESSO] A tua frota foi gerada com sucesso!");
+        this->view.showBoard(board, false);
+        this->view.showPlacementSuccess();
     }
 }

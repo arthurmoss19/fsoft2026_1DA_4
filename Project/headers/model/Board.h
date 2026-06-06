@@ -33,6 +33,7 @@ public:
     int getSize() const;
     char getCell(int row, int column) const;
     const vector<Ship>& getFleet() const;
+    bool isWithinBounds(int row, int column, int size, bool horizontal) const;
 };
 
 #endif

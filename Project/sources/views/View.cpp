@@ -136,3 +136,50 @@ void View::printHelpAndRules() {
 void View::printMessage(const string& msg) {
     cout << msg << endl;
 }
+
+void View::ShipPlacement(const string& type, int size, int& row, int& col, bool& horizontal) {
+    cout << "\nPosicionar " << type << " (Tamanho " << size << ")\n";
+
+    bool validPosition = false;
+
+    while (!validPosition) {
+        string position = Utils::getString("Introduza a posicao inicial do navio (ex: A1)");
+
+        if (position.length() < 2) {
+            cout << "Posicao invalida! Use o formato letra + numero (ex: A1)\n";
+            continue;
+        }
+
+        char letter = toupper(position[0]);
+        row = letter - 'A';
+
+        string number = position.substr(1);
+        col = stoi(number);
+
+        if (row < 0 || row > 9 || col < 0 || col > 9) {
+            cout << "Posicao fora do tabuleiro! Linha de A-J, Coluna de 0-9\n";
+            continue;
+        }
+
+        validPosition = true;
+    }
+
+    string orientation = Utils::getString("Introduza a orientacao (H - Horizontal, V - Vertical)");
+    horizontal = (orientation == "H" || orientation == "h");
+}
+
+void View::showOutOfBoundsError() {
+    cout << "Posicao fora dos limites do tabuleiro! Escolha outra posiçao.\n";
+}
+
+void View::showOverlapError() {
+    cout << "Navios sobrepostos! Escolha outra posicao.\n";
+}
+
+void View::showPlacementSuccess() {
+    cout << "\n[SUCESSO] Todos os teus navios foram posicionados!\n";
+}
+
+void View::showBoard(const Board& board, bool hideShips) {
+    board.print(hideShips);
+}

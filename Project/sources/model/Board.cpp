@@ -96,7 +96,7 @@ void Board::print(bool hideShips) const {
     cout << "\n";
 
     for (int i = 0; i < this->SIZE; ++i) {
-        cout << i << " ";
+        cout << (char)('A' + i) << " ";
         for (int j = 0; j < this->SIZE; ++j) {
             char cell = this->grid[i][j];
             if (hideShips && cell != this->WATER && cell != this->HIT && cell != this->MISS) {
@@ -152,4 +152,14 @@ void Board::placeShipAutomatically(int size, const string& type, char symbol) {
             placed = true;
         }
     }
+}
+
+bool Board::isWithinBounds(int row, int column, int size, bool horizontal) const {
+    if (row < 0 || row >= this->SIZE || column < 0 || column >= this->SIZE)
+        return false;
+    if (horizontal && column + size > this->SIZE)
+        return false;
+    if (!horizontal && row + size > this->SIZE)
+        return false;
+    return true;
 }
