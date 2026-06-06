@@ -327,5 +327,16 @@ void Controller::runGameLoop()
         bool hit = (result == 'X');
 
         this->view.showShotResult(hit, coord);
+
+        if (hit) {
+            Utils::pressEnter();
+        }
+
+        if (!hit && !this->currentGame->isGameOver()) {
+            Utils::pressEnter();
+
+            string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
+            Utils::pressEnterConfirmPlayer(nextPlayer);
+        }
     };
 }

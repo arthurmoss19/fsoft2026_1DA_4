@@ -56,3 +56,8 @@ void Utils::pressEnterConfirmPlayer(const string& player) {
     cout << "Pressione ENTER...";
     cin.get();
 }
+
+void Utils::pressEnter() {
+    cout << "Pressione ENTER...";
+    cin.get();
+}

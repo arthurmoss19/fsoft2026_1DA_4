@@ -16,6 +16,7 @@ public:
     static void pressEnterMainMenu();
     static void pressEnterPlayerSwitch(const string& player);
     static void pressEnterConfirmPlayer(const string& player);
+    static void pressEnter();
 };
 
 #endif

@@ -201,7 +201,7 @@ int View::menuAutoPlacement() {
 }
 
 bool View::getShotCoordinate(int& row, int& col) {
-    string shot = Utils::getString("Introduza a coordenada de ataque (ex: A1)");
+    string shot = Utils::getString("\nIntroduza a coordenada de ataque (ex: A1)");
 
     if (shot == "0") {
         return false;
@@ -226,5 +226,5 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
 }
 
 void View::showShotResult(bool hit, const string& coordinate) {
-    cout << "\n>>> Tiro em " << coordinate << (hit ? ": NAVIO!" : ": AGUA!") << '\n';
+    cout << "\nTiro em " << coordinate << (hit ? ": NAVIO!\n" : ": AGUA!\n") << '\n';
 }
