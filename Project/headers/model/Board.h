@@ -34,6 +34,7 @@ public:
     char getCell(int row, int col) const;
     const vector<Ship>& getFleet() const;
     bool isWithinBounds(int row, int col, int size, bool horizontal) const;
+    bool isCellPartOfShip(int row, int col, const Ship& ship) const;
 };
 
 #endif

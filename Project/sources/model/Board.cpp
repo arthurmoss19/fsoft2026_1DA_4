@@ -55,6 +55,7 @@ bool Board::placeShip(const Ship& ship, int row, int column, bool horizontal) {
                 this->grid[i][column] = tempShip.getSymbol();
             }
         }
+        tempShip.setStartPosition(row, column);
         this->fleet.push_back(tempShip);
         return true;
     }
@@ -72,7 +73,7 @@ char Board::registerShot(int row, int column) {
         this->grid[row][column] = this->HIT;
 
         for (size_t i = 0; i < this->fleet.size(); ++i) {
-            if (this->fleet[i].getSymbol() == currentCell) {
+            if (isCellPartOfShip(row, column, this->fleet[i])) {
                 this->fleet[i].addHit();
                 break;
             }
@@ -162,4 +163,16 @@ bool Board::isWithinBounds(int row, int col, int size, bool horizontal) const {
     if (!horizontal && row + size > this->SIZE)
         return false;
     return true;
+}
+
+bool Board::isCellPartOfShip(int row, int col, const Ship& ship) const {
+    if (ship.getDirection()) {
+        return row == ship.getStartRow() &&
+               col >= ship.getStartCol() &&
+               col < ship.getStartCol() + ship.getSize();
+    } else {
+        return col == ship.getStartCol() &&
+               row >= ship.getStartRow() &&
+               row < ship.getStartRow() + ship.getSize();
+    }
 }

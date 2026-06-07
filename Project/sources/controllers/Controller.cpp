@@ -151,6 +151,7 @@ void Controller::runNewGame() {
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
 
                     runGameLoop();
+                    op = 0;
                 }
                 break;
             }
@@ -337,9 +338,16 @@ void Controller::runGameLoop()
             Utils::pressEnterConfirmPlayer(nextPlayer);
         }
     };
-    string winner = this->currentGame->getCurrentPlayer()->getNickname();
-    Player* winnerP = this->currentGame->getCurrentPlayer();
-    this->view.showGameOver(winner, winnerP->getTotalShots(), winnerP->getHits());
+
+    Player* winner = this->currentGame->getCurrentPlayer();
+    Player* loser = (winner == this->currentGame->getPlayer1())
+        ? this->currentGame->getPlayer2()
+        : this->currentGame->getPlayer1();
+
+    this->view.showGameOver(
+        winner->getNickname(), winner->getTotalShots(), winner->getHits(),
+        loser->getNickname(), loser->getTotalShots(), loser->getHits()
+    );
 
     Utils::pressEnterMainMenu();
 

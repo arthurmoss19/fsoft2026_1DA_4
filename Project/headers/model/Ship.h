@@ -15,6 +15,8 @@ private:
     string type;
     int size;
     int hitsReceived;
+    int startRow;
+    int startCol;
     char symbol;
     bool direction;
     bool isSizeValid(int size);
@@ -35,6 +37,9 @@ public:
     void setDirection(bool direction);
     bool isSunk() const;
     void addHit();
+    void setStartPosition(int row, int col);
+    int getStartRow() const;
+    int getStartCol() const;
     bool operator == (const Ship& obj) const;
     bool operator == (const string& type) const;
 };

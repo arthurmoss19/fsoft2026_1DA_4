@@ -43,13 +43,9 @@ void Ship::setType(const string& type) {
     }
 }
 
-Ship::Ship(const string& type, int size, char symbol) {
-    setType(type);
-    setSize(size);
-    this->symbol = symbol;
-    this->hitsReceived = 0;
-    this ->direction = true;
-}
+Ship::Ship(const string& type, int size, char symbol)
+    : type(type), size(size), symbol(symbol), hitsReceived(0), direction(true),
+      startRow(-1), startCol(-1) {}
 
 Ship::Ship(const Ship& obj) {
     setType(obj.type);
@@ -57,6 +53,8 @@ Ship::Ship(const Ship& obj) {
     this->symbol = obj.symbol;
     this->hitsReceived = obj.hitsReceived;
     this->direction = obj.direction;
+    this->startRow = obj.startRow;
+    this->startCol = obj.startCol;
 }
 
 const string& Ship::getType() const {
@@ -109,3 +107,10 @@ bool Ship::operator == (const string& type) const {
     }
     return false;
 }
+void Ship::setStartPosition(int row, int col) {
+    startRow = row;
+    startCol = col;
+}
+
+int Ship::getStartRow() const { return startRow; }
+int Ship::getStartCol() const { return startCol; }

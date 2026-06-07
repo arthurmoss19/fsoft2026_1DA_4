@@ -146,7 +146,7 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
         string position = Utils::getString("Introduza a posicao inicial do navio (ex: A1)");
 
         if (position.length() < 2) {
-            cout << "Posicao invalida! Use o formato letra + numero (ex: A1)\n";
+            cout << "Posicao invalida! Use o formato letra + numero (ex: A1)\n\n";
             continue;
         }
 
@@ -228,11 +228,15 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
 void View::showShotResult(bool hit, const string& coordinate) {
     cout << "\nTiro em " << coordinate << (hit ? ": NAVIO!\n" : ": AGUA!\n") << '\n';
 }
-void View::showGameOver(const string& winnerName, int shots, int hits) {
+
+void View::showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits) {
     cout << "\n**********************************\n";
     cout << "********** FIM DE JOGO **********\n";
     cout << "**********************************\n";
-    cout << "\n>>> VENCEDOR: " << winnerName << " <<<\n";
-    cout << "Tiros: " << shots << " | Acertos: " << hits
-         << " | Precisao: " << (shots > 0 ? hits * 100 / shots : 0) << "%\n\n";
+    cout << "\n--- VENCEDOR: " << winnerName << " ---\n";
+    cout << "Tiros: " << winnerShots << " | Acertos: " << winnerHits
+         << " | Precisao: " << (winnerShots > 0 ? winnerHits * 100 / winnerShots : 0) << "%\n";
+    cout << "\n--- PERDEDOR: " << loserName << " ---\n";
+    cout << "Tiros: " << loserShots << " | Acertos: " << loserHits
+         << " | Precisao: " << (loserShots > 0 ? loserHits * 100 / loserShots : 0) << "%\n\n";
 }
