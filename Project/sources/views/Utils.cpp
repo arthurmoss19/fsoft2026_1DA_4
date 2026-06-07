@@ -42,22 +42,47 @@ string Utils::getString(const string&  label){
 }
 
 void Utils::pressEnterMainMenu() {
-    cout << "Pressione ENTER para voltar ao menu principal...";
-    cin.get();
+
+    string input;
+    do {
+        cout << "Pressione ENTER para voltar ao menu principal...";
+        getline(cin, input);
+        if (!input.empty()) {
+            cout << "Apenas pressione ENTER, sem escrever nada!\n";
+        }
+    } while (!input.empty());
 }
 
 void Utils::pressEnterPlayerSwitch(const string& player) {
-    cout << "Pressione ENTER e passe o computador para " << player << "...";
-    cin.get();
+    string input;
+    do {
+        cout << "Pressione ENTER e passe o computador para " << player << "...";
+        getline(cin, input);
+        if (!input.empty()) {
+            cout << "Apenas pressione ENTER, sem escrever nada!\n";
+        }
+    } while (!input.empty());
 }
 
 void Utils::pressEnterConfirmPlayer(const string& player) {
-    cout << "Passe o computador para " << player << "\n";
-    cout << "Pressione ENTER...";
-    cin.get();
+    string input;
+    do {
+        cout << "Passe o computador para " << player << "\n";
+        cout << "Pressione ENTER...";
+        getline(cin, input);
+        if (!input.empty()) {
+            cout << "Apenas pressione ENTER, sem escrever nada!\n";
+        }
+    } while (!input.empty());
 }
 
 void Utils::pressEnter() {
-    cout << "Pressione ENTER...";
-    cin.get();
+    string input;
+    do {
+        cout << "Pressione ENTER...";
+        getline(cin, input);
+        if (!input.empty()) {
+            cout << "Apenas pressione ENTER, sem escrever nada!\n\n";
+        }
+    } while (!input.empty());
 }
