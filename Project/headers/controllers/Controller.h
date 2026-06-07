@@ -22,7 +22,7 @@ private:
     string currentNickname;
 
     void runNewGame();
-    void runPlacement(Board& board);
+    bool runPlacement(Board& board);
     void runRankingType();
     void runStatistics();
     void runHelpAndRules();

@@ -128,13 +128,24 @@ void Controller::runNewGame() {
                     this->currentGame = new Game(p1, p2, false, 0);
 
                     this->view.printMessage("\n********** Jogador 1: " + p1->getNickname() + " - posiciona os teus navios **********");
-                    runPlacement(this->currentGame->getBoard1());
+
+                    if (!runPlacement(this->currentGame->getBoard1())) {
+                        delete this->currentGame;
+                        this->currentGame = nullptr;
+                        return;
+                    }
 
                     Utils::pressEnterPlayerSwitch(nick2);
 
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
-                    runPlacement(this->currentGame->getBoard2());
 
+                    if (!runPlacement(this->currentGame->getBoard2())) {
+                        delete this->currentGame;
+                        this->currentGame = nullptr;
+                        return;
+                    }
+
+                    Utils::pressEnter();
                     Utils::pressEnterConfirmPlayer(currentNickname);
 
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
@@ -246,51 +257,38 @@ void Controller::placeFleetManually(Board& board) {
     }
 }
 
-void Controller::runPlacement(Board& board) {
-    if (this->currentGame == nullptr) {
-        return;
-    }
+bool Controller::runPlacement(Board& board) {
+    if (this->currentGame == nullptr) return false;
+
+    int modo = this->view.menuShipPlacement();
+    if (modo == 0) return false;
+
     const auto& fleet = Game::getFleet();
-    int op = this->view.menuShipPlacement();
+    bool ready = false;
 
-    switch (op)
-    {
-        case 1:
-            {
-                this->placeFleetManually(board);
-                this->view.showPlacementSuccess();
-                break;
-            }
-        case 2:
-            {
-                bool ready = false;
-                while (!ready) {
-                    board = Board();
-                    for (const auto& ship : fleet) {
-                        board.placeShipAutomatically(ship.size, ship.type, '#');
-                }
-                this->view.showBoard(board, false);
+    while (!ready) {
+        board = Board();
 
-                int opt = this->view.menuAutoPlacement();
-                switch (opt) {
-                    case 1:
-                        ready = true;
-                        this->view.showPlacementSuccess();
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        {
-                            board = Board();
-                            this->placeFleetManually(board);
-                            this->view.showPlacementSuccess();
-                            break;
-                        }
-                }
+        if (modo == 1) {
+            this->placeFleetManually(board);
+        } else {
+            for (const auto& ship : fleet) {
+                board.placeShipAutomatically(ship.size, ship.type, '#');
             }
-            break;
-            }
+        }
+
+        this->view.showBoard(board, false);
+        int opt = this->view.menuSatisfaction();
+        switch (opt) {
+        case 1: ready = true; break;
+        case 2: modo = 2; break;
+        case 3: modo = 1; break;
+        case 0: return false;
+        }
     }
+
+    this->view.showPlacementSuccess();
+    return true;
 }
 
 void Controller::runGameLoop()

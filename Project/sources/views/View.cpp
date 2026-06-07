@@ -185,13 +185,13 @@ void View::showBoard(const Board& board, bool hideShips) {
     board.print(hideShips);
 }
 
-int View::menuAutoPlacement() {
+int View::menuSatisfaction() {
     int op = -1;
     do {
         cout << "\n********** Esta satisfeito com a distribuicao dos navios? **********\n";
         cout << "1. Sim, comecar jogo\n";
-        cout << "2. Nao, gerar nova distribuicao\n";
-        cout << "3. Nao, quero posicionar manualmente\n";
+        cout << "2. Nao, gerar distribuicao automatica\n";
+        cout << "3. Nao, posicionar manualmente\n";
         cout << "\n0. Sair\n";
 
         op = Utils::getNumber("Opcao", 0, 3);

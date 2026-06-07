@@ -18,7 +18,7 @@ public:
     int menuShipPlacement();
     int menuRankingType();
     int menuStatistics();
-    int menuAutoPlacement();
+    int menuSatisfaction();
     void printHelpAndRules();
     void printMessage(const string& msg);
     void ShipPlacement(const string& type, int size, int& row, int& col, bool& horizontal);
