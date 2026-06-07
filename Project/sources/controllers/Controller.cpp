@@ -275,9 +275,9 @@ bool Controller::runPlacement(Board& board) {
             for (const auto& ship : fleet) {
                 board.placeShipAutomatically(ship.size, ship.type, '#');
             }
+            this->view.showBoard(board, false);
         }
 
-        this->view.showBoard(board, false);
         int opt = this->view.menuSatisfaction();
         switch (opt) {
         case 1: ready = true; break;
@@ -337,4 +337,12 @@ void Controller::runGameLoop()
             Utils::pressEnterConfirmPlayer(nextPlayer);
         }
     };
+    string winner = this->currentGame->getCurrentPlayer()->getNickname();
+    Player* winnerP = this->currentGame->getCurrentPlayer();
+    this->view.showGameOver(winner, winnerP->getTotalShots(), winnerP->getHits());
+
+    Utils::pressEnterMainMenu();
+
+    delete this->currentGame;
+    this->currentGame = nullptr;
 }

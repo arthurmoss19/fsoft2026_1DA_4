@@ -228,3 +228,11 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
 void View::showShotResult(bool hit, const string& coordinate) {
     cout << "\nTiro em " << coordinate << (hit ? ": NAVIO!\n" : ": AGUA!\n") << '\n';
 }
+void View::showGameOver(const string& winnerName, int shots, int hits) {
+    cout << "\n**********************************\n";
+    cout << "********** FIM DE JOGO **********\n";
+    cout << "**********************************\n";
+    cout << "\n>>> VENCEDOR: " << winnerName << " <<<\n";
+    cout << "Tiros: " << shots << " | Acertos: " << hits
+         << " | Precisao: " << (shots > 0 ? hits * 100 / shots : 0) << "%\n\n";
+}

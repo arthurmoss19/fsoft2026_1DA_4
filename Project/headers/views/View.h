@@ -28,6 +28,7 @@ public:
     void showOverlapError();
     void showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard);
     void showShotResult(bool hit, const string& coordinate);
+    void showGameOver(const string& winnerName, int shots, int hits);
     bool getShotCoordinate(int& row, int& col);
 };
 
