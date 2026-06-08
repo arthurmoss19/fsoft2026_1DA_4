@@ -201,18 +201,51 @@ int View::menuSatisfaction() {
 }
 
 bool View::getShotCoordinate(int& row, int& col) {
-    string shot = Utils::getString("\nIntroduza a coordenada de ataque (ex: A1)");
+    while (true) {
+        string shot = Utils::getString("\nIntroduza a coordenada de ataque (ex: A1)");
 
-    if (shot == "0") {
-        return false;
+        if (shot == "0") return false;
+
+        if (shot.length() < 2) {
+            cout << "\nCoordenada invalida! Use o formato letra + numero (ex: A1)\n";
+            continue;
+        }
+
+        char letter = toupper(shot[0]);
+        string numberStr = shot.substr(1);
+
+        if (!isalpha(shot[0])) {
+            cout << "\nCoordenada invalida! Use o formato letra + numero (ex: A1)\n";
+            continue;
+        }
+
+        bool allDigits = true;
+        for (char c : numberStr) {
+            if (!isdigit(c)) { allDigits = false; break; }
+        }
+        if (!allDigits) {
+            cout << "\nCoordenada invalida! Use o formato letra + numero (ex: A1)\n";
+            continue;
+        }
+
+        col = stoi(numberStr);
+
+        if ((letter < 'A' || letter > 'J') && (col < 0 || col > 9)) {
+            cout << "\nLinha e coluna invalidas! Use A-J e 0-9.\n";
+            continue;
+        }
+        if (letter < 'A' || letter > 'J') {
+            cout << "\nLinha invalida! Use A-J.\n";
+            continue;
+        }
+        if (col < 0 || col > 9) {
+            cout << "\nColuna invalida! Use 0-9.\n";
+            continue;
+        }
+
+        row = letter - 'A';
+        return true;
     }
-
-    char letter = toupper(shot[0]);
-
-    row = letter - 'A';
-    col = stoi(shot.substr(1));
-
-    return (row >= 0 && row <= 9 && col >= 0 && col <= 9);
 }
 
 void View::showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard) {
