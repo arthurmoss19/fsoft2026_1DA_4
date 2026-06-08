@@ -33,12 +33,10 @@ void Controller::runLogin() {
         op = this -> loginView.menuLogin();
         switch(op) {
             case 1: {
-                string nick = loginView.getNickname("\nNickname");
+                string nick = loginView.getNickname("Nickname");
                 try {
                     playerService -> getPlayer(nick);
                     currentNickname = nick;
-                    op = 0;
-                    system("cls");
                     runMain();
                 } catch (NoDataException& e) {
                     this->view.printMessage(e.what());
@@ -50,8 +48,6 @@ void Controller::runLogin() {
                 try {
                     playerService -> registerPlayer(dto);
                     currentNickname = dto.nickname;
-                    op = 0;
-                    system("cls");
                     view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
                     runMain();
                 } catch (InvalidDataException& e) {
