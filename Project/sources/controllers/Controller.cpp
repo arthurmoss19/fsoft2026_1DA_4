@@ -37,7 +37,9 @@ void Controller::runLogin() {
                 try {
                     playerService -> getPlayer(nick);
                     currentNickname = nick;
+                    system("cls");
                     runMain();
+                    op = 0;
                 } catch (NoDataException& e) {
                     this->view.printMessage(e.what());
                 }
@@ -49,6 +51,8 @@ void Controller::runLogin() {
                     playerService -> registerPlayer(dto);
                     currentNickname = dto.nickname;
                     view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                    op = 0;
+                    system("cls");
                     runMain();
                 } catch (InvalidDataException& e) {
                     this->view.printMessage(e.what());
@@ -136,7 +140,7 @@ void Controller::runNewGame() {
                     }
 
                     Utils::pressEnterPlayerSwitch(nick2);
-
+                    system("cls");
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
 
                     if (!runPlacement(this->currentGame->getBoard2())) {
@@ -146,7 +150,9 @@ void Controller::runNewGame() {
                     }
 
                     Utils::pressEnter();
+                    system("cls");
                     Utils::pressEnterConfirmPlayer(currentNickname);
+                    system("cls");
 
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
 
@@ -173,6 +179,7 @@ void Controller::runRankingType() {
                     pos++;
                 }
                 break;
+                system("cls");
             }
             case 2: {
                 list<PlayerDTO> ranking = this->playerService->getRankingByAccuracy();
@@ -181,8 +188,9 @@ void Controller::runRankingType() {
                 for (const PlayerDTO &p: ranking) {
                     this->view.printMessage(to_string(pos) + ". " + p.nickname + " - " + to_string(p.accuracy) + "%");
                     pos++;
-                }
+                }   
                 break;
+                system("cls");
             }
         }
     }while (op != 0);
@@ -206,12 +214,15 @@ void Controller::runStatistics() {
                     this->view.printMessage(e.what());
                 }
             }
+
             break;
+                system("cls");
                 case 2: {
-                    string nick = this -> loginView.getNickname("Introduza o nickname de um jogador");
+                    string nick = this -> loginView.getNickname("\nIntroduza o nickname de um jogador");
                     try {
+                        system("cls");
                         PlayerDTO stats = this->playerService->getPlayer(nick);
-                        this->view.printMessage("Nickname: " + stats.nickname);
+                        this->view.printMessage("\nNickname: " + stats.nickname);
                         this->view.printMessage("Vitorias: " + to_string(stats.victories));
                         this->view.printMessage("Derrotas: " + to_string(stats.defeats));
                         this->view.printMessage("Numero de tiros dados: " + to_string(stats.totalShots));
@@ -222,6 +233,7 @@ void Controller::runStatistics() {
                     }
                 }
                 break;
+                system("cls");
         }
     } while (op != 0);
 }
@@ -229,6 +241,7 @@ void Controller::runStatistics() {
 void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
     Utils::pressEnterMainMenu();
+    system("cls");
 }
 
 void Controller::placeFleetManually(Board& board) {
@@ -329,13 +342,16 @@ void Controller::runGameLoop()
 
         if (hit) {
             Utils::pressEnter();
+            system("cls");
         }
 
         if (!hit && !this->currentGame->isGameOver()) {
             Utils::pressEnter();
+            system("cls");
 
             string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
             Utils::pressEnterConfirmPlayer(nextPlayer);
+            system("cls");
         }
     };
 
@@ -350,6 +366,7 @@ void Controller::runGameLoop()
     );
 
     Utils::pressEnterMainMenu();
+    system("cls");
 
     delete this->currentGame;
     this->currentGame = nullptr;
