@@ -33,6 +33,8 @@ void Controller::runLogin() {
         op = this -> loginView.menuLogin();
         switch(op) {
             case 1: {
+                system("cls");
+                view.printMessage("Login: Entrar com conta\n");
                 string nick = loginView.getNickname("Nickname");
                 try {
                     playerService -> getPlayer(nick);
@@ -41,11 +43,13 @@ void Controller::runLogin() {
                     runMain();
                     op = 0;
                 } catch (NoDataException& e) {
+                    system("cls");
                     this->view.printMessage(e.what());
                 }
                 break;
             }
                 case 2: {
+                system("cls");
                 PlayerLoginDTO dto = loginView.getNewPlayer();
                 try {
                     playerService -> registerPlayer(dto);
@@ -70,13 +74,21 @@ void Controller::runMain() {
     do {
         op = this -> view.menuMain();
         switch(op) {
-            case 1: runNewGame();
+            case 1:
+                system("cls");
+                runNewGame();
                 break;
-            case 2: runRankingType();
+            case 2:
+                system("cls");
+                runRankingType();
                 break;
-            case 3: runStatistics();
+            case 3:
+                system("cls");
+                runStatistics();
                 break;
-            case 4: runHelpAndRules();
+            case 4:
+                system("cls");
+                runHelpAndRules();
                 break;
             default:
                 break;
@@ -89,9 +101,14 @@ void Controller::runNewGame() {
     do {
         op = this->view.menuNewGame();
         switch (op) {
-            case 1: this->view.menuDifficulty();
+            case 1:
+                system("cls");
+                this->view.printMessage("********** Modo de jogo: Comp. vs J **********");
+                this->view.menuDifficulty();
                 break;
             case 2: {
+                system("cls");
+                this->view.printMessage("********** Modo de jogo: J vs J **********");
                 string nick2;
                 bool player2nick = false;
                 int op2 = -1;
@@ -102,6 +119,7 @@ void Controller::runNewGame() {
                             nick2 = loginView.getNickname("Nickname do jogador 2");
                             try {
                                 this->playerService->getPlayer(nick2);
+                                system("cls");
                                 player2nick = true;
                             } catch (NoDataException &e) {
                                 this->view.printMessage(e.what());
@@ -113,6 +131,7 @@ void Controller::runNewGame() {
                             try {
                                 this->playerService->registerPlayer(dto);
                                 nick2 = dto.nickname;
+                                system("cls");
                                 this->view.printMessage("Perfil criado com sucesso! Bem-vindo, " + nick2 + "!\n");
                                 player2nick = true;
                             } catch (InvalidDataException &e) {
@@ -171,6 +190,7 @@ void Controller::runRankingType() {
         op = this->view.menuRankingType();
         switch (op) {
             case 1: {
+                system("cls");
                 list<PlayerDTO> ranking = this->playerService->getRankingByWins();
                 this->view.printMessage("\n********** Ranking por Numero de Vitorias **********");
                 int pos = 1;
@@ -182,16 +202,20 @@ void Controller::runRankingType() {
                 system("cls");
             }
             case 2: {
+                system("cls");
                 list<PlayerDTO> ranking = this->playerService->getRankingByAccuracy();
                 this->view.printMessage("\n********** Ranking por Taxa de Precisao **********");
                 int pos = 1;
                 for (const PlayerDTO &p: ranking) {
                     this->view.printMessage(to_string(pos) + ". " + p.nickname + " - " + to_string(p.accuracy) + "%");
                     pos++;
-                }   
+                }
                 break;
                 system("cls");
             }
+        }
+        if (op == 0) {
+            system("cls");
         }
     }while (op != 0);
 }
@@ -202,6 +226,8 @@ void Controller::runStatistics() {
         op = this -> view.menuStatistics();
         switch(op) {
             case 1: {
+                system("cls");
+                this->view.printMessage("********** As Minhas Estatisticas **********\n");
                 try {
                     PlayerDTO myStats = this->playerService->getPlayer(this->currentNickname);
                     this->view.printMessage("Nickname: " + myStats.nickname);
@@ -218,9 +244,14 @@ void Controller::runStatistics() {
             break;
                 system("cls");
                 case 2: {
+                    system("cls");
+                    this->view.printMessage("**********  Consultar outro Jogador ********** \n");
+
                     string nick = this -> loginView.getNickname("\nIntroduza o nickname de um jogador");
                     try {
                         system("cls");
+                        this->view.printMessage("********** Estatisticas de " + nick + " **********\n");
+
                         PlayerDTO stats = this->playerService->getPlayer(nick);
                         this->view.printMessage("\nNickname: " + stats.nickname);
                         this->view.printMessage("Vitorias: " + to_string(stats.victories));
@@ -235,6 +266,11 @@ void Controller::runStatistics() {
                 break;
                 system("cls");
         }
+
+        if (op == 0) {
+            system("cls");
+        }
+
     } while (op != 0);
 }
 
@@ -245,6 +281,7 @@ void Controller::runHelpAndRules() {
 }
 
 void Controller::placeFleetManually(Board& board) {
+    system("cls");
     this->view.showBoard(board, false);
     const auto& fleet = Game::getFleet();
     for (const auto& ship : fleet) {
@@ -255,6 +292,7 @@ void Controller::placeFleetManually(Board& board) {
             this->view.ShipPlacement(ship.type, ship.size, row, col, horizontal);
 
             if (!board.isWithinBounds(row, col, ship.size, horizontal)) {
+                system("cls");
                 this->view.showOutOfBoundsError();
                 this->view.showBoard(board, false);
                 continue;
@@ -263,10 +301,12 @@ void Controller::placeFleetManually(Board& board) {
             Ship newShip(ship.type, ship.size, '#');
             placed = board.placeShip(newShip, row, col, horizontal);
             if (!placed) {
+                system("cls");
                 this->view.showOverlapError();
                 this->view.showBoard(board, false);
             }
         }
+        system("cls");
         this->view.showBoard(board, false);
     }
 }
@@ -284,8 +324,12 @@ bool Controller::runPlacement(Board& board) {
         board = Board();
 
         if (modo == 1) {
+            system("cls");
+            this->view.printMessage("Modo de Posicionamento: Manual\n");
             this->placeFleetManually(board);
         } else {
+            system("cls");
+            this->view.printMessage("Modo de Posicionamento: Automatico\n");
             for (const auto& ship : fleet) {
                 board.placeShipAutomatically(ship.size, ship.type, '#');
             }
@@ -294,10 +338,19 @@ bool Controller::runPlacement(Board& board) {
 
         int opt = this->view.menuSatisfaction();
         switch (opt) {
-        case 1: ready = true; break;
-        case 2: modo = 2; break;
-        case 3: modo = 1; break;
-        case 0: return false;
+        case 1:
+                ready = true;
+                break;
+        case 2:
+                modo = 2;
+                break;
+        case 3:
+                modo = 1;
+                break;
+        case 0:
+                system("cls");
+                return false;
+
         }
     }
 
