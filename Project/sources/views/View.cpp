@@ -127,6 +127,7 @@ void View::printHelpAndRules() {
 
     cout << "- Nao pode mudar os navios de lugar durante o jogo\n";
     cout << "- Cada jogador joga uma vez por turno\n";
+    cout << "- Se o jogador acertar um navio, joga novamente\n";
     cout << "- Ganha quem destruir todos os navios inimigos\n";
 
     cout << "\nAgora voce ja esta pronto para jogar Batalha Naval!\n";
