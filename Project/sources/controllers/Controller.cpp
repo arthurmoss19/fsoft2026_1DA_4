@@ -108,10 +108,34 @@ void Controller::runNewGame() {
         op = this->view.menuNewGame();
         switch (op) {
             case 1:
-                system("cls");
-                this->view.printMessage("********** Modo de jogo: Jogador vs Computador **********");
-                this->view.menuDifficulty();
-                break;
+                {
+                    system("cls");
+                    this->view.printMessage("********** Modo de jogo: Jogador vs Computador **********");
+
+                    int diff = this->view.menuDifficulty();
+                    if (diff == 0) break;
+                    Player* p1 = this->playerContainer->get(this->currentNickname);
+                    this->currentGame = new Game(p1, nullptr, true, diff);
+
+                    this->view.printMessage("********** " + p1->getNickname() + " - posiciona os teus navios **********");
+
+                    if (!runPlacement(this->currentGame->getBoard1())) {
+                        delete this->currentGame;
+                        this->currentGame = nullptr;
+                        return;
+                    }
+
+                    const auto& fleet = Game::getFleet();
+                    for (const auto& ship : fleet) {
+                        this->currentGame->getBoard2().placeShipAutomatically(ship.size, ship.type, '#');
+                    }
+
+                    system("cls");
+                    op = 0;
+                    runGameLoop();
+
+                    break;
+                }
             case 2: {
                 system("cls");
                 this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********");
@@ -402,7 +426,21 @@ void Controller::runGameLoop()
 {
     if (this->currentGame == nullptr) return;
 
-    while (!this->currentGame->isGameOver()) {
+    while (!this->currentGame->isGameOver())
+    {
+        if (this->currentGame->isVsComputer() && this->currentGame->getCurrentTurn() == 2) {
+            int row, col;
+            bool hit;
+            this->currentGame->computerMove(row, col, hit);
+
+            string coord = string(1, 'A' + row) + to_string(col);
+            this->view.printMessage("\nComputador atirou em " + coord + (hit ? ": NAVIO!\n" : ": AGUA!\n"));
+
+            Utils::pressEnter();
+            system("cls");
+            continue;
+        }
+
         string player = this->currentGame->getCurrentPlayer()->getNickname();
         Board& myBoard = this->currentGame->getActiveBoard();
         Board& enemyBoard = this->currentGame->getOpponentBoard();
@@ -420,12 +458,13 @@ void Controller::runGameLoop()
             char cell = enemyBoard.getCell(row, col);
 
             if (cell == 'X' || cell == 'O') {
-                this->view.printMessage("Essa posicao ja foi atacada! Escolha outra.");
+                this->view.printMessage("\nEssa posicao ja foi atacada! Escolha outra.");
             }
             else {
                 valid = true;
             }
-        } while (!valid);
+        }
+        while (!valid);
 
         string coord = string(1, 'A' + row) + to_string(col);
         char result = this->currentGame->executeMove(row, col);
@@ -442,22 +481,38 @@ void Controller::runGameLoop()
             Utils::pressEnter();
             system("cls");
 
-            string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
-            Utils::pressEnterConfirmPlayer(nextPlayer);
+            if (!this->currentGame->isVsComputer()) {
+                string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
+                Utils::pressEnterConfirmPlayer(nextPlayer);
+            }
             system("cls");
         }
-    };
+    }
 
-    Player* winner = this->currentGame->getCurrentPlayer();
-    Player* loser = (winner == this->currentGame->getPlayer1())
+    if (this->currentGame->isVsComputer()) {
+        Player* p1 = this->currentGame->getPlayer1();
+        bool playerWon = this->currentGame->getBoard2().allShipsSunk();
+
+        if (playerWon) {
+            this->view.showGameOver(p1->getNickname(), p1->getTotalShots(), p1->getHits(),
+                                    "Computador", 0, 0);
+        }
+        else {
+            this->view.showGameOver("Computador", 0, 0,
+                                    p1->getNickname(), p1->getTotalShots(), p1->getHits());
+        }
+    }
+    else {
+        Player* winner = this->currentGame->getCurrentPlayer();
+        Player* loser = (winner == this->currentGame->getPlayer1())
         ? this->currentGame->getPlayer2()
         : this->currentGame->getPlayer1();
 
-    this->view.showGameOver(
-        winner->getNickname(), winner->getTotalShots(), winner->getHits(),
-        loser->getNickname(), loser->getTotalShots(), loser->getHits()
-    );
-
+        this->view.showGameOver (
+            winner->getNickname(), winner->getTotalShots(), winner->getHits(),
+            loser->getNickname(), loser->getTotalShots(), loser->getHits()
+        );
+    }
     Utils::pressEnterMainMenu();
     system("cls");
 

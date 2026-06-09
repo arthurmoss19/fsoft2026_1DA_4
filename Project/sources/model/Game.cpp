@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <ctime>
 #include "Game.h"
 
 const vector<Game::ShipInfo>& Game::getFleet() {
@@ -23,6 +24,7 @@ Game::Game(Player* p1, Player* p2, bool isVsAI, int difficulty) {
     this->aiDifficulty = difficulty;
     this->currentTurn = 1;
     this->gameOver = false;
+    this->aiTargets.clear();
 }
 
 void Game::switchTurn() {
@@ -90,8 +92,76 @@ char Game::executeMove(int row, int column) {
     return result;
 }
 
-void Game::computerMove() {
-    return;
+void Game::computerMove(int& row, int& col, bool& hit) {
+    static bool seeded = false;
+    if (!seeded) { srand(time(0)); seeded = true; }
+
+    Board& target = this->board1;
+
+    if (this->aiDifficulty == 1 || this->aiTargets.empty()) {
+        do {
+            row = rand() % 10;
+            col = rand() % 10;
+        } while (cellAlreadyAttacked(row, col));
+    } else {
+        bool found = false;
+
+        while (!this->aiTargets.empty() && !found) {
+            row = this->aiTargets.front().first;
+            col = this->aiTargets.front().second;
+            this->aiTargets.erase(this->aiTargets.begin());
+
+            if (!cellAlreadyAttacked(row, col)) {
+                found = true;
+            }
+        }
+        if (!found) {
+            do {
+                row = rand() % 10;
+                col = rand() % 10;
+            } while (cellAlreadyAttacked(row, col));
+        }
+    }
+
+    char result = this->board1.registerShot(row, col);
+    hit = (result == 'X');
+
+    if (hit && this->aiDifficulty == 2) {
+        addNeighbors(row, col);
+        verifyDestroyedShips(row, col);
+    }
+
+    if (result == 'O') switchTurn();
+    checkGameOver();
+}
+
+bool Game::cellAlreadyAttacked(int row, int col) const {
+    char cell = this->board1.getCell(row, col);
+    return (cell == 'X' || cell == 'O');
+}
+
+void Game::addNeighbors(int row, int col) {
+    int dirs[4][2] = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+
+    for (int i = 0; i < 4; i++) {
+        int r = row + dirs[i][0];
+        int c = col + dirs[i][1];
+
+        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c)) {
+            this->aiTargets.push_back({r, c});
+        }
+    }
+}
+
+void Game::verifyDestroyedShips(int row, int col) {
+    const vector<Ship>& fleet = this->board1.getFleet();
+
+    for (const Ship& ship : fleet) {
+        if (this->board1.isCellPartOfShip(row, col, ship) && ship.isSunk()) {
+            this->aiTargets.clear();
+            break;
+        }
+    }
 }
 
 Board& Game::getActiveBoard() {

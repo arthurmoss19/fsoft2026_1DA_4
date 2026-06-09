@@ -24,6 +24,7 @@ private:
     bool gameOver;
     void switchTurn();
     bool checkGameOver();
+    vector<pair<int,int>> aiTargets;
 
 public:
     struct ShipInfo {
@@ -36,7 +37,7 @@ public:
     ~Game() = default;
     void prepareMatch();
     char executeMove(int row, int column);
-    void computerMove();
+    void computerMove(int& row, int& col, bool& hit);
     int getCurrentTurn() const;
     bool isVsComputer() const;
     int getAiDifficulty() const;
@@ -50,6 +51,9 @@ public:
     Player* getPlayer2() const;
     Player* getCurrentPlayer() const;
     bool isGameOver() const;
+    bool cellAlreadyAttacked(int row, int col) const;
+    void addNeighbors(int row, int col);
+    void verifyDestroyedShips(int row, int col);
 };
 
 #endif
