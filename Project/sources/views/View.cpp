@@ -164,7 +164,13 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
         validPosition = true;
     }
 
-    string orientation = Utils::getString("\nIntroduza a orientacao (H - Horizontal, V - Vertical)");
+    string orientation;
+    do {
+        orientation = Utils::getString("\nIntroduza a orientacao (H - Horizontal, V - Vertical)");
+        if (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v") {
+            cout << "\nOrientacao invalida! Insira apenas H ou V.\n";
+        }
+    } while (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v");
     horizontal = (orientation == "H" || orientation == "h");
 }
 
@@ -202,7 +208,7 @@ int View::menuSatisfaction() {
 
 bool View::getShotCoordinate(int& row, int& col) {
     while (true) {
-        string shot = Utils::getString("\nIntroduza a coordenada de ataque (ex: A1)");
+        string shot = Utils::getString("\nIntroduza a coordenada de ataque (ex: A1) [0 para sair]");
 
         if (shot == "0") return false;
 
