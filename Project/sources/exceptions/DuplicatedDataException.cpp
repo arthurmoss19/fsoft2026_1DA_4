@@ -6,7 +6,7 @@
 
 
 DuplicatedDataException::DuplicatedDataException(string data){
-    this->data = "ERRO! "+ data + "!";
+    this->data = "\nERRO! "+ data + "!";
 }
 
 const char* DuplicatedDataException::what(){
