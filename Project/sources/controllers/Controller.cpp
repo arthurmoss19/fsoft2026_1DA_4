@@ -109,12 +109,12 @@ void Controller::runNewGame() {
         switch (op) {
             case 1:
                 system("cls");
-                this->view.printMessage("********** Modo de jogo: Comp. vs J **********");
+                this->view.printMessage("********** Modo de jogo: Jogador vs Computador **********");
                 this->view.menuDifficulty();
                 break;
             case 2: {
                 system("cls");
-                this->view.printMessage("********** Modo de jogo: J vs J **********");
+                this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********");
                 string nick2;
                 bool player2nick = false;
                 int op2 = -1;
@@ -123,7 +123,7 @@ void Controller::runNewGame() {
                     switch (op2) {
                         case 1: {
                             system("cls");
-                            this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                            this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                             this->view.printMessage("********** Login do Jogador 2 **********\n");
 
                             nick2 = loginView.getNickname("Nickname do jogador 2");
@@ -133,15 +133,21 @@ void Controller::runNewGame() {
                                 player2nick = true;
                             } catch (NoDataException &e) {
                                 system("cls");
-                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                                this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                                 this->view.printMessage(e.what());
                             }
                             break;
                         }
                         case 2: {
                             system("cls");
-                            this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                            this->view.printMessage("********** Modo de jogo: Jogador vs. Jogador **********\n");
                             PlayerLoginDTO dto = this->loginView.getNewPlayer();
+                            if (dto.nickname == currentNickname)
+                            {
+                                this->view.printMessage("\nO nickname do jogador 2 tem de ser diferente do jogador 1!");
+                                break;
+                            }
+
                             try {
                                 this->playerService->registerPlayer(dto);
                                 nick2 = dto.nickname;
@@ -150,11 +156,11 @@ void Controller::runNewGame() {
                                 player2nick = true;
                             } catch (InvalidDataException &e) {
                                 system("cls");
-                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                                this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                                 this->view.printMessage(e.what());
                             } catch (DuplicatedDataException &e) {
                                 system("cls");
-                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                                this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                                 this->view.printMessage(e.what());
                             }
                             break;
