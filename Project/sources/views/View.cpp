@@ -15,7 +15,7 @@ int View::menuMain() {
     int op = -1;
 
     do {
-        cout <<"\n\n********** Menu Principal **********\n";
+        cout <<"\n\n********** Menu Principal **********\n\n";
         cout <<"1. Novo Jogo\n";
         cout <<"2. Ranking\n";
         cout <<"3. Estatisticas\n";
@@ -32,7 +32,7 @@ int View::menuNewGame() {
     int op = -1;
 
     do {
-        cout <<"\n\n********** Novo Jogo **********\n";
+        cout <<"\n\n********** Novo Jogo **********\n\n";
         cout <<"1. Jogador vs. Computador\n";
         cout <<"2. Jogador vs. Jogador\n";
         cout <<"\n0. Sair\n";
@@ -47,7 +47,7 @@ int View::menuDifficulty() {
     int op = -1;
 
     do {
-        cout <<"\n\n********** Dificuldade **********\n";
+        cout <<"\n\n********** Dificuldade **********\n\n";
         cout <<"1. Facil\n";
         cout <<"2. Dificil\n";
         cout <<"\n0. Sair\n";
@@ -62,7 +62,7 @@ int View::menuShipPlacement() {
     int op = -1;
 
     do {
-        cout <<"\n\n********** Posicionamento dos Navios **********\n";
+        cout <<"\n\n********** Posicionamento dos Navios **********\n\n";
         cout <<"1. Posicionamento manual\n";
         cout <<"2. Posicionamento automatico\n";
         cout <<"\n0. Sair\n";
@@ -77,7 +77,7 @@ int View::menuRankingType() {
     int op = -1;
 
     do {
-        cout << "\n\n********** Tipo de Ranking **********\n";
+        cout << "\n\n********** Tipo de Ranking **********\n\n";
         cout << "1. Numero de vitorias\n";
         cout << "2. Taxa de precisao\n";
         cout << "\n0. Sair\n";
@@ -91,7 +91,7 @@ int View::menuRankingType() {
 int View::menuStatistics() {
     int op = -1;
     do {
-        cout << "\n\n********** Estatisticas *********\n";
+        cout << "\n\n********** Estatisticas *********\n\n";
         cout <<"1. Ver minhas estatisticas\n";
         cout <<"2. Ver estatisticas de outro jogador\n";
         cout <<"\n0. Sair\n";
