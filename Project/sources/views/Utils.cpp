@@ -15,6 +15,7 @@ int Utils::getNumber(const string&  label, int min, int max){
     cin >> number;
 
     if (cin.fail()) {
+        system("cls");
         cout << "\nEntrada Invalida! Por favor insira um numero" << endl;
 
         cin.clear();
@@ -27,7 +28,8 @@ int Utils::getNumber(const string&  label, int min, int max){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (number < min || number > max) {
-        cout << "\nEntrada invalida! A opcao tem de ser um dos numeros acima " << endl;
+        system("cls");
+        cout << "\nEntrada invalida! A opcao tem de ser um dos numeros presentes no menu" << endl;
         return min - 1;
     }
 

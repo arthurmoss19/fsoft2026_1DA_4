@@ -113,6 +113,7 @@ void Controller::runNewGame() {
                     this->view.printMessage("********** Modo de jogo: Jogador vs Computador **********");
 
                     int diff = this->view.menuDifficulty();
+                    system("cls");
                     if (diff == 0) break;
                     Player* p1 = this->playerContainer->get(this->currentNickname);
                     this->currentGame = new Game(p1, nullptr, true, diff);
@@ -122,6 +123,7 @@ void Controller::runNewGame() {
                     if (!runPlacement(this->currentGame->getBoard1())) {
                         delete this->currentGame;
                         this->currentGame = nullptr;
+                        system("cls");
                         return;
                     }
 
