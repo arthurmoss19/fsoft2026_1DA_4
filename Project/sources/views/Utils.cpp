@@ -15,7 +15,7 @@ int Utils::getNumber(const string&  label, int min, int max){
     cin >> number;
 
     if (cin.fail()) {
-        cout << "Entrada Invalida! Por favor insira um numero" << endl;
+        cout << "\nEntrada Invalida! Por favor insira um numero" << endl;
 
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -27,7 +27,7 @@ int Utils::getNumber(const string&  label, int min, int max){
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (number < min || number > max) {
-        cout << "Entrada invalida! A opcao tem de ser um dos numeros acima " << endl;
+        cout << "\nEntrada invalida! A opcao tem de ser um dos numeros acima " << endl;
         return min - 1;
     }
 
@@ -45,10 +45,10 @@ void Utils::pressEnterMainMenu() {
 
     string input;
     do {
-        cout << "Pressione ENTER para voltar ao menu principal...";
+        cout << "\nPressione ENTER para voltar ao menu principal...";
         getline(cin, input);
         if (!input.empty()) {
-            cout << "Apenas pressione ENTER, sem escrever nada...\n";
+            cout << "\nApenas pressione ENTER, sem escrever nada...\n";
         }
     } while (!input.empty());
 }
@@ -56,10 +56,10 @@ void Utils::pressEnterMainMenu() {
 void Utils::pressEnterPlayerSwitch(const string& player) {
     string input;
     do {
-        cout << "Pressione ENTER e passe o computador para " << player << "...";
+        cout << "\nPressione ENTER e passe o computador para " << player << "...";
         getline(cin, input);
         if (!input.empty()) {
-            cout << "Apenas pressione ENTER, sem escrever nada...\n";
+            cout << "\nApenas pressione ENTER, sem escrever nada...\n";
         }
     } while (!input.empty());
 }
@@ -67,11 +67,11 @@ void Utils::pressEnterPlayerSwitch(const string& player) {
 void Utils::pressEnterConfirmPlayer(const string& player) {
     string input;
     do {
-        cout << "Passe o computador para " << player << "\n";
+        cout << "\nPasse o computador para " << player << "\n";
         cout << "Pressione ENTER...";
         getline(cin, input);
         if (!input.empty()) {
-            cout << "Apenas pressione ENTER, sem escrever nada...\n";
+            cout << "\nApenas pressione ENTER, sem escrever nada...\n";
         }
     } while (!input.empty());
 }
@@ -79,10 +79,10 @@ void Utils::pressEnterConfirmPlayer(const string& player) {
 void Utils::pressEnter() {
     string input;
     do {
-        cout << "Pressione ENTER...";
+        cout << "\nPressione ENTER...";
         getline(cin, input);
         if (!input.empty()) {
-            cout << "Apenas pressione ENTER, sem escrever nada...\n\n";
+            cout << "\nApenas pressione ENTER, sem escrever nada...\n\n";
         }
     } while (!input.empty());
 }
