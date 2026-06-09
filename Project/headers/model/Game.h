@@ -22,9 +22,11 @@ private:
     bool vsComputer;
     int aiDifficulty;
     bool gameOver;
+    int attackedRow, attackedCol;
+    int prevAttackedRow, prevAttackedCol;
+    vector<pair<int,int>> aiTargets;
     void switchTurn();
     bool checkGameOver();
-    vector<pair<int,int>> aiTargets;
 
 public:
     struct ShipInfo {

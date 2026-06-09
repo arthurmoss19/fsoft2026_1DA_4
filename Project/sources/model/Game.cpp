@@ -25,6 +25,10 @@ Game::Game(Player* p1, Player* p2, bool isVsAI, int difficulty) {
     this->currentTurn = 1;
     this->gameOver = false;
     this->aiTargets.clear();
+    this->attackedRow = -1;
+    this->attackedCol = -1;
+    this->prevAttackedRow = -1;
+    this->prevAttackedCol = -1;
 }
 
 void Game::switchTurn() {
@@ -140,17 +144,45 @@ bool Game::cellAlreadyAttacked(int row, int col) const {
     return (cell == 'X' || cell == 'O');
 }
 
-void Game::addNeighbors(int row, int col) {
-    int dirs[4][2] = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+void Game::addNeighbors(int row, int col)
+{
+    bool directionKnown = (attackedRow != -1 && abs(row - attackedRow) + abs(col - attackedCol) == 1);
 
-    for (int i = 0; i < 4; i++) {
-        int r = row + dirs[i][0];
-        int c = col + dirs[i][1];
+    if (directionKnown)
+    {
+        int dr = row - attackedRow;
+        int dc = col - attackedCol;
 
-        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c)) {
+        int r = row + dr;
+        int c = col + dc;
+
+        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c))
+        {
+            this->aiTargets.push_back({r, c});
+        }
+        r = attackedRow - dr;
+        c = attackedCol - dc;
+        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c))
+        {
             this->aiTargets.push_back({r, c});
         }
     }
+    else
+    {
+        int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        for (int i = 0; i < 4; i++) {
+            int r = row + dirs[i][0];
+            int c = col + dirs[i][1];
+            if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c)) {
+                this->aiTargets.push_back({r, c});
+            }
+        }
+    }
+    prevAttackedRow = attackedRow;
+    prevAttackedCol = attackedCol;
+    attackedRow = row;
+    attackedCol = col;
 }
 
 void Game::verifyDestroyedShips(int row, int col) {
@@ -159,6 +191,10 @@ void Game::verifyDestroyedShips(int row, int col) {
     for (const Ship& ship : fleet) {
         if (this->board1.isCellPartOfShip(row, col, ship) && ship.isSunk()) {
             this->aiTargets.clear();
+            this->attackedRow = -1;
+            this->attackedCol = -1;
+            this->prevAttackedRow = -1;
+            this->prevAttackedCol = -1;
             break;
         }
     }
