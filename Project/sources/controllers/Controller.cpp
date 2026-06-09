@@ -55,12 +55,15 @@ void Controller::runLogin() {
                     playerService -> registerPlayer(dto);
                     currentNickname = dto.nickname;
                     view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
-                    op = 0;
                     system("cls");
+                    view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                    op = 0;
                     runMain();
                 } catch (InvalidDataException& e) {
+                    system("cls");
                     this->view.printMessage(e.what());
                 } catch (DuplicatedDataException& e) {
+                    system("cls");
                     this->view.printMessage(e.what());
                 }
                 break;
@@ -72,6 +75,8 @@ void Controller::runLogin() {
 void Controller::runMain() {
     int op = -1;
     do {
+        this->view.printMessage("---------- Batalha Naval ----------");
+
         op = this -> view.menuMain();
         switch(op) {
             case 1:
@@ -94,6 +99,7 @@ void Controller::runMain() {
                 break;
         }
     } while (op != 0);
+    system("cls");
 }
 
 void Controller::runNewGame() {
@@ -116,17 +122,25 @@ void Controller::runNewGame() {
                     op2 = this->loginView.menuLogin("********** Login do Jogador 2 **********");
                     switch (op2) {
                         case 1: {
+                            system("cls");
+                            this->view.printMessage("********** Modo de jogo: J vs J **********\n");
+                            this->view.printMessage("********** Login do Jogador 2 **********\n");
+
                             nick2 = loginView.getNickname("Nickname do jogador 2");
                             try {
                                 this->playerService->getPlayer(nick2);
                                 system("cls");
                                 player2nick = true;
                             } catch (NoDataException &e) {
+                                system("cls");
+                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
                                 this->view.printMessage(e.what());
                             }
                             break;
                         }
                         case 2: {
+                            system("cls");
+                            this->view.printMessage("********** Modo de jogo: J vs J **********\n");
                             PlayerLoginDTO dto = this->loginView.getNewPlayer();
                             try {
                                 this->playerService->registerPlayer(dto);
@@ -135,8 +149,12 @@ void Controller::runNewGame() {
                                 this->view.printMessage("Perfil criado com sucesso! Bem-vindo, " + nick2 + "!\n");
                                 player2nick = true;
                             } catch (InvalidDataException &e) {
+                                system("cls");
+                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
                                 this->view.printMessage(e.what());
                             } catch (DuplicatedDataException &e) {
+                                system("cls");
+                                this->view.printMessage("********** Modo de jogo: J vs J **********\n");
                                 this->view.printMessage(e.what());
                             }
                             break;
@@ -144,6 +162,10 @@ void Controller::runNewGame() {
                         case 0: player2nick = true;
                     }
                 } while (!player2nick && op2 != 0);
+
+                if (op2 == 0) {
+                    system("cls");
+                }
 
                 if (player2nick && op2 != 0) {
                     Player* p1 = this->playerContainer->get(this->currentNickname);
@@ -155,31 +177,43 @@ void Controller::runNewGame() {
                     if (!runPlacement(this->currentGame->getBoard1())) {
                         delete this->currentGame;
                         this->currentGame = nullptr;
+                        system("cls");
                         return;
                     }
+                    system("cls");
 
+                    this->view.printMessage("Os teus navios foram todos posicionados com sucesso!\n");
                     Utils::pressEnterPlayerSwitch(nick2);
+
                     system("cls");
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
 
                     if (!runPlacement(this->currentGame->getBoard2())) {
                         delete this->currentGame;
                         this->currentGame = nullptr;
+                        system("cls");
                         return;
                     }
+
+                    system("cls");
+
+                    this->view.printMessage("Os teus navios foram todos posicionados com sucesso!\n");
+                    this->view.printMessage("\nPreparacao concluida! O jogo vai comecar!\n");
+
 
                     Utils::pressEnter();
                     system("cls");
                     Utils::pressEnterConfirmPlayer(currentNickname);
                     system("cls");
 
-                    this->view.printMessage("\nPreparacao concluida! O jogo vai comecar...");
-
                     runGameLoop();
                     op = 0;
                 }
                 break;
             }
+        }
+        if (op == 0) {
+            system("cls");
         }
     } while (op != 0);
 }
