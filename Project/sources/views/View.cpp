@@ -164,7 +164,7 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
         validPosition = true;
     }
 
-    string orientation = Utils::getString("Introduza a orientacao (H - Horizontal, V - Vertical)");
+    string orientation = Utils::getString("\nIntroduza a orientacao (H - Horizontal, V - Vertical)");
     horizontal = (orientation == "H" || orientation == "h");
 }
 
