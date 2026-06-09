@@ -364,11 +364,34 @@ void Controller::placeFleetManually(Board& board) {
                 continue;
             }
 
+            bool overlap = false;
+
+            if (horizontal) {
+                for (int j = col; j < col + ship.size; ++j) {
+                    if (board.getCell(row, j) != '~') {
+                        overlap = true; break;
+                    }
+                }
+            } else {
+                for (int i = row; i < row + ship.size; ++i) {
+                    if (board.getCell(i, col) != '~') {
+                        overlap = true; break;
+                    }
+                }
+            }
+
+            if (overlap) {
+                system("cls");
+                this->view.showOverlapError();
+                this->view.showBoard(board, false);
+                continue;
+            }
+
             Ship newShip(ship.type, ship.size, '#');
             placed = board.placeShip(newShip, row, col, horizontal);
             if (!placed) {
                 system("cls");
-                this->view.showOverlapError();
+                this->view.printMessage("Os navios nao podem encostar uns nos outros! Deve haver pelo menos uma casa de agua entre eles.\n");
                 this->view.showBoard(board, false);
             }
         }

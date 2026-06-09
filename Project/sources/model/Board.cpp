@@ -2,9 +2,10 @@
 // Created by pedro on 16/05/2026.
 //
 
-#include <iostream>
 #include "Board.h"
+#include <iostream>
 #include <random>
+#include <algorithm>
 
 Board::Board() {
     for (int i = 0; i < this->SIZE; ++i) {
@@ -23,21 +24,25 @@ bool Board::validatePosition(int row, int column, int size, bool horizontal) con
         if (column + size > this->SIZE) {
             return false;
         }
-        for (int j = column; j < column + size; ++j) {
-            if (this->grid[row][j] != this->WATER) {
-                return false;
-            }
-        }
     } else {
         if (row + size > this->SIZE) {
             return false;
         }
-        for (int i = row; i < row + size; ++i) {
-            if (this->grid[i][column] != this->WATER) {
+    }
+
+    int startRow = std::max(0, row - 1);
+    int endRow   = std::min(this->SIZE - 1, horizontal ? row + 1 : row + size);
+    int startCol = std::max(0, column - 1);
+    int endCol   = std::min(this->SIZE - 1, horizontal ? column + size : column + 1);
+
+    for (int i = startRow; i <= endRow; ++i) {
+        for (int j = startCol; j <= endCol; ++j) {
+            if (this->grid[i][j] != this->WATER) {
                 return false;
             }
         }
     }
+
     return true;
 }
 

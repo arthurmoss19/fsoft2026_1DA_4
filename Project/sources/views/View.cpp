@@ -176,7 +176,7 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
 }
 
 void View::showOutOfBoundsError() {
-    cout << "Posicao fora dos limites do tabuleiro! Escolha outra posiçao.\n";
+    cout << "Posicao fora dos limites do tabuleiro! Escolha outra posicao.\n";
 }
 
 void View::showOverlapError() {
