@@ -49,27 +49,34 @@ void Controller::runLogin() {
                 }
                 break;
             }
-            case 2: {
-                system("cls");
-                PlayerLoginDTO dto = loginView.getNewPlayer();
-                try {
-                    playerService -> registerPlayer(dto);
-                    currentNickname = dto.nickname;
-                    this -> playerContainer -> saveToFile("players.txt");
-                    view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+        case 2: {
                     system("cls");
-                    view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
-                    op = 0;
-                    runMain();
-                } catch (InvalidDataException& e) {
-                    system("cls");
-                    this->view.printMessage(e.what());
-                } catch (DuplicatedDataException& e) {
-                    system("cls");
-                    this->view.printMessage(e.what());
-                }
-                break;
-            }
+                    PlayerLoginDTO dto = loginView.getNewPlayer();
+                    try {
+                        playerService -> registerPlayer(dto);
+                        currentNickname = dto.nickname;
+
+                        // CORREÇÃO: Passamos apenas a string (currentNickname) como o teu .add() exige!
+                        if (this->playerContainer->get(currentNickname) == nullptr) {
+                            this->playerContainer->add(currentNickname);
+                        }
+
+                        this -> playerContainer -> saveToFile("players.txt");
+
+                        view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                        system("cls");
+                        view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                        op = 0;
+                        runMain();
+                    } catch (InvalidDataException& e) {
+                        system("cls");
+                        this->view.printMessage(e.what());
+                    } catch (DuplicatedDataException& e) {
+                        system("cls");
+                        this->view.printMessage(e.what());
+                    }
+                    break;
+        }
         }
     } while (op != 0);
 }
