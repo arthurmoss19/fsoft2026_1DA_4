@@ -2,9 +2,9 @@
 // Created by pedro on 16/05/2026.
 //
 
+#include "Game.h"
 #include <iostream>
 #include <ctime>
-#include "Game.h"
 
 const vector<Game::ShipInfo>& Game::getFleet() {
     static const vector<ShipInfo> fleet = {
