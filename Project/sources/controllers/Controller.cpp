@@ -501,7 +501,22 @@ void Controller::runGameLoop()
         char result = this->currentGame->executeMove(row, col);
         bool hit = (result == 'X');
 
-        this->view.showShotResult(hit, coord);
+        bool sunk = false;
+        string sunkShipType;
+
+        if (hit) {
+            for (const Ship& ship : enemyBoard.getFleet()) {
+                if (enemyBoard.isCellPartOfShip(row, col, ship)) {
+                    if (ship.isSunk()) {
+                        sunk = true;
+                        sunkShipType = ship.getType();
+                    }
+                    break;
+                }
+            }
+        }
+
+        this->view.showShotResult(hit, sunk, sunkShipType, coord);
 
         if (hit) {
             Utils::pressEnter();

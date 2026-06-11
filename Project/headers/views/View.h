@@ -27,7 +27,7 @@ public:
     void showOutOfBoundsError();
     void showOverlapError();
     void showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard);
-    void showShotResult(bool hit, const string& coordinate);
+    void showShotResult(bool hit, bool sunk, const string& shipType, const string& coordinate);
     void showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits);
     bool getShotCoordinate(int& row, int& col);
 };

@@ -265,8 +265,12 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
     opponentBoard.print(true);
 }
 
-void View::showShotResult(bool hit, const string& coordinate) {
-    cout << "\nTiro em " << coordinate << (hit ? ": NAVIO!\n" : ": AGUA!\n") << '\n';
+void View::showShotResult(bool hit, bool sunk, const string& shipType, const string& coordinate) {
+    cout << "\n" << (hit ? "NAVIO!" : "AGUA!") << "\n";
+    if (sunk) {
+        cout << "Afundou " << shipType << "!\n";
+    }
+    cout << '\n';
 }
 
 void View::showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits) {
