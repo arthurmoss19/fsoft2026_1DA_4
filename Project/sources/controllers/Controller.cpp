@@ -53,17 +53,9 @@ void Controller::runLogin() {
                     system("cls");
                     PlayerLoginDTO dto = loginView.getNewPlayer();
                     try {
-                        playerService -> registerPlayer(dto);
+                        playerService->registerPlayer(dto);
                         currentNickname = dto.nickname;
-
-                        // CORREÇÃO: Passamos apenas a string (currentNickname) como o teu .add() exige!
-                        if (this->playerContainer->get(currentNickname) == nullptr) {
-                            this->playerContainer->add(currentNickname);
-                        }
-
-                        this -> playerContainer -> saveToFile("players.txt");
-
-                        view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
+                        this->playerContainer->saveToFile("players.txt");
                         system("cls");
                         view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
                         op = 0;
@@ -74,6 +66,12 @@ void Controller::runLogin() {
                     } catch (DuplicatedDataException& e) {
                         system("cls");
                         this->view.printMessage(e.what());
+                    } catch (const exception& e) {
+                        system("cls");
+                        this->view.printMessage(e.what());
+                    } catch (...) {
+                        system("cls");
+                        this->view.printMessage("Erro desconhecido ao registar perfil.\n");
                     }
                     break;
         }

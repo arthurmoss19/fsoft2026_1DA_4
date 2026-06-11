@@ -11,7 +11,6 @@
 class PlayerContainer {
 private:
     list<Player*> players;
-    Player* search(const string& nickname);
 
 public:
     list<Player*>& getAll();
@@ -21,6 +20,7 @@ public:
     Player* update(const string& oldNickname, const string& newNickname);
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
+    Player* search(const string& nickname);
 };
 
 #endif // PROJETOFSOFT_PLAYERCONTAINER_H

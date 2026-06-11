@@ -35,11 +35,13 @@ int Utils::getNumber(const string&  label, int min, int max){
 
     return number;
 }
-string Utils::getString(const string&  label){
+string Utils::getString(const string& label) {
     string input;
-    cout<<label<<": ";
-    getline (cin, input);
-
+    cout << label << ": ";
+    if (cin.peek() == '\n') {
+        cin.ignore();
+    }
+    getline(cin, input);
     return input;
 }
 

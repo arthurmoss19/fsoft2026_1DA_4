@@ -43,17 +43,13 @@ void PlayerContainer::add(const string& nickname) {
 }
 
 Player* PlayerContainer::remove(const string& nickname) {
-    Player* player = NULL;
     list<Player*>::iterator it = this->players.begin();
     for (; it != this->players.end(); ++it) {
-        if (**it == nickname) {
-            break;
-        }
+        if (**it == nickname) break;
     }
     if (it != this->players.end()) {
-        player = *it;
+        Player* player = *it;
         this->players.erase(it);
-        delete (*it);
         return player;
     } else {
         string msg = "Jogador " + nickname;
@@ -79,16 +75,18 @@ Player* PlayerContainer::update(const string& oldNickname, const string& newNick
 }
 void PlayerContainer::saveToFile(const string& filename) {
     std::ofstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open()) {
+        cout << "ERRO: nao foi possivel abrir o ficheiro " << filename << endl;
+        return;
+    }
 
-    for (Player* p : players) {
-        if (p != nullptr) {
-            file << p->getNickname() << ","
-                 << p->getWins() << ","
-                 << p->getLosses() << ","
-                 << p->getTotalShots() << ","
-                 << p->getHits() << "\n";
-        }
+    for (list<Player*>::iterator it = this->players.begin(); it != this->players.end(); ++it) {
+        if (*it == nullptr) continue;
+        file << (*it)->getNickname() << ","
+             << (*it)->getWins() << ","
+             << (*it)->getLosses() << ","
+             << (*it)->getTotalShots() << ","
+             << (*it)->getHits() << "\n";
     }
     file.close();
 }
