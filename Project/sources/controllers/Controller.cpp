@@ -15,6 +15,7 @@ using namespace std;
 
 Controller::Controller() {
     this -> playerContainer = new PlayerContainer();
+    this -> playerContainer -> loadFromFile("players.txt");
     this -> playerService = new PlayerService(this -> playerContainer);
     this->currentGame = nullptr;
 }
@@ -48,12 +49,13 @@ void Controller::runLogin() {
                 }
                 break;
             }
-                case 2: {
+            case 2: {
                 system("cls");
                 PlayerLoginDTO dto = loginView.getNewPlayer();
                 try {
                     playerService -> registerPlayer(dto);
                     currentNickname = dto.nickname;
+                    this -> playerContainer -> saveToFile("players.txt");
                     view.printMessage("\nPerfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
                     system("cls");
                     view.printMessage("Perfil criado com sucesso! Bem-vindo, " + currentNickname + "!\n");
@@ -71,7 +73,6 @@ void Controller::runLogin() {
         }
     } while (op != 0);
 }
-
 void Controller::runMain() {
     int op = -1;
     do {
