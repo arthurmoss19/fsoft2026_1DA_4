@@ -23,6 +23,10 @@ Game::Game(Player* p1, Player* p2, bool isVsAI, int difficulty) {
     this->vsComputer = isVsAI;
     this->aiDifficulty = difficulty;
     this->currentTurn = 1;
+    this->currentShotsP1 = 0;
+    this->currentHitsP1 = 0;
+    this->currentShotsP2 = 0;
+    this->currentHitsP2 = 0;
     this->gameOver = false;
     this->aiTargets.clear();
     this->aiShots = 0;
@@ -79,12 +83,23 @@ char Game::executeMove(int row, int column) {
     char result;
     if (this->currentTurn == 1) {
         result = this->board2.registerShot(row, column);
+        this->currentShotsP1++;
+
+        if (result == 'X') {
+            this->currentHitsP1++;
+        }
+
         if (this->player1 != NULL) {
             this->player1->registerShot(result == 'X');
         }
     }
     else {
         result = this->board1.registerShot(row, column);
+        this->currentShotsP2++;
+
+        if (result == 'X') {
+            this->currentHitsP2++;
+        }
         if (this->player2 != NULL) {
             this->player2->registerShot(result == 'X');
         }
@@ -273,4 +288,17 @@ int Game::getAiShots() const {
 }
 int Game::getAiHits() const {
     return aiHits;
+}
+
+int Game::getCurrentShotsP1() const {
+    return currentShotsP1;
+}
+int Game::getCurrentHitsP1() const {
+    return currentHitsP1;
+}
+int Game::getCurrentShotsP2() const {
+    return currentShotsP2;
+}
+int Game::getCurrentHitsP2() const {
+    return currentHitsP2;
 }

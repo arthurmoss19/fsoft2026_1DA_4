@@ -525,20 +525,27 @@ void Controller::runGameLoop()
         bool playerWon = this->currentGame->getBoard2().allShipsSunk();
 
         if (playerWon) {
-            this->view.showGameOver(p1->getNickname(), p1->getTotalShots(), p1->getHits(),"Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits());
+            this->view.showGameOver(p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1(),"Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits());
         }
         else {
-            this->view.showGameOver("Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits(), p1->getNickname(), p1->getTotalShots(), p1->getHits());
+            this->view.showGameOver("Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits(), p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1());
         }
     } else {
         Player* winner = this->currentGame->getCurrentPlayer();
         Player* loser = (winner == this->currentGame->getPlayer1())
                         ? this->currentGame->getPlayer2()
                         : this->currentGame->getPlayer1();
-        
+
+        Player* p1 = this->currentGame->getPlayer1();
+
+        int winnerShots = (winner == p1) ? this->currentGame->getCurrentShotsP1() : this->currentGame->getCurrentShotsP2();
+        int winnerHits  = (winner == p1) ? this->currentGame->getCurrentHitsP1()  : this->currentGame->getCurrentHitsP2();
+        int loserShots  = (winner == p1) ? this->currentGame->getCurrentShotsP2() : this->currentGame->getCurrentShotsP1();
+        int loserHits   = (winner == p1) ? this->currentGame->getCurrentHitsP2()  : this->currentGame->getCurrentHitsP1();
+
         this->view.showGameOver (
-            winner->getNickname(), winner->getTotalShots(), winner->getHits(),
-            loser->getNickname(), loser->getTotalShots(), loser->getHits()
+        winner->getNickname(), winnerShots, winnerHits,
+        loser->getNickname(), loserShots, loserHits
         );
     }
     Utils::pressEnterMainMenu();
