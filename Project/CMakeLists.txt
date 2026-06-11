@@ -69,7 +69,8 @@ set(DTO_SOURCE_FILES
         ${PROJECT_HEADERS_DTO_DIR}/BoardDTO.h
         ${PROJECT_HEADERS_DTO_DIR}/ShipDTO.h
         ${PROJECT_HEADERS_DTO_DIR}/GameDTO.h
-        ${PROJECT_HEADERS_DTO_DIR}/PlayerDTO.h)
+        ${PROJECT_HEADERS_DTO_DIR}/PlayerDTO.h
+        ${PROJECT_HEADERS_DTO_DIR}/PlayerLoginDTO.h)
 
 ################################################
 
@@ -85,7 +86,9 @@ set(VIEWS_SOURCE_FILES
         ${PROJECT_HEADERS_VIEWS_DIR}/View.h
         ${PROJECT_SOURCES_VIEWS_DIR}/View.cpp
         ${PROJECT_HEADERS_VIEWS_DIR}/Utils.h
-        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp)
+        ${PROJECT_SOURCES_VIEWS_DIR}/Utils.cpp
+        ${PROJECT_HEADERS_VIEWS_DIR}/LoginView.h
+        ${PROJECT_SOURCES_VIEWS_DIR}/LoginView.cpp)
 
 ################################################
 
@@ -132,9 +135,6 @@ set(MAPPERS_SOURCE_FILES
         ${PROJECT_HEADERS_MAPPERS_DIR}/GameMapper.h
         ${PROJECT_SOURCES_MAPPERS_DIR}/PlayerMapper.cpp
         ${PROJECT_HEADERS_MAPPERS_DIR}/PlayerMapper.h
-        sources/views/LoginView.cpp
-        headers/views/LoginView.h
-        headers/dto/PlayerLoginDTO.h
 )
 
 ################################################
