@@ -520,10 +520,12 @@ void Controller::runGameLoop()
         bool playerWon = this->currentGame->getBoard2().allShipsSunk();
 
         if (playerWon) {
+            this->playerService->updateStats(p1->getNickname(), true, p1->getTotalShots(), p1->getHits());
             this->view.showGameOver(p1->getNickname(), p1->getTotalShots(), p1->getHits(),
                                     "Computador", 0, 0);
         }
         else {
+            this->playerService->updateStats(p1->getNickname(), false, p1->getTotalShots(), p1->getHits());
             this->view.showGameOver("Computador", 0, 0,
                                     p1->getNickname(), p1->getTotalShots(), p1->getHits());
         }
@@ -531,8 +533,11 @@ void Controller::runGameLoop()
     else {
         Player* winner = this->currentGame->getCurrentPlayer();
         Player* loser = (winner == this->currentGame->getPlayer1())
-        ? this->currentGame->getPlayer2()
-        : this->currentGame->getPlayer1();
+                        ? this->currentGame->getPlayer2()
+                        : this->currentGame->getPlayer1();
+
+        this->playerService->updateStats(winner->getNickname(), true, winner->getTotalShots(), winner->getHits());
+        this->playerService->updateStats(loser->getNickname(), false, loser->getTotalShots(), loser->getHits());
 
         this->view.showGameOver (
             winner->getNickname(), winner->getTotalShots(), winner->getHits(),
@@ -541,6 +546,8 @@ void Controller::runGameLoop()
     }
     Utils::pressEnterMainMenu();
     system("cls");
+
+    this->playerContainer->saveToFile("players.txt");
 
     delete this->currentGame;
     this->currentGame = nullptr;
