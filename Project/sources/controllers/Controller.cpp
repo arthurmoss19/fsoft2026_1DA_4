@@ -525,25 +525,17 @@ void Controller::runGameLoop()
         bool playerWon = this->currentGame->getBoard2().allShipsSunk();
 
         if (playerWon) {
-            this->playerService->updateStats(p1->getNickname(), true, p1->getTotalShots(), p1->getHits());
-            this->view.showGameOver(p1->getNickname(), p1->getTotalShots(), p1->getHits(),
-                                    "Computador", 0, 0);
+            this->view.showGameOver(p1->getNickname(), p1->getTotalShots(), p1->getHits(),"Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits());
         }
         else {
-            this->playerService->updateStats(p1->getNickname(), false, p1->getTotalShots(), p1->getHits());
-            this->view.showGameOver("Computador", 0, 0,
-                                    p1->getNickname(), p1->getTotalShots(), p1->getHits());
+            this->view.showGameOver("Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits(), p1->getNickname(), p1->getTotalShots(), p1->getHits());
         }
-    }
-    else {
+    } else {
         Player* winner = this->currentGame->getCurrentPlayer();
         Player* loser = (winner == this->currentGame->getPlayer1())
                         ? this->currentGame->getPlayer2()
                         : this->currentGame->getPlayer1();
-
-        this->playerService->updateStats(winner->getNickname(), true, winner->getTotalShots(), winner->getHits());
-        this->playerService->updateStats(loser->getNickname(), false, loser->getTotalShots(), loser->getHits());
-
+        
         this->view.showGameOver (
             winner->getNickname(), winner->getTotalShots(), winner->getHits(),
             loser->getNickname(), loser->getTotalShots(), loser->getHits()

@@ -25,6 +25,8 @@ Game::Game(Player* p1, Player* p2, bool isVsAI, int difficulty) {
     this->currentTurn = 1;
     this->gameOver = false;
     this->aiTargets.clear();
+    this->aiShots = 0;
+    this->aiHits = 0;
     this->attackedRow = -1;
     this->attackedCol = -1;
     this->prevAttackedRow = -1;
@@ -129,6 +131,11 @@ void Game::computerMove(int& row, int& col, bool& hit) {
 
     char result = this->board1.registerShot(row, col);
     hit = (result == 'X');
+    this->aiShots++;
+
+    if (hit) {
+        this->aiHits++;
+    }
 
     if (hit && this->aiDifficulty == 2) {
         addNeighbors(row, col);
@@ -259,4 +266,11 @@ Player* Game::getPlayer1() const {
 
 Player* Game::getPlayer2() const {
     return player2;
+}
+
+int Game::getAiShots() const {
+    return aiShots;
+}
+int Game::getAiHits() const {
+    return aiHits;
 }

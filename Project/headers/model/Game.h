@@ -21,6 +21,8 @@ private:
     int currentTurn;
     bool vsComputer;
     int aiDifficulty;
+    int aiShots;
+    int aiHits;
     bool gameOver;
     int attackedRow, attackedCol;
     int prevAttackedRow, prevAttackedCol;
@@ -43,6 +45,8 @@ public:
     int getCurrentTurn() const;
     bool isVsComputer() const;
     int getAiDifficulty() const;
+    int getAiShots() const;
+    int getAiHits() const;
     Board& getActiveBoard();
     Board& getOpponentBoard();
     Board& getBoard1();
