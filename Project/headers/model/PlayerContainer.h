@@ -19,6 +19,8 @@ public:
     void add(const string& nickname);
     Player* remove(const string& nickname);
     Player* update(const string& oldNickname, const string& newNickname);
+    void saveToFile(const std::string& filename);
+    void loadFromFile(const std::string& filename);
 };
 
 #endif // PROJETOFSOFT_PLAYERCONTAINER_H
