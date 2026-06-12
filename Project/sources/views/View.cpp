@@ -166,12 +166,15 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
     }
 
     string orientation;
+
     do {
         orientation = Utils::getString("\nIntroduza a orientacao (H - Horizontal, V - Vertical)");
+
         if (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v") {
             cout << "\nOrientacao invalida! Insira apenas H ou V.\n";
         }
     } while (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v");
+
     horizontal = (orientation == "H" || orientation == "h");
 }
 
@@ -227,8 +230,12 @@ bool View::getShotCoordinate(int& row, int& col) {
         }
 
         bool allDigits = true;
+
         for (char c : numberStr) {
-            if (!isdigit(c)) { allDigits = false; break; }
+            if (!isdigit(c)) {
+                allDigits = false;
+                break;
+            }
         }
         if (!allDigits) {
             cout << "\nCoordenada invalida! Use o formato letra + numero (ex: A1)\n";
@@ -278,9 +285,7 @@ void View::showGameOver(const string& winnerName, int winnerShots, int winnerHit
     cout << "********** FIM DE JOGO **********\n";
     cout << "**********************************\n";
     cout << "\n--- VENCEDOR: " << winnerName << " ---\n";
-    cout << "Tiros: " << winnerShots << " | Acertos: " << winnerHits
-         << " | Precisao: " << (winnerShots > 0 ? winnerHits * 100 / winnerShots : 0) << "%\n";
+    cout << "Tiros: " << winnerShots << " | Acertos: " << winnerHits << " | Precisao: " << (winnerShots > 0 ? winnerHits * 100 / winnerShots : 0) << "%\n";
     cout << "\n--- PERDEDOR: " << loserName << " ---\n";
-    cout << "Tiros: " << loserShots << " | Acertos: " << loserHits
-         << " | Precisao: " << (loserShots > 0 ? loserHits * 100 / loserShots : 0) << "%\n\n";
+    cout << "Tiros: " << loserShots << " | Acertos: " << loserHits << " | Precisao: " << (loserShots > 0 ? loserHits * 100 / loserShots : 0) << "%\n\n";
 }
