@@ -38,3 +38,12 @@ TEST(ShipIsSunkTest, SunkAfterAllHits) {
     s.addHit();
     EXPECT_TRUE(s.isSunk());
 }
+
+
+
+TEST(ShipOperatorTest, EqualType) {
+    Ship s("Fragata", 2, '#');
+
+    EXPECT_TRUE(s == "Fragata");
+    EXPECT_FALSE(s == "Submarino");
+}
