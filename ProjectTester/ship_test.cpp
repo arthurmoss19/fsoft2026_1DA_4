@@ -22,3 +22,19 @@ TEST(ShipAddHitTest, HitsReceivedIncrements) {
     s.addHit();
     EXPECT_FALSE(s.isSunk());
 }
+
+
+TEST(ShipIsSunkTest, NotSunkBeforeAllHits) {
+    Ship s("Fragata", 2, '#');
+
+    s.addHit();
+    EXPECT_FALSE(s.isSunk());
+}
+
+TEST(ShipIsSunkTest, SunkAfterAllHits) {
+    Ship s("Fragata", 2, '#');
+
+    s.addHit();
+    s.addHit();
+    EXPECT_TRUE(s.isSunk());
+}
