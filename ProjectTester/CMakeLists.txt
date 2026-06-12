@@ -37,8 +37,7 @@ set(SOURCE_FILES
         ${PROJECT_SOURCES_DIR}/exceptions/InvalidDataException.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/NoDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/NoDataException.cpp
-        game_test.cpp
-        game_test.h
+
 )
 
 add_executable(ProjectTester ${SOURCE_FILES})
