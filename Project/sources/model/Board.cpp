@@ -16,19 +16,8 @@ Board::Board() {
 }
 
 bool Board::validatePosition(int row, int column, int size, bool horizontal) const {
-    if (row < 0 || row >= this->SIZE || column < 0 || column >= this->SIZE) {
+    if (!isWithinBounds(row, column, size, horizontal))
         return false;
-    }
-
-    if (horizontal) {
-        if (column + size > this->SIZE) {
-            return false;
-        }
-    } else {
-        if (row + size > this->SIZE) {
-            return false;
-        }
-    }
 
     int startRow = std::max(0, row - 1);
     int endRow   = std::min(this->SIZE - 1, horizontal ? row + 1 : row + size);
@@ -94,34 +83,13 @@ char Board::registerShot(int row, int column) {
     return currentCell;
 }
 
-void Board::print(bool hideShips) const {
-    cout << "  ";
-    for (int j = 0; j < this->SIZE; ++j) {
-        cout << j << " ";
-    }
-    cout << "\n";
-
-    for (int i = 0; i < this->SIZE; ++i) {
-        cout << (char)('A' + i) << " ";
-        for (int j = 0; j < this->SIZE; ++j) {
-            char cell = this->grid[i][j];
-            if (hideShips && cell != this->WATER && cell != this->HIT && cell != this->MISS) {
-                cout << this->WATER << " ";
-            } else {
-                cout << cell << " ";
-            }
-        }
-        cout << "\n";
-    }
-}
-
 bool Board::allShipsSunk() const {
     if (this->fleet.empty()) {
         return false;
     }
 
-    for (vector<Ship>::const_iterator it = this->fleet.begin(); it != this->fleet.end(); ++it) {
-        if (!it->isSunk()) {
+    for (const Ship& s : this->fleet) {
+        if (!s.isSunk()) {
             return false;
         }
     }

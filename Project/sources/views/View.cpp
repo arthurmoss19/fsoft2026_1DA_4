@@ -191,8 +191,28 @@ void View::showPlacementSuccess() {
 }
 
 void View::showBoard(const Board& board, bool hideShips) {
-    cout << "\n--- Seu Tabuleiro ---\n\n";
-    board.print(hideShips);
+    cout << "  ";
+
+    for (int j = 0; j < 10; ++j) {
+        cout << j << " ";
+    }
+
+    cout << "\n";
+
+    for (int i = 0; i < 10; ++i) {
+        cout << (char)('A' + i) << " ";
+
+        for (int j = 0; j < 10; ++j) {
+            char cell = board.getCell(i, j);
+
+            if (hideShips && cell != '~' && cell != 'X' && cell != 'O') {
+                cout << "~ ";
+            } else {
+                cout << cell << " ";
+            }
+        }
+        cout << "\n";
+    }
 }
 
 int View::menuSatisfaction() {
@@ -266,10 +286,10 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
     cout << "\n********** Turno de: " << player << " **********\n\n";
 
     cout << "--- Seu Tabuleiro ---\n";
-    yourBoard.print(false);
+    showBoard(yourBoard, false);
 
     cout << "\n--- Tabuleiro do Adversario ---\n";
-    opponentBoard.print(true);
+    showBoard(opponentBoard, true);
 }
 
 void View::showShotResult(bool hit, bool sunk, const string& shipType, const string& coordinate) {
