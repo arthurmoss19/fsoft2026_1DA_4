@@ -23,6 +23,8 @@ set(SOURCE_FILES
         main.cpp
         ${PROJECT_HEADERS_DIR}/model/Player.h
         ${PROJECT_SOURCES_DIR}/model/Player.cpp
+        ${PROJECT_HEADERS_DIR}/model/Ship.h
+        ${PROJECT_SOURCES_DIR}/model/Ship.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/DuplicatedDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/DuplicatedDataException.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/InvalidDataException.h
