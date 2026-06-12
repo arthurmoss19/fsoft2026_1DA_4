@@ -9,15 +9,15 @@
 #include <sstream>
 
 Player* PlayerContainer::search(const string& nickname) {
-    for (list<Player*>::iterator it = this->players.begin(); it != this->players.end(); ++it) {
-        if (**it == nickname) {
-            return *it;
+    for (Player* player : this->players) {
+        if (*player == nickname) {
+            return player;
         }
     }
     return NULL;
 }
 
-list<Player*>& PlayerContainer::getAll() {
+list<Player*> PlayerContainer::getAll() {
     return this->players;
 }
 
@@ -42,37 +42,6 @@ void PlayerContainer::add(const string& nickname) {
     }
 }
 
-Player* PlayerContainer::remove(const string& nickname) {
-    list<Player*>::iterator it = this->players.begin();
-    for (; it != this->players.end(); ++it) {
-        if (**it == nickname) break;
-    }
-    if (it != this->players.end()) {
-        Player* player = *it;
-        this->players.erase(it);
-        return player;
-    } else {
-        string msg = "Jogador " + nickname;
-        throw NoDataException(msg);
-    }
-}
-
-Player* PlayerContainer::update(const string& oldNickname, const string& newNickname) {
-    Player* player1 = search(oldNickname);
-    if (player1 != NULL) {
-        Player* player2 = search(newNickname);
-        if (player2 == NULL) {
-            player1->setNickname(newNickname);
-            return player1;
-        } else {
-            string msg = "Jogador " + newNickname;
-            throw DuplicatedDataException(msg);
-        }
-    } else {
-        string msg = "Jogador " + oldNickname;
-        throw NoDataException(msg);
-    }
-}
 void PlayerContainer::saveToFile(const string& filename) {
     std::ofstream file(filename);
     if (!file.is_open()) {
@@ -80,13 +49,13 @@ void PlayerContainer::saveToFile(const string& filename) {
         return;
     }
 
-    for (list<Player*>::iterator it = this->players.begin(); it != this->players.end(); ++it) {
-        if (*it == nullptr) continue;
-        file << (*it)->getNickname() << ","
-             << (*it)->getWins() << ","
-             << (*it)->getLosses() << ","
-             << (*it)->getTotalShots() << ","
-             << (*it)->getHits() << "\n";
+    for (Player* p : this->players) {
+        if (p == nullptr) continue;
+        file << (p)->getNickname() << ","
+             << (p)->getWins() << ","
+             << (p)->getLosses() << ","
+             << (p)->getTotalShots() << ","
+             << (p)->getHits() << "\n";
     }
     file.close();
 }
