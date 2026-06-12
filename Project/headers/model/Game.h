@@ -45,7 +45,6 @@ public:
     friend class GameMapper;
     Game(Player* p1, Player* p2, bool isVsAI, int difficulty);
     ~Game() = default;
-    void prepareMatch();
     char executeMove(int row, int column);
     void computerMove(int& row, int& col, bool& hit);
     int getCurrentTurn() const;
