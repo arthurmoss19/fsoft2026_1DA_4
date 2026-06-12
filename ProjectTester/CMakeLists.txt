@@ -25,12 +25,20 @@ set(SOURCE_FILES
         ${PROJECT_SOURCES_DIR}/model/Player.cpp
         ${PROJECT_HEADERS_DIR}/model/Ship.h
         ${PROJECT_SOURCES_DIR}/model/Ship.cpp
+        ${PROJECT_HEADERS_DIR}/model/Board.h
+        ${PROJECT_SOURCES_DIR}/model/Board.cpp
+        ${PROJECT_HEADERS_DIR}/model/Game.h
+        ${PROJECT_SOURCES_DIR}/model/Game.cpp
+        ${PROJECT_HEADERS_DIR}/model/PlayerContainer.h
+        ${PROJECT_SOURCES_DIR}/model/PlayerContainer.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/DuplicatedDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/DuplicatedDataException.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/InvalidDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/InvalidDataException.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/NoDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/NoDataException.cpp
+        game_test.cpp
+        game_test.h
 )
 
 add_executable(ProjectTester ${SOURCE_FILES})
