@@ -36,7 +36,7 @@ void Controller::runLogin() {
             case 1: {
                 system("cls");
                 view.printMessage("Login: Entrar com conta\n");
-                string nick = loginView.getNickname("Nickname");
+                string nick = Utils::getString("Nickname");
                 try {
                     playerService -> getPlayer(nick);
                     currentNickname = nick;
@@ -158,7 +158,7 @@ void Controller::runNewGame() {
                             this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                             this->view.printMessage("********** Login do Jogador 2 **********\n");
 
-                            nick2 = loginView.getNickname("Nickname do jogador 2");
+                            nick2 = Utils::getString("Nickname do jogador 2");
                             try {
                                 this->playerService->getPlayer(nick2);
                                 system("cls");
@@ -319,7 +319,7 @@ void Controller::runStatistics() {
                     system("cls");
                     this->view.printMessage("**********  Consultar outro Jogador ********** \n");
 
-                    string nick = this -> loginView.getNickname("\nIntroduza o nickname de um jogador");
+                    string nick = Utils::getString("\nIntroduza o nickname de um jogador");
                     try {
                         system("cls");
                         this->view.printMessage("********** Estatisticas de " + nick + " **********\n");

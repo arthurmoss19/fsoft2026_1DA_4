@@ -12,7 +12,6 @@ using namespace std;
 class LoginView {
 public:
     PlayerLoginDTO getNewPlayer();
-    string getNickname(const string& label);
     int menuLogin(const string& title = "********** Batalha Naval **********");
 };
 
