@@ -56,3 +56,10 @@ void Utils::pressEnter(const string& message) {
         }
     } while (!input.empty());
 }
+
+bool Utils::isNicknameValid(const string& nick) {
+    if (nick.length() < 3 || nick.length() > 24) {
+        return false;
+    }
+    return true;
+}

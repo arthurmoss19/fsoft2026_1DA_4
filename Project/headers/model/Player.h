@@ -17,7 +17,6 @@ private:
     int losses;
     int totalShots;
     int hits;
-    bool isNicknameValid(const string& nick);
     void setWins(int wins);
     void setLosses(int losses);
 
