@@ -221,7 +221,7 @@ void Controller::runNewGame() {
                     system("cls");
 
                     this->view.printMessage("Os teus navios foram todos posicionados com sucesso!\n");
-                    Utils::pressEnterPlayerSwitch(nick2);
+                    Utils::pressEnter("Pressione ENTER e passe o computador para " + nick2 + "...");
 
                     system("cls");
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
@@ -239,9 +239,9 @@ void Controller::runNewGame() {
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar!\n");
 
 
-                    Utils::pressEnter();
+                    Utils::pressEnter("Pressione ENTER...");
                     system("cls");
-                    Utils::pressEnterConfirmPlayer(currentNickname);
+                    Utils::pressEnter("Passe o computador para " + currentNickname + "\nPressione ENTER...");
                     system("cls");
 
                     runGameLoop();
@@ -348,7 +348,7 @@ void Controller::runStatistics() {
 
 void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
-    Utils::pressEnterMainMenu();
+    Utils::pressEnter("Pressione ENTER para voltar ao menu principal...");
     system("cls");
 }
 
@@ -467,7 +467,7 @@ void Controller::runGameLoop()
             string coord = string(1, 'A' + row) + to_string(col);
             this->view.printMessage("\nComputador atirou em " + coord + (hit ? ": NAVIO!\n" : ": AGUA!\n"));
 
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
             continue;
         }
@@ -519,17 +519,17 @@ void Controller::runGameLoop()
         this->view.showShotResult(hit, sunk, sunkShipType, coord);
 
         if (hit) {
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
         }
 
         if (!hit && !this->currentGame->isGameOver()) {
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
 
             if (!this->currentGame->isVsComputer()) {
                 string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
-                Utils::pressEnterConfirmPlayer(nextPlayer);
+                Utils::pressEnter("Passe o computador para " + nextPlayer + "\nPressione ENTER...");
             }
             system("cls");
         }
@@ -563,7 +563,7 @@ void Controller::runGameLoop()
         loser->getNickname(), loserShots, loserHits
         );
     }
-    Utils::pressEnterMainMenu();
+    Utils::pressEnter("Pressione ENTER para voltar ao menu principal...");
     system("cls");
 
     this->playerContainer->saveToFile("players.txt");
