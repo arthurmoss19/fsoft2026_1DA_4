@@ -15,3 +15,10 @@ TEST(ShipConstructorTest, ValidShip) {
     }
     EXPECT_FALSE(flag);
 }
+
+TEST(ShipAddHitTest, HitsReceivedIncrements) {
+    Ship s("Fragata", 2, '#');
+
+    s.addHit();
+    EXPECT_FALSE(s.isSunk());
+}
