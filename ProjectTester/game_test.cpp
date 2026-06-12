@@ -34,3 +34,15 @@ TEST(GameIsVsComputerTest, JvsComputer) {
 
     EXPECT_TRUE(g.isVsComputer());
 }
+
+
+TEST(GameExecuteMoveTest, MissChangesTurn) {
+    Player p1("pedro");
+    Player p2("arthur");
+
+    Game g(&p1, &p2, false, 0);
+
+    g.executeMove(0, 0);
+
+    EXPECT_EQ(g.getCurrentTurn(), 2);
+}
