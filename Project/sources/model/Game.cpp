@@ -154,7 +154,6 @@ void Game::computerMove(int& row, int& col, bool& hit) {
 
     if (hit && this->aiDifficulty == 2) {
         addNeighbors(row, col);
-        verifyDestroyedShips(row, col);
     }
 
     if (result == 'O') switchTurn();
@@ -168,6 +167,19 @@ bool Game::cellAlreadyAttacked(int row, int col) const {
 
 void Game::addNeighbors(int row, int col)
 {
+    const vector<Ship>& fleet = this->board1.getFleet();
+
+    for (const Ship& ship : fleet) {
+        if (this->board1.isCellPartOfShip(row, col, ship) && ship.isSunk()) {
+            this->aiTargets.clear();
+            this->attackedRow = -1;
+            this->attackedCol = -1;
+            this->prevAttackedRow = -1;
+            this->prevAttackedCol = -1;
+            return;
+        }
+    }
+
     bool directionKnown = (attackedRow != -1 && abs(row - attackedRow) + abs(col - attackedCol) == 1);
 
     if (directionKnown)
@@ -188,9 +200,7 @@ void Game::addNeighbors(int row, int col)
         {
             this->aiTargets.push_back({r, c});
         }
-    }
-    else
-    {
+    } else {
         int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int i = 0; i < 4; i++) {
@@ -201,25 +211,11 @@ void Game::addNeighbors(int row, int col)
             }
         }
     }
+
     prevAttackedRow = attackedRow;
     prevAttackedCol = attackedCol;
     attackedRow = row;
     attackedCol = col;
-}
-
-void Game::verifyDestroyedShips(int row, int col) {
-    const vector<Ship>& fleet = this->board1.getFleet();
-
-    for (const Ship& ship : fleet) {
-        if (this->board1.isCellPartOfShip(row, col, ship) && ship.isSunk()) {
-            this->aiTargets.clear();
-            this->attackedRow = -1;
-            this->attackedCol = -1;
-            this->prevAttackedRow = -1;
-            this->prevAttackedCol = -1;
-            break;
-        }
-    }
 }
 
 Board& Game::getActiveBoard() {

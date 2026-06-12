@@ -69,7 +69,6 @@ public:
     bool isGameOver() const;
     bool cellAlreadyAttacked(int row, int col) const;
     void addNeighbors(int row, int col);
-    void verifyDestroyedShips(int row, int col);
 };
 
 #endif
