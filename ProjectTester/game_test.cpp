@@ -46,3 +46,17 @@ TEST(GameExecuteMoveTest, MissChangesTurn) {
 
     EXPECT_EQ(g.getCurrentTurn(), 2);
 }
+
+
+TEST(GameExecuteMoveTest, HitKeepsTurn) {
+    Player p1("pedro");
+    Player p2("arthur");
+
+    Game g(&p1, &p2, false, 0);
+    Ship s("Fragata", 2, '#');
+
+    g.getBoard2().placeShip(s, 0, 0, true);
+    g.executeMove(0, 0);
+
+    EXPECT_EQ(g.getCurrentTurn(), 1);
+}
