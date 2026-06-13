@@ -13,6 +13,7 @@
 #include "GameDTO.h"
 #include "PlayerMapper.h"
 #include "BoardMapper.h"
+#include "GameMapper.h"
 
 using namespace std;
 
@@ -537,10 +538,7 @@ void Controller::runGameLoop()
     }
 
     GameDTO dto;
-    dto.gameFinished = true;
-    dto.againstComputer = this->currentGame->isVsComputer();
-    dto.dificultyAI = this->currentGame->getAiDifficulty();
-    dto.currentRound = this->currentGame->getCurrentTurn();
+    GameMapper::model2DTO(*this->currentGame, dto);
 
     if (dto.againstComputer) {
         Player* p1 = this->currentGame->getPlayer1();
