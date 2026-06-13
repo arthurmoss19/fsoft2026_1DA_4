@@ -15,3 +15,17 @@ TEST(PlayerContainerAddTest, AddAndGet) {
     EXPECT_NE(p, nullptr);
     EXPECT_TRUE(*p == "pedro");
 }
+
+
+TEST(PlayerContainerGetTest, GetNonExistent) {
+    PlayerContainer pc;
+    bool flag = false;
+
+    try {
+        pc.get("jogadornaoexiste");
+    } catch (NoDataException& e) {
+        flag = true;
+    }
+
+    EXPECT_TRUE(flag);
+}
