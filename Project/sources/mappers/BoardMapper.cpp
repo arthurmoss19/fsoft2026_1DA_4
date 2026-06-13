@@ -5,8 +5,6 @@
 #include "BoardMapper.h"
 #include "ShipMapper.h"
 
-#include <algorithm>
-
 void BoardMapper::model2DTO(const Board& board, BoardDTO& dto) {
     dto.size    = board.getSize();
     dto.allSunk = board.allShipsSunk();
@@ -21,12 +19,8 @@ void BoardMapper::model2DTO(const Board& board, BoardDTO& dto) {
         ShipDTO boatDto;
         int row = -1, column = -1;
 
-        for (int i = 0; i < dto.size && row == -1; i++)
-            for (int j = 0; j < dto.size && row == -1; j++)
-                if (dto.grid[i][j] == ship.getSymbol()) {
-                    row    = i;
-                    column = j;
-                }
+        row    = ship.getStartRow();
+        column = ship.getStartCol();
 
         ShipMapper::model2DTO(ship, row, column, boatDto);
         dto.fleet.push_back(boatDto);
