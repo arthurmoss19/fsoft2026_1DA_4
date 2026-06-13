@@ -82,3 +82,10 @@ TEST(BoardAllShipsSunkTest, AllSunk) {
 
     EXPECT_TRUE(b.allShipsSunk());
 }
+
+TEST(BoardGetCellTest, CellValueAfterShot) {
+    Board b;
+
+    b.registerShot(0, 0);
+    EXPECT_EQ(b.getCell(0, 0), 'O');
+}
