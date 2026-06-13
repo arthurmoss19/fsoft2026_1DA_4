@@ -6,6 +6,7 @@
 #include "player_test.cpp"
 #include "ship_test.cpp"
 #include "game_test.cpp"
+#include "game_test.cpp"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
