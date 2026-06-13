@@ -24,7 +24,6 @@ private:
     void setSize(int size);
 
 public:
-    friend class ShipMapper;
     Ship(const string& type, int size, char symbol);
     Ship(const Ship& obj);
     ~Ship() = default;

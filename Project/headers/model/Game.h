@@ -42,7 +42,6 @@ public:
         int size;
     };
     static const vector<ShipInfo>& getFleet();
-    friend class GameMapper;
     Game(Player* p1, Player* p2, bool isVsAI, int difficulty);
     ~Game() = default;
     void prepareMatch();
