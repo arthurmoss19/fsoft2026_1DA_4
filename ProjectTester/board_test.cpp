@@ -52,3 +52,13 @@ TEST(BoardRegisterShotTest, ShotInWater) {
     char result = b.registerShot(0, 0);
     EXPECT_EQ(result, 'O');
 }
+
+
+TEST(BoardRegisterShotTest, ShotInShip) {
+    Board b;
+    Ship s("Fragata", 2, '#');
+    b.placeShip(s, 0, 0, true);
+
+    char result = b.registerShot(0, 0);
+    EXPECT_EQ(result, 'X');
+}
