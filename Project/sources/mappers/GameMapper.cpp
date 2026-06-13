@@ -3,8 +3,6 @@
 //
 
 #include "GameMapper.h"
-#include "PlayerMapper.h"
-#include "BoardMapper.h"
 
 void GameMapper::model2DTO(const Game& game, GameDTO& dto) {
     dto.currentRound    = game.getCurrentTurn();
