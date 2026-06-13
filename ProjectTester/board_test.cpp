@@ -34,3 +34,13 @@ TEST(BoardPlaceShipTest, OutOfBounds) {
     bool result = b.placeShip(s, 9, 9, true);
     EXPECT_FALSE(result);
 }
+
+TEST(BoardPlaceShipTest, Overlap) {
+    Board b;
+    Ship s1("Fragata", 2, '#');
+    Ship s2("Submarino", 3, '#');
+    b.placeShip(s1, 0, 0, true);
+
+    bool result = b.placeShip(s2, 0, 0, true);
+    EXPECT_FALSE(result);
+}
