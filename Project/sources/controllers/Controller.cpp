@@ -10,6 +10,9 @@
 #include "NoDataException.h"
 #include "InvalidDataException.h"
 #include "DuplicatedDataException.h"
+#include "GameDTO.h"
+#include "PlayerMapper.h"
+#include "BoardMapper.h"
 
 using namespace std;
 
@@ -533,34 +536,75 @@ void Controller::runGameLoop()
         }
     }
 
-    if (this->currentGame->isVsComputer()) {
+    GameDTO dto;
+    dto.gameFinished = true;
+    dto.againstComputer = this->currentGame->isVsComputer();
+    dto.dificultyAI = this->currentGame->getAiDifficulty();
+    dto.currentRound = this->currentGame->getCurrentTurn();
+
+    if (dto.againstComputer) {
         Player* p1 = this->currentGame->getPlayer1();
         bool playerWon = this->currentGame->getBoard2().allShipsSunk();
 
         if (playerWon) {
-            this->view.showGameOver(p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1(),"Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits());
-        }
-        else {
-            this->view.showGameOver("Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits(), p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1());
+            dto.player1.nickname   = p1->getNickname();
+            dto.player1.totalShots = this->currentGame->getCurrentShotsP1();
+            dto.player1.shotsHit   = this->currentGame->getCurrentHitsP1();
+            dto.player1.accuracy   = dto.player1.totalShots > 0
+                ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+                : 0;
+
+            dto.player2.nickname   = "Computador";
+            dto.player2.totalShots = this->currentGame->getAiShots();
+            dto.player2.shotsHit   = this->currentGame->getAiHits();
+            dto.player2.accuracy   = dto.player2.totalShots > 0
+                ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+                : 0;
+        } else {
+            dto.player1.nickname   = "Computador";
+            dto.player1.totalShots = this->currentGame->getAiShots();
+            dto.player1.shotsHit   = this->currentGame->getAiHits();
+            dto.player1.accuracy   = dto.player1.totalShots > 0
+                ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+                : 0;
+
+            dto.player2.nickname   = p1->getNickname();
+            dto.player2.totalShots = this->currentGame->getCurrentShotsP1();
+            dto.player2.shotsHit   = this->currentGame->getCurrentHitsP1();
+            dto.player2.accuracy   = dto.player2.totalShots > 0
+                ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+                : 0;
         }
     } else {
+        Player* p1   = this->currentGame->getPlayer1();
         Player* winner = this->currentGame->getCurrentPlayer();
-        Player* loser = (winner == this->currentGame->getPlayer1())
-                        ? this->currentGame->getPlayer2()
-                        : this->currentGame->getPlayer1();
+        Player* loser = (winner == p1) ? this->currentGame->getPlayer2()
+                                       : this->currentGame->getPlayer1();
 
-        Player* p1 = this->currentGame->getPlayer1();
+        dto.player1.nickname   = winner->getNickname();
+        dto.player1.totalShots = (winner == p1) ? this->currentGame->getCurrentShotsP1()
+                                                : this->currentGame->getCurrentShotsP2();
+        dto.player1.shotsHit   = (winner == p1) ? this->currentGame->getCurrentHitsP1()
+                                                : this->currentGame->getCurrentHitsP2();
+        dto.player1.accuracy   = dto.player1.totalShots > 0
+            ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+            : 0;
 
-        int winnerShots = (winner == p1) ? this->currentGame->getCurrentShotsP1() : this->currentGame->getCurrentShotsP2();
-        int winnerHits  = (winner == p1) ? this->currentGame->getCurrentHitsP1()  : this->currentGame->getCurrentHitsP2();
-        int loserShots  = (winner == p1) ? this->currentGame->getCurrentShotsP2() : this->currentGame->getCurrentShotsP1();
-        int loserHits   = (winner == p1) ? this->currentGame->getCurrentHitsP2()  : this->currentGame->getCurrentHitsP1();
-
-        this->view.showGameOver (
-        winner->getNickname(), winnerShots, winnerHits,
-        loser->getNickname(), loserShots, loserHits
-        );
+        dto.player2.nickname   = loser->getNickname();
+        dto.player2.totalShots = (winner == p1) ? this->currentGame->getCurrentShotsP2()
+                                                : this->currentGame->getCurrentShotsP1();
+        dto.player2.shotsHit   = (winner == p1) ? this->currentGame->getCurrentHitsP2()
+                                                : this->currentGame->getCurrentHitsP1();
+        dto.player2.accuracy   = dto.player2.totalShots > 0
+            ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+            : 0;
     }
+
+    BoardMapper::model2DTO(this->currentGame->getBoard1(), dto.board1);
+    BoardMapper::model2DTO(this->currentGame->getBoard2(), dto.board2);
+
+    this->view.showGameOver(dto);
+
     Utils::pressEnter("Pressione ENTER para voltar ao menu principal...");
     system("cls");
 

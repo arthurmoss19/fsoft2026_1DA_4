@@ -300,12 +300,12 @@ void View::showShotResult(bool hit, bool sunk, const string& shipType, const str
     cout << '\n';
 }
 
-void View::showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits) {
+void View::showGameOver(const GameDTO& game) {
     cout << "\n**********************************\n";
     cout << "********** FIM DE JOGO **********\n";
     cout << "**********************************\n";
-    cout << "\n--- VENCEDOR: " << winnerName << " ---\n";
-    cout << "Tiros: " << winnerShots << " | Acertos: " << winnerHits << " | Precisao: " << (winnerShots > 0 ? winnerHits * 100 / winnerShots : 0) << "%\n";
-    cout << "\n--- PERDEDOR: " << loserName << " ---\n";
-    cout << "Tiros: " << loserShots << " | Acertos: " << loserHits << " | Precisao: " << (loserShots > 0 ? loserHits * 100 / loserShots : 0) << "%\n\n";
+    cout << "\n--- VENCEDOR: " << game.player1.nickname << " ---\n";
+    cout << "Tiros: " << game.player1.totalShots << " | Acertos: " << game.player1.shotsHit << " | Precisao: " << game.player1.accuracy << "%\n";
+    cout << "\n--- PERDEDOR: " << game.player2.nickname << " ---\n";
+    cout << "Tiros: " << game.player2.totalShots << " | Acertos: " << game.player2.shotsHit << " | Precisao: " << game.player2.accuracy << "%\n\n";
 }

@@ -6,6 +6,7 @@
 #define PROJECT_VIEW_H
 
 #include "Board.h"
+#include "GameDTO.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ public:
     void showOverlapError();
     void showGameTurn(const string& player, const Board& yourBoard, const Board& opponentBoard);
     void showShotResult(bool hit, bool sunk, const string& shipType, const string& coordinate);
-    void showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits);
+    void showGameOver(const GameDTO& game);
     bool getShotCoordinate(int& row, int& col);
 };
 
