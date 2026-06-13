@@ -89,3 +89,11 @@ TEST(BoardGetCellTest, CellValueAfterShot) {
     b.registerShot(0, 0);
     EXPECT_EQ(b.getCell(0, 0), 'O');
 }
+
+
+TEST(BoardPlaceShipAutomaticallyTest, PlacesShip) {
+    Board b;
+
+    b.placeShipAutomatically(2, "Fragata", '#');
+    EXPECT_FALSE(b.allShipsSunk());
+}
