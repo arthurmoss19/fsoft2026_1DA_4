@@ -81,8 +81,6 @@ void Controller::runLogin() {
 void Controller::runMain() {
     int op = -1;
     do {
-        this->view.printMessage("---------- Batalha Naval ----------");
-
         op = this -> view.menuMain();
         switch(op) {
             case 1:

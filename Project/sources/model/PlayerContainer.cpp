@@ -9,15 +9,15 @@
 #include <sstream>
 
 Player* PlayerContainer::search(const string& nickname) {
-    for (Player* player : this->players) {
-        if (*player == nickname) {
-            return player;
+    for (list<Player*>::iterator it = this->players.begin(); it != this->players.end(); ++it) {
+        if (**it == nickname) {
+            return *it;
         }
     }
     return NULL;
 }
 
-list<Player*> PlayerContainer::getAll() {
+list<Player*>& PlayerContainer::getAll() {
     return this->players;
 }
 
@@ -49,13 +49,13 @@ void PlayerContainer::saveToFile(const string& filename) {
         return;
     }
 
-    for (Player* p : this->players) {
-        if (p == nullptr) continue;
-        file << (p)->getNickname() << ","
-             << (p)->getWins() << ","
-             << (p)->getLosses() << ","
-             << (p)->getTotalShots() << ","
-             << (p)->getHits() << "\n";
+    for (list<Player*>::iterator it = this->players.begin(); it != this->players.end(); ++it) {
+        if (*it == nullptr) continue;
+        file << (*it)->getNickname() << ","
+             << (*it)->getWins() << ","
+             << (*it)->getLosses() << ","
+             << (*it)->getTotalShots() << ","
+             << (*it)->getHits() << "\n";
     }
     file.close();
 }

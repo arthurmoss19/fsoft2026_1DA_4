@@ -13,7 +13,7 @@ private:
     list<Player*> players;
 
 public:
-    list<Player*> getAll();
+    list<Player*>& getAll();
     Player* get(const string& nickname);
     void add(const string& nickname);
     void saveToFile(const std::string& filename);
