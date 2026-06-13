@@ -71,3 +71,14 @@ TEST(BoardAllShipsSunkTest, NotSunk) {
 
     EXPECT_FALSE(b.allShipsSunk());
 }
+
+TEST(BoardAllShipsSunkTest, AllSunk) {
+    Board b;
+    Ship s("Fragata", 2, '#');
+    b.placeShip(s, 0, 0, true);
+
+    b.registerShot(0, 0);
+    b.registerShot(0, 1);
+
+    EXPECT_TRUE(b.allShipsSunk());
+}
