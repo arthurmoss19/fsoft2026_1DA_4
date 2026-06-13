@@ -15,3 +15,12 @@ TEST(BoardConstructorTest, AllWater) {
         }
     }
 }
+
+
+TEST(BoardPlaceShipTest, ValidPlacement) {
+    Board b;
+    Ship s("Fragata", 2, '#');
+
+    bool result = b.placeShip(s, 0, 0, true);
+    EXPECT_TRUE(result);
+}
