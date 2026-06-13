@@ -24,3 +24,13 @@ TEST(BoardPlaceShipTest, ValidPlacement) {
     bool result = b.placeShip(s, 0, 0, true);
     EXPECT_TRUE(result);
 }
+
+
+
+TEST(BoardPlaceShipTest, OutOfBounds) {
+    Board b;
+    Ship s("Fragata", 2, '#');
+
+    bool result = b.placeShip(s, 9, 9, true);
+    EXPECT_FALSE(result);
+}
