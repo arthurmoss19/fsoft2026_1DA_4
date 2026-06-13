@@ -62,3 +62,12 @@ TEST(BoardRegisterShotTest, ShotInShip) {
     char result = b.registerShot(0, 0);
     EXPECT_EQ(result, 'X');
 }
+
+
+TEST(BoardAllShipsSunkTest, NotSunk) {
+    Board b;
+    Ship s("Fragata", 2, '#');
+    b.placeShip(s, 0, 0, true);
+
+    EXPECT_FALSE(b.allShipsSunk());
+}
