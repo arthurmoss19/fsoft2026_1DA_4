@@ -14,10 +14,12 @@
 #include "PlayerMapper.h"
 #include "BoardMapper.h"
 #include "GameMapper.h"
+#include "ProfileRepositoryFile.h"
 
 using namespace std;
 
 Controller::Controller() {
+    ProfileRepositoryFile::getInstance();
     this -> playerContainer = new PlayerContainer();
     this -> playerContainer -> loadFromFile("players.txt");
     this -> playerService = new PlayerService(this -> playerContainer);

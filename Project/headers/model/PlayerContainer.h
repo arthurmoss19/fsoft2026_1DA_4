@@ -19,6 +19,8 @@ public:
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
     Player* search(const string& nickname);
+    void add(Player* player);
+    void clear();
 };
 
 #endif // PROJETOFSOFT_PLAYERCONTAINER_H

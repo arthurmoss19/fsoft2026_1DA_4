@@ -22,6 +22,7 @@ private:
 
 public:
     static ProfileRepositoryFile* getInstance();
+    PlayerContainer* getModel();
 
     bool exists(const std::string& nickname) override;
     void addProfile(const Player& player) override;

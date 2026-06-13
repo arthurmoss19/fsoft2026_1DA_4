@@ -105,3 +105,14 @@ void PlayerContainer::loadFromFile(const string& filename) {
     }
     file.close();
 }
+
+void PlayerContainer::add(Player* player) {
+    this->players.push_back(player);
+}
+
+void PlayerContainer::clear() {
+    for (Player* p : this->players) {
+        delete p;
+    }
+    this->players.clear();
+}
