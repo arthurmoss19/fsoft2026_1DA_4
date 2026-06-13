@@ -7,12 +7,13 @@
 #include "Utils.h"
 
 void Player::setNickname(const string& nickname) {
-    if (Utils::isNicknameValid(nickname)) {
+    string errorMsg;
+    if (Utils::isNicknameValid(nickname, errorMsg)) {
         this->nickname = nickname;
     }
     else {
         string msg = "Jogador " + nickname;
-        throw InvalidDataException(msg);
+        throw InvalidDataException(errorMsg);
     }
 }
 

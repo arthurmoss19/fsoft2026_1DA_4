@@ -57,9 +57,28 @@ void Utils::pressEnter(const string& message) {
     } while (!input.empty());
 }
 
-bool Utils::isNicknameValid(const string& nick) {
+bool Utils::isNicknameValid(const string& nick, string& errorMsg) {
     if (nick.length() < 3 || nick.length() > 24) {
+        errorMsg = "O nickname deve ter entre 3 e 24 caracteres,";
         return false;
     }
+
+    string invalidChars;
+    for (char c : nick) {
+        if (c == ' ') {
+            errorMsg = "O nickname nao pode ter espacos,";
+            return false;
+        }
+        if (static_cast<unsigned char>(c) > 127) {
+            if (!invalidChars.empty()) invalidChars += ", ";
+            invalidChars += c;
+        }
+    }
+
+    if (!invalidChars.empty()) {
+        errorMsg = "O nickname nao pode conter o(s) caractere(s): " + invalidChars + ",";
+        return false;
+    }
+
     return true;
 }
