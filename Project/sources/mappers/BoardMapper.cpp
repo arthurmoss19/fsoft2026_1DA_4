@@ -17,12 +17,7 @@ void BoardMapper::model2DTO(const Board& board, BoardDTO& dto) {
     dto.fleet.clear();
     for (const Ship& ship : board.getFleet()) {
         ShipDTO boatDto;
-        int row = -1, column = -1;
-
-        row    = ship.getStartRow();
-        column = ship.getStartCol();
-
-        ShipMapper::model2DTO(ship, row, column, boatDto);
+        ShipMapper::model2DTO(ship, boatDto);
         dto.fleet.push_back(boatDto);
     }
 }

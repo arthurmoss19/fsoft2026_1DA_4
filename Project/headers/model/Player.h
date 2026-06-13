@@ -21,7 +21,6 @@ private:
     void setLosses(int losses);
 
 public:
-    friend class PlayerMapper;
     Player(const string& nickname);
     Player(const Player& obj);
     ~Player() = default;

@@ -21,7 +21,6 @@ private:
     static const char MISS = 'O';
 
 public:
-    friend class BoardMapper;
     Board();
     ~Board() = default;
     bool validatePosition(int row, int column, int size, bool horizontal) const;
