@@ -44,3 +44,11 @@ TEST(BoardPlaceShipTest, Overlap) {
     bool result = b.placeShip(s2, 0, 0, true);
     EXPECT_FALSE(result);
 }
+
+
+TEST(BoardRegisterShotTest, ShotInWater) {
+    Board b;
+
+    char result = b.registerShot(0, 0);
+    EXPECT_EQ(result, 'O');
+}
