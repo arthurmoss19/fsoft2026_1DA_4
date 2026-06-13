@@ -29,3 +29,20 @@ TEST(PlayerContainerGetTest, GetNonExistent) {
 
     EXPECT_TRUE(flag);
 }
+
+
+TEST(PlayerContainerSearchTest, SearchExistent) {
+    PlayerContainer pc;
+    pc.add("pedro");
+
+    Player* p = pc.search("pedro");
+    EXPECT_NE(p, nullptr);
+}
+
+TEST(PlayerContainerSearchTest, SearchNonExistent) {
+    PlayerContainer pc;
+
+    Player* p = pc.search("jogadornaoexiste");
+
+    EXPECT_EQ(p, nullptr);
+}
