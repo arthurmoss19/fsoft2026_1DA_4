@@ -12,6 +12,8 @@ include_directories(${PROJECT_HEADERS_DIR}/model)
 include_directories(${PROJECT_SOURCES_DIR}/model)
 include_directories(${PROJECT_HEADERS_DIR}/exceptions)
 include_directories(${PROJECT_SOURCES_DIR}/exceptions)
+include_directories(${PROJECT_HEADERS_DIR}/views)
+include_directories(${PROJECT_SOURCES_DIR}/views)
 
 set(GOOGLE_TEST_LIB ${PROJECT_SOURCE_DIR}/googleTestLib/googletest-main)
 set(GOOGLE_TEST_LIB_INCLUDE ${GOOGLE_TEST_LIB}/googletest/include)
@@ -37,6 +39,8 @@ set(SOURCE_FILES
         ${PROJECT_SOURCES_DIR}/exceptions/InvalidDataException.cpp
         ${PROJECT_HEADERS_DIR}/exceptions/NoDataException.h
         ${PROJECT_SOURCES_DIR}/exceptions/NoDataException.cpp
+        ${PROJECT_HEADERS_DIR}/views/Utils.h
+        ${PROJECT_SOURCES_DIR}/views/Utils.cpp
 
 )
 

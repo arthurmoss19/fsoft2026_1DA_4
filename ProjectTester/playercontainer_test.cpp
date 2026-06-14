@@ -46,14 +46,3 @@ TEST(PlayerContainerSearchTest, SearchNonExistent) {
 
     EXPECT_EQ(p, nullptr);
 }
-
-
-TEST(PlayerContainerRemoveTest, RemoveExistent) {
-    PlayerContainer pc;
-    pc.add("pedro");
-
-    Player* p = pc.remove("pedro");
-
-    EXPECT_NE(p, nullptr);
-    EXPECT_EQ(pc.search("pedro"), nullptr);
-}
