@@ -47,6 +47,7 @@ void Controller::runLogin() {
                     playerService -> getPlayer(nick);
                     currentNickname = nick;
                     system("cls");
+                    view.printMessage("Bem Vindo, " + currentNickname + "!\n");
                     runMain();
                     op = 0;
                 } catch (NoDataException& e) {
@@ -297,6 +298,16 @@ void Controller::runRankingType() {
 }
 
 void Controller::runStatistics() {
+    auto printStats = [&](const PlayerDTO& stats)
+    {
+        this->view.printMessage("Nickname: " + stats.nickname);
+        this->view.printMessage("Vitorias: " + to_string(stats.victories));
+        this->view.printMessage("Derrotas: " + to_string(stats.defeats));
+        this->view.printMessage("Numero de tiros dados: " + to_string(stats.totalShots));
+        this->view.printMessage("Acertos: " + to_string(stats.shotsHit));
+        this->view.printMessage("Precisao: " + to_string(stats.accuracy) + "%");
+    };
+
     int op = -1;
     do {
         op = this -> view.menuStatistics();
@@ -306,17 +317,11 @@ void Controller::runStatistics() {
                 this->view.printMessage("********** As Minhas Estatisticas **********\n");
                 try {
                     PlayerDTO myStats = this->playerService->getPlayer(this->currentNickname);
-                    this->view.printMessage("Nickname: " + myStats.nickname);
-                    this->view.printMessage("Vitorias: " + to_string(myStats.victories));
-                    this->view.printMessage("Derrotas: " + to_string(myStats.defeats));
-                    this->view.printMessage("Numero de tiros dados: " + to_string(myStats.totalShots));
-                    this->view.printMessage("Acertos: " + to_string(myStats.shotsHit));
-                    this->view.printMessage("Precisao: " + to_string(myStats.accuracy) + "%");
+                    printStats(myStats);
                 } catch (NoDataException& e) {
                     this->view.printMessage(e.what());
                 }
             }
-
             break;
                 system("cls");
                 case 2: {
@@ -329,12 +334,7 @@ void Controller::runStatistics() {
                         this->view.printMessage("********** Estatisticas de " + nick + " **********\n");
 
                         PlayerDTO stats = this->playerService->getPlayer(nick);
-                        this->view.printMessage("\nNickname: " + stats.nickname);
-                        this->view.printMessage("Vitorias: " + to_string(stats.victories));
-                        this->view.printMessage("Derrotas: " + to_string(stats.defeats));
-                        this->view.printMessage("Numero de tiros dados: " + to_string(stats.totalShots));
-                        this->view.printMessage("Acertos: " + to_string(stats.shotsHit));
-                        this->view.printMessage("Precisao: " + to_string(stats.accuracy) + "%");
+                        printStats(stats);
                     } catch (NoDataException & e) {
                         this -> view.printMessage(e.what());
                     }
