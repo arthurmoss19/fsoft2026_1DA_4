@@ -74,16 +74,3 @@ list<PlayerDTO> PlayerService::getRankingByAccuracy() {
     }
     return result;
 }
-
-void PlayerService::updateStats(const string& nickname, bool won, int shots, int hits) {
-    if (shots < 0 || hits < 0 || hits > shots) {
-        throw InvalidDataException("Invalid shot statistics provided.");
-    }
-
-    Player* player = container->get(nickname);
-
-    for (int i = 0; i < shots; i++) {
-        player->registerShot(i < hits);
-    }
-    player->registerGameOver(won);
-}

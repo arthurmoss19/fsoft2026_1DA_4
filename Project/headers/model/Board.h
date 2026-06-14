@@ -27,7 +27,6 @@ public:
     bool placeShip(const Ship& ship, int row, int column, bool horizontal);
     void placeShipAutomatically(int size, const string& type, char symbol);
     char registerShot(int row, int column);
-    void print(bool hideShips) const;
     bool allShipsSunk() const;
     int getSize() const;
     char getCell(int row, int col) const;

@@ -149,4 +149,5 @@ add_executable(
         ${EXCEPTIONS_SOURCE_FILES}
         ${MAPPERS_SOURCE_FILES}
         ${SERVICES_SOURCE_FILES}
+        ${REPO_SOURCE_FILES}
 )

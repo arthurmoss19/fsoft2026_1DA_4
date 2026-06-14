@@ -10,10 +10,16 @@
 #include "NoDataException.h"
 #include "InvalidDataException.h"
 #include "DuplicatedDataException.h"
+#include "GameDTO.h"
+#include "PlayerMapper.h"
+#include "BoardMapper.h"
+#include "GameMapper.h"
+#include "ProfileRepositoryFile.h"
 
 using namespace std;
 
 Controller::Controller() {
+    ProfileRepositoryFile::getInstance();
     this -> playerContainer = new PlayerContainer();
     this -> playerContainer -> loadFromFile("players.txt");
     this -> playerService = new PlayerService(this -> playerContainer);
@@ -36,7 +42,7 @@ void Controller::runLogin() {
             case 1: {
                 system("cls");
                 view.printMessage("Login: Entrar com conta\n");
-                string nick = loginView.getNickname("Nickname");
+                string nick = Utils::getString("Nickname");
                 try {
                     playerService -> getPlayer(nick);
                     currentNickname = nick;
@@ -81,8 +87,6 @@ void Controller::runLogin() {
 void Controller::runMain() {
     int op = -1;
     do {
-        this->view.printMessage("---------- Batalha Naval ----------");
-
         op = this -> view.menuMain();
         switch(op) {
             case 1:
@@ -158,7 +162,7 @@ void Controller::runNewGame() {
                             this->view.printMessage("********** Modo de jogo: Jogador vs Jogador **********\n");
                             this->view.printMessage("********** Login do Jogador 2 **********\n");
 
-                            nick2 = loginView.getNickname("Nickname do jogador 2");
+                            nick2 = Utils::getString("Nickname do jogador 2");
                             try {
                                 this->playerService->getPlayer(nick2);
                                 system("cls");
@@ -221,7 +225,7 @@ void Controller::runNewGame() {
                     system("cls");
 
                     this->view.printMessage("Os teus navios foram todos posicionados com sucesso!\n");
-                    Utils::pressEnterPlayerSwitch(nick2);
+                    Utils::pressEnter("Pressione ENTER e passe o computador para " + nick2 + "...");
 
                     system("cls");
                     this->view.printMessage("\n********** Jogador 2: " + p2->getNickname() + " - posiciona os teus navios **********");
@@ -239,9 +243,9 @@ void Controller::runNewGame() {
                     this->view.printMessage("\nPreparacao concluida! O jogo vai comecar!\n");
 
 
-                    Utils::pressEnter();
+                    Utils::pressEnter("Pressione ENTER...");
                     system("cls");
-                    Utils::pressEnterConfirmPlayer(currentNickname);
+                    Utils::pressEnter("Passe o computador para " + currentNickname + "\nPressione ENTER...");
                     system("cls");
 
                     runGameLoop();
@@ -319,7 +323,7 @@ void Controller::runStatistics() {
                     system("cls");
                     this->view.printMessage("**********  Consultar outro Jogador ********** \n");
 
-                    string nick = this -> loginView.getNickname("\nIntroduza o nickname de um jogador");
+                    string nick = Utils::getString("\nIntroduza o nickname de um jogador");
                     try {
                         system("cls");
                         this->view.printMessage("********** Estatisticas de " + nick + " **********\n");
@@ -348,7 +352,7 @@ void Controller::runStatistics() {
 
 void Controller::runHelpAndRules() {
     this->view.printHelpAndRules();
-    Utils::pressEnterMainMenu();
+    Utils::pressEnter("Pressione ENTER para voltar ao menu principal...");
     system("cls");
 }
 
@@ -467,7 +471,7 @@ void Controller::runGameLoop()
             string coord = string(1, 'A' + row) + to_string(col);
             this->view.printMessage("\nComputador atirou em " + coord + (hit ? ": NAVIO!\n" : ": AGUA!\n"));
 
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
             continue;
         }
@@ -519,51 +523,89 @@ void Controller::runGameLoop()
         this->view.showShotResult(hit, sunk, sunkShipType, coord);
 
         if (hit) {
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
         }
 
         if (!hit && !this->currentGame->isGameOver()) {
-            Utils::pressEnter();
+            Utils::pressEnter("Pressione ENTER...");
             system("cls");
 
             if (!this->currentGame->isVsComputer()) {
                 string nextPlayer = this->currentGame->getCurrentPlayer()->getNickname();
-                Utils::pressEnterConfirmPlayer(nextPlayer);
+                Utils::pressEnter("Passe o computador para " + nextPlayer + "\nPressione ENTER...");
             }
             system("cls");
         }
     }
 
-    if (this->currentGame->isVsComputer()) {
+    GameDTO dto;
+    GameMapper::model2DTO(*this->currentGame, dto);
+
+    if (dto.againstComputer) {
         Player* p1 = this->currentGame->getPlayer1();
         bool playerWon = this->currentGame->getBoard2().allShipsSunk();
 
         if (playerWon) {
-            this->view.showGameOver(p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1(),"Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits());
-        }
-        else {
-            this->view.showGameOver("Computador", this->currentGame->getAiShots(), this->currentGame->getAiHits(), p1->getNickname(), this->currentGame->getCurrentShotsP1(), this->currentGame->getCurrentHitsP1());
+            dto.player1.nickname   = p1->getNickname();
+            dto.player1.totalShots = this->currentGame->getCurrentShotsP1();
+            dto.player1.shotsHit   = this->currentGame->getCurrentHitsP1();
+            dto.player1.accuracy   = dto.player1.totalShots > 0
+                ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+                : 0;
+
+            dto.player2.nickname   = "Computador";
+            dto.player2.totalShots = this->currentGame->getAiShots();
+            dto.player2.shotsHit   = this->currentGame->getAiHits();
+            dto.player2.accuracy   = dto.player2.totalShots > 0
+                ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+                : 0;
+        } else {
+            dto.player1.nickname   = "Computador";
+            dto.player1.totalShots = this->currentGame->getAiShots();
+            dto.player1.shotsHit   = this->currentGame->getAiHits();
+            dto.player1.accuracy   = dto.player1.totalShots > 0
+                ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+                : 0;
+
+            dto.player2.nickname   = p1->getNickname();
+            dto.player2.totalShots = this->currentGame->getCurrentShotsP1();
+            dto.player2.shotsHit   = this->currentGame->getCurrentHitsP1();
+            dto.player2.accuracy   = dto.player2.totalShots > 0
+                ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+                : 0;
         }
     } else {
+        Player* p1   = this->currentGame->getPlayer1();
         Player* winner = this->currentGame->getCurrentPlayer();
-        Player* loser = (winner == this->currentGame->getPlayer1())
-                        ? this->currentGame->getPlayer2()
-                        : this->currentGame->getPlayer1();
+        Player* loser = (winner == p1) ? this->currentGame->getPlayer2()
+                                       : this->currentGame->getPlayer1();
 
-        Player* p1 = this->currentGame->getPlayer1();
+        dto.player1.nickname   = winner->getNickname();
+        dto.player1.totalShots = (winner == p1) ? this->currentGame->getCurrentShotsP1()
+                                                : this->currentGame->getCurrentShotsP2();
+        dto.player1.shotsHit   = (winner == p1) ? this->currentGame->getCurrentHitsP1()
+                                                : this->currentGame->getCurrentHitsP2();
+        dto.player1.accuracy   = dto.player1.totalShots > 0
+            ? (float)dto.player1.shotsHit / dto.player1.totalShots * 100
+            : 0;
 
-        int winnerShots = (winner == p1) ? this->currentGame->getCurrentShotsP1() : this->currentGame->getCurrentShotsP2();
-        int winnerHits  = (winner == p1) ? this->currentGame->getCurrentHitsP1()  : this->currentGame->getCurrentHitsP2();
-        int loserShots  = (winner == p1) ? this->currentGame->getCurrentShotsP2() : this->currentGame->getCurrentShotsP1();
-        int loserHits   = (winner == p1) ? this->currentGame->getCurrentHitsP2()  : this->currentGame->getCurrentHitsP1();
-
-        this->view.showGameOver (
-        winner->getNickname(), winnerShots, winnerHits,
-        loser->getNickname(), loserShots, loserHits
-        );
+        dto.player2.nickname   = loser->getNickname();
+        dto.player2.totalShots = (winner == p1) ? this->currentGame->getCurrentShotsP2()
+                                                : this->currentGame->getCurrentShotsP1();
+        dto.player2.shotsHit   = (winner == p1) ? this->currentGame->getCurrentHitsP2()
+                                                : this->currentGame->getCurrentHitsP1();
+        dto.player2.accuracy   = dto.player2.totalShots > 0
+            ? (float)dto.player2.shotsHit / dto.player2.totalShots * 100
+            : 0;
     }
-    Utils::pressEnterMainMenu();
+
+    BoardMapper::model2DTO(this->currentGame->getBoard1(), dto.board1);
+    BoardMapper::model2DTO(this->currentGame->getBoard2(), dto.board2);
+
+    this->view.showGameOver(dto);
+
+    Utils::pressEnter("Pressione ENTER para voltar ao menu principal...");
     system("cls");
 
     this->playerContainer->saveToFile("players.txt");

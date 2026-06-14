@@ -10,7 +10,7 @@
 
 class ShipMapper {
 public:
-    static void model2DTO(const Ship& ship, int row, int column, ShipDTO& dto);
+    static void model2DTO(const Ship& ship, ShipDTO& dto);
     static void dto2Model(const ShipDTO& dto, Ship& boat);
 };
 

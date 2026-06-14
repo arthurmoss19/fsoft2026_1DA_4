@@ -5,26 +5,8 @@
 #include "Ship.h"
 #include "InvalidDataException.h"
 
-bool Ship::isSizeValid(int size) {
-    if (size >= 2 && size <= 5) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-bool Ship::isTypeValid(const string& type) {
-    if (type.length() >= 3 && type.length() <= 20) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 void Ship::setSize(int size) {
-    if (isSizeValid(size)) {
+    if (size >= 2 && size <= 5) {
         this ->size = size;
     }
     else {
@@ -34,7 +16,7 @@ void Ship::setSize(int size) {
 }
 
 void Ship::setType(const string& type) {
-    if (isTypeValid(type)) {
+    if (type.length() >= 3 && type.length() <= 20) {
         this ->type = type;
     }
     else {

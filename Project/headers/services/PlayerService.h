@@ -28,7 +28,6 @@ public:
     PlayerDTO getPlayer(const string& nickname);
     list<PlayerDTO> getRankingByWins();
     list<PlayerDTO> getRankingByAccuracy();
-    void updateStats(const string& nickname, bool won, int shots, int hits);
 };
 
 #endif //FSOFT_PLAYERSERVICE_H

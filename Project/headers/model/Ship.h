@@ -19,8 +19,6 @@ private:
     int startCol;
     char symbol;
     bool direction;
-    bool isSizeValid(int size);
-    bool isTypeValid(const string& type);
     void setSize(int size);
 
 public:

@@ -4,13 +4,13 @@
 
 #include "ShipMapper.h"
 
-void ShipMapper::model2DTO(const Ship& ship, int row, int column, ShipDTO& dto) {
+void ShipMapper::model2DTO(const Ship& ship, ShipDTO& dto) {
     dto.type      = ship.getType();
     dto.size      = ship.getSize();
     dto.direction = ship.getDirection();
     dto.destroyed = ship.isSunk();
-    dto.line      = row;
-    dto.column    = column;
+    dto.line      = ship.getStartRow();
+    dto.column    = ship.getStartCol();
 }
 
 void ShipMapper::dto2Model(const ShipDTO& dto, Ship& ship) {

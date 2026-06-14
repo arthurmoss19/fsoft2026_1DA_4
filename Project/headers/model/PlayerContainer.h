@@ -16,11 +16,11 @@ public:
     list<Player*>& getAll();
     Player* get(const string& nickname);
     void add(const string& nickname);
-    Player* remove(const string& nickname);
-    Player* update(const string& oldNickname, const string& newNickname);
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
     Player* search(const string& nickname);
+    void add(Player* player);
+    void clear();
 };
 
 #endif // PROJETOFSOFT_PLAYERCONTAINER_H

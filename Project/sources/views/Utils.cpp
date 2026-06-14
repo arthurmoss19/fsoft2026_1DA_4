@@ -24,7 +24,6 @@ int Utils::getNumber(const string&  label, int min, int max){
         return -1;
     }
 
-    cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (number < min || number > max) {
@@ -45,48 +44,41 @@ string Utils::getString(const string& label) {
     return input;
 }
 
-void Utils::pressEnterMainMenu() {
-
+void Utils::pressEnter(const string& message) {
     string input;
+
     do {
-        cout << "\nPressione ENTER para voltar ao menu principal...";
+        cout << "\n" << message;
         getline(cin, input);
+
         if (!input.empty()) {
             cout << "\nApenas pressione ENTER, sem escrever nada...\n";
         }
     } while (!input.empty());
 }
 
-void Utils::pressEnterPlayerSwitch(const string& player) {
-    string input;
-    do {
-        cout << "\nPressione ENTER e passe o computador para " << player << "...";
-        getline(cin, input);
-        if (!input.empty()) {
-            cout << "\nApenas pressione ENTER, sem escrever nada...\n";
-        }
-    } while (!input.empty());
-}
+bool Utils::isNicknameValid(const string& nick, string& errorMsg) {
+    if (nick.length() < 3 || nick.length() > 24) {
+        errorMsg = "O nickname deve ter entre 3 e 24 caracteres,";
+        return false;
+    }
 
-void Utils::pressEnterConfirmPlayer(const string& player) {
-    string input;
-    do {
-        cout << "\nPasse o computador para " << player << "\n";
-        cout << "Pressione ENTER...";
-        getline(cin, input);
-        if (!input.empty()) {
-            cout << "\nApenas pressione ENTER, sem escrever nada...\n";
+    string invalidChars;
+    for (char c : nick) {
+        if (c == ' ') {
+            errorMsg = "O nickname nao pode ter espacos,";
+            return false;
         }
-    } while (!input.empty());
-}
+        if (static_cast<unsigned char>(c) > 127) {
+            if (!invalidChars.empty()) invalidChars += ", ";
+            invalidChars += c;
+        }
+    }
 
-void Utils::pressEnter() {
-    string input;
-    do {
-        cout << "\nPressione ENTER...";
-        getline(cin, input);
-        if (!input.empty()) {
-            cout << "\nApenas pressione ENTER, sem escrever nada...\n\n";
-        }
-    } while (!input.empty());
+    if (!invalidChars.empty()) {
+        errorMsg = "O nickname nao pode conter o(s) caractere(s): " + invalidChars + ",";
+        return false;
+    }
+
+    return true;
 }

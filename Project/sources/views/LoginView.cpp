@@ -2,10 +2,9 @@
 // Created by arthu on 17/05/2026.
 //
 
-#include "LogInView.h"
+#include "LoginView.h"
 #include "Utils.h"
 #include <iostream>
-#include <iomanip>
 
 using namespace std;
 
@@ -27,8 +26,4 @@ PlayerLoginDTO LoginView::getNewPlayer() {
     cout << "\n********** Registar Novo Jogador **********\n";
     dto.nickname = Utils::getString("Nickname (3-24 caracteres)");
     return dto;
-}
-
-string LoginView::getNickname(const string& label) {
-    return Utils::getString(label);
 }

@@ -70,11 +70,6 @@ bool Game::checkGameOver() {
     return false;
 }
 
-void Game::prepareMatch() {
-    this->currentTurn = 1;
-    this->gameOver = false;
-}
-
 char Game::executeMove(int row, int column) {
     if (this->gameOver) {
         return false;
@@ -115,9 +110,9 @@ char Game::executeMove(int row, int column) {
 
 void Game::computerMove(int& row, int& col, bool& hit) {
     static bool seeded = false;
-    if (!seeded) { srand(time(0)); seeded = true; }
-
-    Board& target = this->board1;
+    if (!seeded) {
+        srand(time(0)); seeded = true;
+    }
 
     if (this->aiDifficulty == 1 || this->aiTargets.empty()) {
         do {
@@ -167,6 +162,7 @@ bool Game::cellAlreadyAttacked(int row, int col) const {
 
 void Game::addNeighbors(int row, int col)
 {
+    const int SIZE = this->board1.getSize();
     const vector<Ship>& fleet = this->board1.getFleet();
 
     for (const Ship& ship : fleet) {
@@ -190,13 +186,13 @@ void Game::addNeighbors(int row, int col)
         int r = row + dr;
         int c = col + dc;
 
-        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c))
+        if (r >= 0 && r < SIZE && c >= 0 && c < SIZE && !cellAlreadyAttacked(r, c))
         {
             this->aiTargets.push_back({r, c});
         }
         r = attackedRow - dr;
         c = attackedCol - dc;
-        if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c))
+        if (r >= 0 && r < SIZE && c >= 0 && c < SIZE && !cellAlreadyAttacked(r, c))
         {
             this->aiTargets.push_back({r, c});
         }
@@ -206,7 +202,8 @@ void Game::addNeighbors(int row, int col)
         for (int i = 0; i < 4; i++) {
             int r = row + dirs[i][0];
             int c = col + dirs[i][1];
-            if (r >= 0 && r < 10 && c >= 0 && c < 10 && !cellAlreadyAttacked(r, c)) {
+
+            if (r >= 0 && r < SIZE && c >= 0 && c < SIZE && !cellAlreadyAttacked(r, c)) {
                 this->aiTargets.push_back({r, c});
             }
         }

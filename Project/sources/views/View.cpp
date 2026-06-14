@@ -166,12 +166,15 @@ void View::ShipPlacement(const string& type, int size, int& row, int& col, bool&
     }
 
     string orientation;
+
     do {
         orientation = Utils::getString("\nIntroduza a orientacao (H - Horizontal, V - Vertical)");
+
         if (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v") {
             cout << "\nOrientacao invalida! Insira apenas H ou V.\n";
         }
     } while (orientation != "H" && orientation != "h" && orientation != "V" && orientation != "v");
+
     horizontal = (orientation == "H" || orientation == "h");
 }
 
@@ -188,8 +191,28 @@ void View::showPlacementSuccess() {
 }
 
 void View::showBoard(const Board& board, bool hideShips) {
-    cout << "\n--- Seu Tabuleiro ---\n\n";
-    board.print(hideShips);
+    cout << "  ";
+
+    for (int j = 0; j < 10; ++j) {
+        cout << j << " ";
+    }
+
+    cout << "\n";
+
+    for (int i = 0; i < 10; ++i) {
+        cout << (char)('A' + i) << " ";
+
+        for (int j = 0; j < 10; ++j) {
+            char cell = board.getCell(i, j);
+
+            if (hideShips && cell != '~' && cell != 'X' && cell != 'O') {
+                cout << "~ ";
+            } else {
+                cout << cell << " ";
+            }
+        }
+        cout << "\n";
+    }
 }
 
 int View::menuSatisfaction() {
@@ -227,8 +250,12 @@ bool View::getShotCoordinate(int& row, int& col) {
         }
 
         bool allDigits = true;
+
         for (char c : numberStr) {
-            if (!isdigit(c)) { allDigits = false; break; }
+            if (!isdigit(c)) {
+                allDigits = false;
+                break;
+            }
         }
         if (!allDigits) {
             cout << "\nCoordenada invalida! Use o formato letra + numero (ex: A1)\n";
@@ -259,10 +286,10 @@ void View::showGameTurn(const string& player, const Board& yourBoard, const Boar
     cout << "\n********** Turno de: " << player << " **********\n\n";
 
     cout << "--- Seu Tabuleiro ---\n";
-    yourBoard.print(false);
+    showBoard(yourBoard, false);
 
     cout << "\n--- Tabuleiro do Adversario ---\n";
-    opponentBoard.print(true);
+    showBoard(opponentBoard, true);
 }
 
 void View::showShotResult(bool hit, bool sunk, const string& shipType, const string& coordinate) {
@@ -273,14 +300,12 @@ void View::showShotResult(bool hit, bool sunk, const string& shipType, const str
     cout << '\n';
 }
 
-void View::showGameOver(const string& winnerName, int winnerShots, int winnerHits, const string& loserName, int loserShots, int loserHits) {
+void View::showGameOver(const GameDTO& game) {
     cout << "\n**********************************\n";
     cout << "********** FIM DE JOGO **********\n";
     cout << "**********************************\n";
-    cout << "\n--- VENCEDOR: " << winnerName << " ---\n";
-    cout << "Tiros: " << winnerShots << " | Acertos: " << winnerHits
-         << " | Precisao: " << (winnerShots > 0 ? winnerHits * 100 / winnerShots : 0) << "%\n";
-    cout << "\n--- PERDEDOR: " << loserName << " ---\n";
-    cout << "Tiros: " << loserShots << " | Acertos: " << loserHits
-         << " | Precisao: " << (loserShots > 0 ? loserHits * 100 / loserShots : 0) << "%\n\n";
+    cout << "\n--- VENCEDOR: " << game.player1.nickname << " ---\n";
+    cout << "Tiros: " << game.player1.totalShots << " | Acertos: " << game.player1.shotsHit << " | Precisao: " << game.player1.accuracy << "%\n";
+    cout << "\n--- PERDEDOR: " << game.player2.nickname << " ---\n";
+    cout << "Tiros: " << game.player2.totalShots << " | Acertos: " << game.player2.shotsHit << " | Precisao: " << game.player2.accuracy << "%\n\n";
 }

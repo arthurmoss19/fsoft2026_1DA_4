@@ -4,56 +4,31 @@
 
 #include "Player.h"
 #include "InvalidDataException.h"
-
-void Player::setWins(int wins) {
-    if (wins >= 0) {
-        this->wins = wins;
-    }
-    else {
-        string msg = "Jogador " + nickname;
-        throw InvalidDataException(msg);
-    }
-}
-
-void Player::setLosses(int losses) {
-    if (losses >= 0) {
-        this->losses = losses;
-    }
-    else {
-        string msg = "Jogador " + nickname;
-        throw InvalidDataException(msg);
-    }
-}
-
-bool Player::isNicknameValid(const string& nick) {
-    if (nick.length() < 3 || nick.length() > 24) {
-        return false;
-    }
-    return true;
-}
+#include "Utils.h"
 
 void Player::setNickname(const string& nickname) {
-    if (isNicknameValid(nickname)) {
+    string errorMsg;
+    if (Utils::isNicknameValid(nickname, errorMsg)) {
         this->nickname = nickname;
     }
     else {
         string msg = "Jogador " + nickname;
-        throw InvalidDataException(msg);
+        throw InvalidDataException(errorMsg);
     }
 }
 
 Player::Player(const string& nickname) {
     setNickname(nickname);
-    setWins(0);
-    setLosses(0);
+    this->wins = 0;
+    this->losses = 0;
     this->totalShots = 0;
     this->hits = 0;
 }
 
 Player::Player(const Player& obj) {
     setNickname(obj.nickname);
-    setWins(obj.wins);
-    setLosses(obj.losses);
+    this->wins = obj.wins;
+    this->losses = obj.losses;
     this->totalShots = obj.totalShots;
     this->hits = obj.hits;
 }

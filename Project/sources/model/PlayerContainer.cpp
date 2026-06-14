@@ -42,37 +42,6 @@ void PlayerContainer::add(const string& nickname) {
     }
 }
 
-Player* PlayerContainer::remove(const string& nickname) {
-    list<Player*>::iterator it = this->players.begin();
-    for (; it != this->players.end(); ++it) {
-        if (**it == nickname) break;
-    }
-    if (it != this->players.end()) {
-        Player* player = *it;
-        this->players.erase(it);
-        return player;
-    } else {
-        string msg = "Jogador " + nickname;
-        throw NoDataException(msg);
-    }
-}
-
-Player* PlayerContainer::update(const string& oldNickname, const string& newNickname) {
-    Player* player1 = search(oldNickname);
-    if (player1 != NULL) {
-        Player* player2 = search(newNickname);
-        if (player2 == NULL) {
-            player1->setNickname(newNickname);
-            return player1;
-        } else {
-            string msg = "Jogador " + newNickname;
-            throw DuplicatedDataException(msg);
-        }
-    } else {
-        string msg = "Jogador " + oldNickname;
-        throw NoDataException(msg);
-    }
-}
 void PlayerContainer::saveToFile(const string& filename) {
     std::ofstream file(filename);
     if (!file.is_open()) {
@@ -135,4 +104,15 @@ void PlayerContainer::loadFromFile(const string& filename) {
             }
     }
     file.close();
+}
+
+void PlayerContainer::add(Player* player) {
+    this->players.push_back(player);
+}
+
+void PlayerContainer::clear() {
+    for (Player* p : this->players) {
+        delete p;
+    }
+    this->players.clear();
 }
