@@ -112,13 +112,14 @@ void Game::computerMove(int& row, int& col, bool& hit) {
     static bool seeded = false;
     if (!seeded) {
         srand(time(0)); seeded = true;
+        this->huntParity = rand() % 2;
     }
 
     if (this->aiDifficulty == 1 || this->aiTargets.empty()) {
         do {
             row = rand() % 10;
             col = rand() % 10;
-        } while (cellAlreadyAttacked(row, col));
+        } while (cellAlreadyAttacked(row, col) || (this->aiDifficulty == 2 && (row + col) % 2 != this->huntParity));
     } else {
         bool found = false;
 
@@ -135,7 +136,7 @@ void Game::computerMove(int& row, int& col, bool& hit) {
             do {
                 row = rand() % 10;
                 col = rand() % 10;
-            } while (cellAlreadyAttacked(row, col));
+            } while (cellAlreadyAttacked(row, col) || (this->aiDifficulty == 2 && (row + col) % 2 != this->huntParity));
         }
     }
 

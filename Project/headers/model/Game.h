@@ -32,6 +32,7 @@ private:
     int attackedCol;
     int prevAttackedRow;
     int prevAttackedCol;
+    int huntParity;
     vector<pair<int,int>> aiTargets;
     void switchTurn();
     bool checkGameOver();
